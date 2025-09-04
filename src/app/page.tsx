@@ -22,8 +22,8 @@ export default async function HomePage() {
   ]
 
   // Try to fetch from other potential tables
-  const tableData: Record<string, any> = {}
-  const tableErrors: Record<string, any> = {}
+  const tableData: Record<string, unknown[]> = {}
+  const tableErrors: Record<string, string> = {}
 
   for (const tableName of possibleTables) {
     try {
@@ -37,7 +37,7 @@ export default async function HomePage() {
       } else if (error) {
         tableErrors[tableName] = error.message
       }
-    } catch (err) {
+    } catch {
       // Table doesn't exist, that's fine
     }
   }
@@ -58,7 +58,7 @@ export default async function HomePage() {
     }
     acc[albumId].push(song)
     return acc
-  }, {} as Record<string, any[]>) || {}
+  }, {} as Record<string, unknown[]>) || {}
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
