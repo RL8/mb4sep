@@ -1,0 +1,43 @@
+Ideal Song Ranking Experience in Discography - Step by Step
+Entry Point & Mode Selection
+Browse Albums: User is in the albums view, seeing the grid of Taylor Swift albums
+Rank Mode Button: User sees a "Rank Mode" button in the header
+Mode Selection: When clicked, user gets a choice: "Rank Albums" or "Rank Songs"
+Visual Feedback: The interface clearly shows which mode is active
+Song Ranking Mode Activation
+Mode Switch: User selects "Rank Songs" and the interface changes
+Navigation Change: User can now navigate between albums to access different songs
+Visual Cues: Songs become interactive with subtle animations or highlighting
+Clear Instructions: Interface shows "Tap songs to rank them in order"
+Song Selection & Ranking
+Browse Songs: User navigates through different albums to find songs
+Tap to Rank: User taps songs to add them to their ranking in order
+Visual Feedback: Each ranked song shows a numbered badge (1, 2, 3...)
+Cross-Album Selection: User can rank songs from any album in any order
+Remove Songs: User can tap ranked songs again to remove them
+Progress Indicator: Shows how many songs have been ranked
+Ranking Management
+View Rankings: User can access a "View Rankings" button to see their current list
+Ranking Display: Shows all ranked songs in order with album information
+Reorder Songs: User can drag and drop to reorder their song rankings
+Undo/Redo: User can undo or redo ranking changes
+Clear All: User can clear all rankings and start over
+Ranking Persistence & Sharing
+Save Rankings: User's song rankings are automatically saved
+Resume Later: User can return later and continue ranking
+Share Rankings: User can share their song rankings with others
+Export Options: User can copy their ranking list or export it
+Mode Switching
+Switch Modes: User can switch between album ranking and song ranking
+Separate Rankings: Album and song rankings are kept separate
+Quick Access: User can quickly switch between viewing album vs song rankings
+Visual Design & Feedback
+Consistent Styling: Song rankings use the same visual language as album rankings
+Album Context: Each ranked song shows which album it's from
+Color Coding: Songs maintain their album's color scheme
+Smooth Animations: All interactions have smooth, satisfying animations
+Navigation & Flow
+Seamless Navigation: User can move between albums and songs without losing ranking progress
+Clear Exit: User can easily exit ranking mode and return to normal browsing
+Progress Preservation: Rankings are preserved when navigating between different views
+Help & Guidance: Clear instructions and help available throughout the process

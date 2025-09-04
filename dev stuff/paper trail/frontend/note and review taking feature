@@ -1,0 +1,52 @@
+# Note-Taking & Review Features - Overview
+
+## **Two Content Systems**
+
+**Reviews**: Rate music (1-5 stars) + write opinions
+**Notes**: Create titled entries with personal thoughts
+
+## **How It Works**
+
+1. **Users** browse albums/songs/artists
+2. **Choose** to review (rate) or take notes (document)
+3. **Create** content through forms
+4. **Share** publicly or keep private
+5. **Discover** others' reviews and public notes
+
+## **Technical Setup**
+
+- **Database**: Separate tables for reviews and notes
+- **API**: CRUD endpoints for both systems
+- **Auth**: Users can only edit their own content
+- **Privacy**: Notes can be public or private
+
+## **User Value**
+
+- **Reviews**: Help others discover music
+- **Notes**: Personal reference and analysis
+- **Community**: Public content builds discussion
+- **Flexibility**: Choose engagement level
+
+**Result**: Users can both evaluate music and document their thoughts, creating a rich content ecosystem around music discovery.
+
+# Reviewing & Note-Taking System - User Experience
+
+| **System** | **Step** | **User Action** | **Output/Result** |
+|------------|----------|-----------------|-------------------|
+| **Reviews** | 1 | Navigate to album page | See "Review Album" form with empty stars |
+| **Reviews** | 2 | Click 1-5 stars to rate | Stars fill with yellow, rating selected |
+| **Reviews** | 3 | Type optional review text (1000 chars) | Character counter shows progress |
+| **Reviews** | 4 | Click "Submit Review" | Review saved, form resets |
+| **Reviews** | 5 | View Reviews section | See total count and average rating |
+| **Reviews** | 6 | Scroll through reviews | Individual cards with star ratings, text, dates |
+| **Notes** | 1 | Navigate to album page | See Notes section with "Add Note" button |
+| **Notes** | 2 | Click "Add Note" | Form opens with title/content fields |
+| **Notes** | 3 | Enter title (100 chars) | Character counter shows progress |
+| **Notes** | 4 | Type content (2000 chars) | Character counter shows progress |
+| **Notes** | 5 | Toggle public/private switch | Visual indicator changes |
+| **Notes** | 6 | Click "Save Note" | Note saved, appears in list immediately |
+| **Notes** | 7 | Use search bar | Filter notes by title/content |
+| **Notes** | 8 | View note cards | See title, content, privacy badge, dates |
+
+## Key Features:
+- **Real-time updates** | **Search functionality** | **Privacy controls** | **Edit capabilities** | **Visual feedback**

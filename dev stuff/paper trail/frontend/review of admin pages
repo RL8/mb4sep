@@ -1,0 +1,9 @@
+Looking at the flow chart for the home page, just want to clarify that the artist request form could actually be more like what you'd expect to see on a feature request for a software app whereby users can upvote. So in our use case, users can upvote the artists that they want to see and they can see what other people have previously upvoted so it kind of tallies up as people use it.
+
+Regarding the Taylor Swift artist page, we've got connect page, discography page, but you have not included the preview sort of countdown. It's a separate box which will lead, we know where it will lead but it needs to be added to the diagram.
+
+On the explorer tab, rank tab, even the connect tab I feel like it's getting out of hand because you are including random facts about the various steps as opposed to just focusing on action points or kind of concise workflow kind of points. So could you tidy up the diagram so they don't have to have all the information since we also have the table?
+
+on the discography tab, we actually do have a third tab which we just matching where we let users compare their rankings to other users it's separating from the ranking one, where you actually edit that one it's more viewing other people's rankings.
+
+Ranking is not just ranking in terms of numerical. We also need to allow people to add their musings about albums and songs.

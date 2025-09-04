@@ -85,6 +85,16 @@ export default async function HomePage() {
           MB4SEP - Taylor Swift Complete Discography
         </h1>
         
+        {/* Navigation to Admin Panel */}
+        <div className="text-center mb-8">
+          <a 
+            href="/admin" 
+            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+          >
+            ⚙️ Admin Panel
+          </a>
+        </div>
+        
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
           <strong>✅ Successfully connected to Supabase!</strong>
         </div>

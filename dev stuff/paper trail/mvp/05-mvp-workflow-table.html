@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taylor Swift Fan App - MVP Workflow Table</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 222.2 84% 4.9%;
+            --primary: 222.2 47.4% 11.2%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96%;
+            --secondary-foreground: 222.2 47.4% 11.2%;
+            --muted: 210 40% 96%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --accent: 210 40% 96%;
+            --accent-foreground: 222.2 47.4% 11.2%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 222.2 84% 4.9%;
+            --radius: 0.5rem;
+        }
+        
+        .dark {
+            --background: 222.2 84% 4.9%;
+            --foreground: 210 40% 98%;
+            --card: 222.2 84% 4.9%;
+            --card-foreground: 210 40% 98%;
+            --popover: 222.2 84% 4.9%;
+            --popover-foreground: 210 40% 98%;
+            --primary: 210 40% 98%;
+            --primary-foreground: 222.2 47.4% 11.2%;
+            --secondary: 217.2 32.6% 17.5%;
+            --secondary-foreground: 210 40% 98%;
+            --muted: 217.2 32.6% 17.5%;
+            --muted-foreground: 215 20.2% 65.1%;
+            --accent: 217.2 32.6% 17.5%;
+            --accent-foreground: 210 40% 98%;
+            --destructive: 0 62.8% 30.6%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 217.2 32.6% 17.5%;
+            --input: 217.2 32.6% 17.5%;
+            --ring: 217.2 32.6% 17.5%;
+        }
+        
+        * {
+            border-color: hsl(var(--border));
+        }
+        
+        body {
+            color: hsl(var(--foreground));
+            background: hsl(var(--background));
+            font-feature-settings: "rlig" 1, "calt" 1;
+        }
+        
+        .container {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+        
+        .card {
+            background-color: hsl(var(--card));
+            color: hsl(var(--card-foreground));
+            border-radius: calc(var(--radius) - 2px);
+            border: 1px solid hsl(var(--border));
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            border-radius: calc(var(--radius) - 2px);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: colors;
+            focus-visible:outline-none;
+            focus-visible:ring-2;
+            focus-visible:ring-ring;
+            focus-visible:ring-offset-2;
+            disabled:pointer-events-none;
+            disabled:opacity-50;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+        
+        .btn-secondary {
+            background-color: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+        
+        .btn-secondary:hover {
+            background-color: hsl(var(--secondary) / 0.8);
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 9999px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            line-height: 1;
+            transition: colors;
+        }
+        
+        .badge-primary {
+            background-color: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+        }
+        
+        .badge-secondary {
+            background-color: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
+        }
+        
+        .badge-outline {
+            border: 1px solid hsl(var(--border));
+            background-color: transparent;
+            color: hsl(var(--foreground));
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            border-radius: calc(var(--radius) - 2px);
+            border: 1px solid hsl(var(--border));
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        
+        .table th {
+            background-color: hsl(var(--muted));
+            color: hsl(var(--muted-foreground));
+            font-weight: 600;
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid hsl(var(--border));
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .table td {
+            padding: 1rem 0.75rem;
+            border-bottom: 1px solid hsl(var(--border));
+            vertical-align: top;
+        }
+        
+        .table tbody tr:hover {
+            background-color: hsl(var(--muted) / 0.5);
+        }
+        
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: calc(var(--radius) - 2px);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .section-badge-page {
+            background-color: hsl(220 100% 95%);
+            color: hsl(220 100% 20%);
+        }
+        
+        .section-badge-sub {
+            background-color: hsl(270 100% 95%);
+            color: hsl(270 100% 20%);
+        }
+        
+        .section-badge-sub-sub {
+            background-color: hsl(30 100% 95%);
+            color: hsl(30 100% 20%);
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 0.25rem 0;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .feature-list li::before {
+            content: "•";
+            color: hsl(var(--primary));
+            font-weight: bold;
+            margin-top: 0.125rem;
+        }
+        
+        .purpose-text {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .purpose-text strong {
+            color: hsl(var(--foreground));
+            font-weight: 600;
+        }
+        
+        .toggle-dark {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 50;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background-color: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: calc(var(--radius) - 2px);
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: hsl(var(--primary));
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .mvp-badge {
+            background-color: hsl(120 100% 95%);
+            color: hsl(120 100% 20%);
+        }
+        
+        .premium-badge {
+            background-color: hsl(45 100% 95%);
+            color: hsl(45 100% 20%);
+        }
+        
+        .free-badge {
+            background-color: hsl(200 100% 95%);
+            color: hsl(200 100% 20%);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-background">
+    <button class="toggle-dark btn btn-secondary" onclick="toggleDark()">🌙</button>
+    
+    <div class="container mx-auto p-8 max-w-7xl">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-foreground mb-4">Taylor Swift Fan App</h1>
+            <p class="text-xl text-muted-foreground mb-2">MVP Specification - Table Format</p>
+            <p class="text-sm text-muted-foreground">Focused on core ranking functionality and monetization</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Core MVP Features</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2</div>
+                <div class="stat-label">User Tiers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Albums (Free)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">13</div>
+                <div class="stat-label">Songs (Free)</div>
+            </div>
+        </div>
+
+        <div class="card p-6">
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Section</th>
+                            <th>Purpose & Design</th>
+                            <th>Content/Functionality</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">📱 Page</span>
+                                    <span class="font-semibold text-foreground">1. Landing Page</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> Simple entry point focused on Taylor Swift ranking<br>
+                                <strong>Design:</strong> Mobile-first, single-page layout with clear value proposition
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>App Name: "Taylor Swift Rankings"</li>
+                                    <li>Tagline: "Rank your favorite albums and songs"</li>
+                                    <li>Single "Start Ranking" button</li>
+                                    <li>Preview of ranking interface</li>
+                                    <li>Social proof: "Join 1,000+ Swifties"</li>
+                                </ul>
+                            </td>
+                        </tr>
+                
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">🎵 Core</span>
+                                    <span class="font-semibold text-foreground">2. Ranking Interface</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> Core value proposition - ranking Taylor Swift's discography<br>
+                                <strong>Design:</strong> Intuitive tap-to-rank mobile interface with visual feedback
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li><span class="badge free-badge">Free</span> Rank 3 albums + 13 songs total</li>
+                                    <li><span class="badge premium-badge">Premium</span> Rank entire discography</li>
+                                    <li>Tap-to-rank interface with numbered badges</li>
+                                    <li>Cross-album song selection</li>
+                                    <li>Drag-and-drop reordering</li>
+                                    <li>Progress indicators and visual feedback</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">📚 Content</span>
+                                    <span class="font-semibold text-foreground">3. Knowledge Base</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> Provide context and information to enhance ranking experience<br>
+                                <strong>Design:</strong> Clean, searchable interface with album/song details
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li><span class="badge free-badge">Free</span> Access only to ranked items</li>
+                                    <li><span class="badge premium-badge">Premium</span> Full discography access</li>
+                                    <li>Album covers, release dates, track listings</li>
+                                    <li>Song details, duration, track numbers</li>
+                                    <li>Basic search and filtering</li>
+                                    <li>Upgrade prompts for full access</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">💬 Personal</span>
+                                    <span class="font-semibold text-foreground">4. User Notes & Comments</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> Personalization and community engagement through user-generated content<br>
+                                <strong>Design:</strong> Simple text input with character limits and auto-save
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li><span class="badge free-badge">Free</span> Notes only on ranked items</li>
+                                    <li><span class="badge premium-badge">Premium</span> Notes on any song/album</li>
+                                    <li>Character-limited text input (500 chars)</li>
+                                    <li>Auto-save functionality</li>
+                                    <li>Basic formatting (bold, italic)</li>
+                                    <li>Timestamp and edit history</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">🔗 Social</span>
+                                    <span class="font-semibold text-foreground">5. Shareable Links</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> Viral growth and social proof through shareable ranking pages<br>
+                                <strong>Design:</strong> Clean, mobile-optimized sharing interface
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>Unique permanent link per user</li>
+                                    <li>Public/private link settings</li>
+                                    <li>Social media sharing buttons</li>
+                                    <li>Mobile-optimized ranking display</li>
+                                    <li>User notes and comments visible</li>
+                                    <li>Basic analytics on link views</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">💰 Monetization</span>
+                                    <span class="font-semibold text-foreground">6. Premium Upgrade</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> Convert free users to premium subscribers<br>
+                                <strong>Design:</strong> Clear upgrade prompts with compelling value proposition
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>Natural upgrade prompts at limits</li>
+                                    <li>Feature comparison table</li>
+                                    <li>Limited-time launch pricing</li>
+                                    <li>One-click payment integration</li>
+                                    <li>Immediate feature unlock</li>
+                                    <li>30-day money-back guarantee</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">🎮 Engagement</span>
+                                    <span class="font-semibold text-foreground">7. Prediction Game</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> Engage users with upcoming "Life of a Showgirl" album<br>
+                                <strong>Design:</strong> Simple prediction interface with results tracking
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>Predict where LOAS will rank in your list</li>
+                                    <li>Mark prediction as "sounds right" or "way off"</li>
+                                    <li>Track accuracy after album release</li>
+                                    <li>Available to all users (free and premium)</li>
+                                    <li>Simple form-based interface</li>
+                                    <li>Results comparison with other users</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">👥 Community</span>
+                                    <span class="font-semibold text-foreground">8. Limited Social Features</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> Basic community engagement for free users<br>
+                                <strong>Design:</strong> Simple viewing interface for other users' content
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li><span class="badge free-badge">Free</span> View limited public rankings</li>
+                                    <li><span class="badge premium-badge">Premium</span> Full community access</li>
+                                    <li>Browse other users' public links</li>
+                                    <li>Basic user profiles</li>
+                                    <li>Simple search by username</li>
+                                    <li>Upgrade prompts for full access</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">📊 Data</span>
+                                    <span class="font-semibold text-foreground">9. User History</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> Track user activity and provide ranking history<br>
+                                <strong>Design:</strong> Simple timeline view of user actions
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li><span class="badge free-badge">Free</span> 7-day history retention</li>
+                                    <li><span class="badge premium-badge">Premium</span> Unlimited history</li>
+                                    <li>Timeline of ranking changes</li>
+                                    <li>Note creation and edits</li>
+                                    <li>Share link generation</li>
+                                    <li>Export ranking data (premium)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">⚙️ System</span>
+                                    <span class="font-semibold text-foreground">10. User Management</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> Handle user accounts, subscriptions, and preferences<br>
+                                <strong>Design:</strong> Simple account management with clear subscription status
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>Email/password authentication</li>
+                                    <li>Subscription status tracking</li>
+                                    <li>Payment history and billing</li>
+                                    <li>Account settings and preferences</li>
+                                    <li>Data export and deletion</li>
+                                    <li>Customer support contact</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- MVP Pricing Section -->
+        <div class="card p-6 mt-8">
+            <h2 class="text-2xl font-bold text-foreground mb-4">MVP Pricing Strategy</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="border border-border rounded-lg p-4">
+                    <h3 class="font-semibold text-lg mb-2">Free Tier</h3>
+                    <div class="text-3xl font-bold text-primary mb-2">$0</div>
+                    <ul class="text-sm space-y-1">
+                        <li>• Rank 3 albums + 13 songs</li>
+                        <li>• Limited knowledge base</li>
+                        <li>• Notes on ranked items only</li>
+                        <li>• 7-day history</li>
+                        <li>• Prediction game</li>
+                        <li>• Shareable links</li>
+                    </ul>
+                </div>
+                <div class="border border-border rounded-lg p-4 bg-primary/5">
+                    <h3 class="font-semibold text-lg mb-2">Premium Monthly</h3>
+                    <div class="text-3xl font-bold text-primary mb-2">$4.89</div>
+                    <ul class="text-sm space-y-1">
+                        <li>• Rank entire discography</li>
+                        <li>• Full knowledge base access</li>
+                        <li>• Notes on any song/album</li>
+                        <li>• Unlimited history</li>
+                        <li>• All mini-games</li>
+                        <li>• Full community access</li>
+                    </ul>
+                </div>
+                <div class="border border-border rounded-lg p-4 bg-yellow-50">
+                    <h3 class="font-semibold text-lg mb-2">Launch Special</h3>
+                    <div class="text-3xl font-bold text-primary mb-2">$10.03</div>
+                    <div class="text-sm text-muted-foreground mb-2">per year (79% off)</div>
+                    <ul class="text-sm space-y-1">
+                        <li>• All premium features</li>
+                        <li>• Limited to first 1,989 users</li>
+                        <li>• Lifetime access</li>
+                        <li>• Early access to new features</li>
+                        <li>• Special community badge</li>
+                        <li>• Priority customer support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- MVP Success Metrics -->
+        <div class="card p-6 mt-8">
+            <h2 class="text-2xl font-bold text-foreground mb-4">MVP Success Metrics</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-semibold text-lg mb-3">User Metrics</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><strong>User Acquisition:</strong> 1,000+ users in first month</li>
+                        <li><strong>Engagement:</strong> 70%+ complete initial ranking</li>
+                        <li><strong>Retention:</strong> 40%+ 7-day retention</li>
+                        <li><strong>Sharing:</strong> 20%+ generate shareable links</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-3">Revenue Metrics</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><strong>Conversion Rate:</strong> 5%+ free to premium</li>
+                        <li><strong>Monthly Revenue:</strong> $1,000+ by month 3</li>
+                        <li><strong>Customer Lifetime Value:</strong> $25+ average</li>
+                        <li><strong>Churn Rate:</strong> <5% monthly churn</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDark() {
+            document.documentElement.classList.toggle('dark');
+        }
+    </script>
+</body>
+</html>
