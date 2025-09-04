@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #1e7e34;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .file-list {
+            padding: 30px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .file-item:hover {
+            border-color: #007bff;
+            box-shadow: 0 2px 8px rgba(0,123,255,0.1);
+        }
+
+        .file-item.selected {
+            border-color: #007bff;
+            background: #f8f9ff;
+        }
+
+        .file-checkbox {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+
+        .file-description {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .stats {
+            background: #e9ecef;
+            padding: 15px 30px;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .select-all-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .category-section {
+            margin-bottom: 30px;
+        }
+
+        .category-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .no-files {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 30px;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Documentation Hub</h1>
+            <p>Auto-discovering and managing your HTML documentation files</p>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="refreshFiles()">
+                🔄 Refresh Files
+            </button>
+            <button class="btn btn-success" onclick="openSelected()" id="openSelectedBtn" disabled>
+                📂 Open Selected
+            </button>
+            <button class="btn btn-secondary" onclick="openAll()" id="openAllBtn" disabled>
+                📁 Open All
+            </button>
+            
+            <div class="select-all-controls">
+                <button class="btn btn-secondary btn-small" onclick="selectAll()">
+                    ✅ Select All
+                </button>
+                <button class="btn btn-secondary btn-small" onclick="selectNone()">
+                    ❌ Select None
+                </button>
+            </div>
+        </div>
+
+        <div id="content">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Scanning for HTML documentation files...</p>
+            </div>
+        </div>
+
+        <div class="stats">
+            <span id="fileCount">0 files found</span>
+            <span id="selectedCount">0 selected</span>
+        </div>
+    </div>
+
+    <script>
+        let files = [];
+        let selectedFiles = new Set();
+
+        // File descriptions mapping
+        const fileDescriptions = {
+            'frontend/workflow-description-table.html': 'Music Besties App Specification - Detailed table format with all sections and functionality',
+            'frontend/music-besties-flowchart.html': 'Music Besties App User Flow - Interactive Mermaid flowchart showing app navigation',
+            '../gallery.html': 'shadcn/ui Component Gallery - Static HTML showcase of design system components',
+            'index.html': 'Documentation Hub - This index page for managing all documentation files'
+        };
+
+        // Categorize files
+        function categorizeFile(filename) {
+            if (filename.includes('music-besties') || filename.includes('workflow')) {
+                return 'Music Besties Project';
+            } else if (filename.includes('gallery') || filename.includes('component')) {
+                return 'Design System';
+            } else if (filename.includes('index')) {
+                return 'System';
+            } else {
+                return 'Other Documentation';
+            }
+        }
+
+        // Real file discovery via API
+        async function discoverFiles() {
+            try {
+                const response = await fetch('/api/files');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                return data.files;
+            } catch (error) {
+                console.error('Error discovering files:', error);
+                // Fallback to simulated files if API fails
+                return [
+                    'frontend/workflow-description-table.html',
+                    'frontend/music-besties-flowchart.html',
+                    '../gallery.html'
+                ];
+            }
+        }
+
+        async function refreshFiles() {
+            document.getElementById('content').innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Scanning for HTML documentation files...</p>
+                </div>
+            `;
+
+            try {
+                files = await discoverFiles();
+                selectedFiles.clear();
+                renderFiles();
+                updateStats();
+            } catch (error) {
+                showError('Failed to discover files: ' + error.message);
+            }
+        }
+
+        function renderFiles() {
+            if (files.length === 0) {
+                document.getElementById('content').innerHTML = `
+                    <div class="no-files">
+                        <h3>No HTML files found</h3>
+                        <p>Make sure you have HTML files in the current directory</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Group files by category
+            const categories = {};
+            files.forEach(filename => {
+                const category = categorizeFile(filename);
+                if (!categories[category]) {
+                    categories[category] = [];
+                }
+                categories[category].push(filename);
+            });
+
+            let html = '';
+            Object.keys(categories).forEach(category => {
+                html += `
+                    <div class="category-section">
+                        <div class="category-title">${category}</div>
+                `;
+                
+                categories[category].forEach(filename => {
+                    const description = fileDescriptions[filename] || 'HTML documentation file';
+                    const isSelected = selectedFiles.has(filename);
+                    
+                    html += `
+                        <div class="file-item ${isSelected ? 'selected' : ''}" data-filename="${filename}">
+                            <input type="checkbox" class="file-checkbox" ${isSelected ? 'checked' : ''} 
+                                   onchange="toggleFile('${filename}')">
+                            <div class="file-info">
+                                <div class="file-name">${filename}</div>
+                                <div class="file-description">${description}</div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="btn btn-primary btn-small" onclick="openSingle('${filename}')">
+                                    👁️ Open
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+            });
+
+            document.getElementById('content').innerHTML = html;
+        }
+
+        function toggleFile(filename) {
+            if (selectedFiles.has(filename)) {
+                selectedFiles.delete(filename);
+            } else {
+                selectedFiles.add(filename);
+            }
+            updateStats();
+            updateFileItem(filename);
+        }
+
+        function updateFileItem(filename) {
+            const item = document.querySelector(`[data-filename="${filename}"]`);
+            const checkbox = item.querySelector('.file-checkbox');
+            const isSelected = selectedFiles.has(filename);
+            
+            checkbox.checked = isSelected;
+            item.classList.toggle('selected', isSelected);
+        }
+
+        function selectAll() {
+            files.forEach(filename => selectedFiles.add(filename));
+            updateStats();
+            renderFiles();
+        }
+
+        function selectNone() {
+            selectedFiles.clear();
+            updateStats();
+            renderFiles();
+        }
+
+        function openSingle(filename) {
+            window.open(filename, '_blank');
+        }
+
+        function openSelected() {
+            if (selectedFiles.size === 0) {
+                alert('Please select at least one file to open.');
+                return;
+            }
+            
+            selectedFiles.forEach(filename => {
+                window.open(filename, '_blank');
+            });
+        }
+
+        function openAll() {
+            files.forEach(filename => {
+                window.open(filename, '_blank');
+            });
+        }
+
+        function updateStats() {
+            document.getElementById('fileCount').textContent = `${files.length} files found`;
+            document.getElementById('selectedCount').textContent = `${selectedFiles.size} selected`;
+            
+            document.getElementById('openSelectedBtn').disabled = selectedFiles.size === 0;
+            document.getElementById('openAllBtn').disabled = files.length === 0;
+        }
+
+        function showError(message) {
+            document.getElementById('content').innerHTML = `
+                <div class="error">
+                    <strong>Error:</strong> ${message}
+                </div>
+            `;
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshFiles();
+        });
+    </script>
+</body>
+</html>
