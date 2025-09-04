@@ -5,34 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Besties - App Flow</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --primary: 222.2 47.4% 11.2%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96%;
+            --secondary-foreground: 222.2 47.4% 11.2%;
+            --muted: 210 40% 96%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --border: 214.3 31.8% 91.4%;
+            --radius: 0.5rem;
+        }
+        
+        .dark {
+            --background: 222.2 84% 4.9%;
+            --foreground: 210 40% 98%;
+            --card: 222.2 84% 4.9%;
+            --card-foreground: 210 40% 98%;
+            --primary: 210 40% 98%;
+            --primary-foreground: 222.2 47.4% 11.2%;
+            --secondary: 217.2 32.6% 17.5%;
+            --secondary-foreground: 210 40% 98%;
+            --muted: 217.2 32.6% 17.5%;
+            --muted-foreground: 215 20.2% 65.1%;
+            --border: 217.2 32.6% 17.5%;
+        }
+        
+        * {
+            border-color: hsl(var(--border));
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f5f5f5;
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        
+        .card {
+            background-color: hsl(var(--card));
+            color: hsl(var(--card-foreground));
+            border-radius: calc(var(--radius) - 2px);
+            border: 1px solid hsl(var(--border));
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
         }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 30px;
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            border-radius: calc(var(--radius) - 2px);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
         }
+        
+        .btn-secondary {
+            background-color: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+        
+        .btn-secondary:hover {
+            background-color: hsl(var(--secondary) / 0.8);
+        }
+        
+        .toggle-dark {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 50;
+        }
+        
         .mermaid {
             text-align: center;
+            background: transparent;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Music Besties - App User Flow</h1>
-        <div class="mermaid">
+<body class="min-h-screen bg-background">
+    <button class="toggle-dark btn btn-secondary" onclick="toggleDark()">🌙</button>
+    
+    <div class="container mx-auto p-8 max-w-7xl">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-foreground mb-4">Music Besties</h1>
+            <p class="text-xl text-muted-foreground mb-2">App User Flow</p>
+            <p class="text-sm text-muted-foreground">Interactive flowchart showing the complete user journey</p>
+        </div>
+
+        <div class="card p-6">
+            <div class="mermaid">
             flowchart TD
                 A[Homepage] --> B[Add Your Own Artist]
                 A --> C[Taylor Swift Artist Page]
@@ -44,29 +116,29 @@
                 F --> H[Rank Tab]
                 F --> I[Connect Tab]
                 
-                G --> J[Sub-navigation:<br/>Co-writers | Lyrics | Audio]
+                G --> J["Sub-navigation: Co-writers | Lyrics | Audio"]
                 J --> K[Co-writers Sub-Tab]
                 J --> L[Lyrics Sub-Tab]
                 J --> M[Audio Sub-Tab]
                 
-                K --> N[Songwriter Names<br/>with Total Counts]
-                N --> O[Select Songwriter<br/>e.g. Jack Antonoff 45]
-                O --> P[12-Album Grid<br/>Shows Songs per Album]
-                P --> Q[Tap Album → Song List<br/>with Specific Songs]
+                K --> N["Songwriter Names with Total Counts"]
+                N --> O["Select Songwriter (e.g. Jack Antonoff 45)"]
+                O --> P["12-Album Grid Shows Songs per Album"]
+                P --> Q["Tap Album → Song List with Specific Songs"]
                 
                 L --> R[Lyrical Characteristics]
-                R --> S[Select Characteristic<br/>e.g. Word Count]
-                S --> T[12-Album Grid<br/>Shows Values per Album]
-                T --> U[Tap Album → Song List<br/>with Individual Values]
+                R --> S["Select Characteristic (e.g. Word Count)"]
+                S --> T["12-Album Grid Shows Values per Album"]
+                T --> U["Tap Album → Song List with Individual Values"]
                 
                 M --> V[Audio Features]
-                V --> W[Select Feature<br/>e.g. Danceability]
-                W --> X[12-Album Grid<br/>Shows Values per Album]
-                X --> Y[Tap Album → Song List<br/>with Individual Values]
+                V --> W["Select Feature (e.g. Danceability)"]
+                W --> X["12-Album Grid Shows Values per Album"]
+                X --> Y["Tap Album → Song List with Individual Values"]
                 
-                I --> Z[Community Activities:<br/>Showgirl Countdown |<br/>Eras Tour Reunion |<br/>The Travis Era |<br/>Arcade | Mix & Mingle]
-                Z --> AA[Showgirl Countdown<br/>Prediction Activity]
-                AA --> BB[Predict LOAS Ranking<br/>Mark as Accurate/Inaccurate]
+                I --> Z["Community Activities: Showgirl Countdown | Eras Tour Reunion | The Travis Era | Arcade | Mix & Mingle"]
+                Z --> AA["Showgirl Countdown Prediction Activity"]
+                AA --> BB["Predict Life of a Showgirl Ranking - Mark as Accurate/Inaccurate"]
                 
                 Q --> F
                 U --> F
@@ -78,10 +150,22 @@
                 style G fill:#fff3e0
                 style H fill:#e8f5e8
                 style I fill:#fce4ec
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-sm text-muted-foreground">
+            <p>Built with shadcn/ui design system • Music Besties App Flow</p>
         </div>
     </div>
 
     <script>
+        function toggleDark() {
+            document.documentElement.classList.toggle('dark');
+            const btn = document.querySelector('.toggle-dark');
+            btn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+        }
+
         mermaid.initialize({
             startOnLoad: true,
             theme: 'default',
