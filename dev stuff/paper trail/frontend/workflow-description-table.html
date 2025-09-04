@@ -4,269 +4,540 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Besties - Workflow Description Table</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 222.2 84% 4.9%;
+            --primary: 222.2 47.4% 11.2%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96%;
+            --secondary-foreground: 222.2 47.4% 11.2%;
+            --muted: 210 40% 96%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --accent: 210 40% 96%;
+            --accent-foreground: 222.2 47.4% 11.2%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 222.2 84% 4.9%;
+            --radius: 0.5rem;
+        }
+        
+        .dark {
+            --background: 222.2 84% 4.9%;
+            --foreground: 210 40% 98%;
+            --card: 222.2 84% 4.9%;
+            --card-foreground: 210 40% 98%;
+            --popover: 222.2 84% 4.9%;
+            --popover-foreground: 210 40% 98%;
+            --primary: 210 40% 98%;
+            --primary-foreground: 222.2 47.4% 11.2%;
+            --secondary: 217.2 32.6% 17.5%;
+            --secondary-foreground: 210 40% 98%;
+            --muted: 217.2 32.6% 17.5%;
+            --muted-foreground: 215 20.2% 65.1%;
+            --accent: 217.2 32.6% 17.5%;
+            --accent-foreground: 210 40% 98%;
+            --destructive: 0 62.8% 30.6%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 217.2 32.6% 17.5%;
+            --input: 217.2 32.6% 17.5%;
+            --ring: 212.7 26.8% 83.9%;
+        }
+        
+        * {
+            border-color: hsl(var(--border));
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f5f5f5;
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
         }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        
+        .card {
+            background-color: hsl(var(--card));
+            color: hsl(var(--card-foreground));
+            border-radius: calc(var(--radius) - 2px);
+            border: 1px solid hsl(var(--border));
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
         }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 30px;
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            border-radius: calc(var(--radius) - 2px);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
         }
-        table {
+        
+        .btn-primary {
+            background-color: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+        
+        .btn-primary:hover {
+            background-color: hsl(var(--primary) / 0.9);
+        }
+        
+        .btn-secondary {
+            background-color: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+        
+        .btn-secondary:hover {
+            background-color: hsl(var(--secondary) / 0.8);
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 9999px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            line-height: 1;
+            transition: colors;
+        }
+        
+        .badge-primary {
+            background-color: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+        }
+        
+        .badge-secondary {
+            background-color: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
+        }
+        
+        .badge-outline {
+            border: 1px solid hsl(var(--border));
+            background-color: transparent;
+            color: hsl(var(--foreground));
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            border-radius: calc(var(--radius) - 2px);
+            border: 1px solid hsl(var(--border));
+        }
+        
+        .table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 30px;
-            font-size: 14px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            font-size: 0.875rem;
         }
-        th, td {
-            border: 1px solid #e1e5e9;
-            padding: 16px;
+        
+        .table th {
+            background-color: hsl(var(--muted));
+            color: hsl(var(--muted-foreground));
+            font-weight: 600;
             text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid hsl(var(--border));
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .table td {
+            padding: 1rem 0.75rem;
+            border-bottom: 1px solid hsl(var(--border));
             vertical-align: top;
+        }
+        
+        .table tbody tr:hover {
+            background-color: hsl(var(--muted) / 0.5);
+        }
+        
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: calc(var(--radius) - 2px);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .section-badge-page {
+            background-color: hsl(220 100% 95%);
+            color: hsl(220 100% 20%);
+        }
+        
+        .section-badge-sub {
+            background-color: hsl(270 100% 95%);
+            color: hsl(270 100% 20%);
+        }
+        
+        .section-badge-sub-sub {
+            background-color: hsl(30 100% 95%);
+            color: hsl(30 100% 20%);
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 0.25rem 0;
+            font-size: 0.875rem;
             line-height: 1.5;
         }
-        th {
-            background-color: #f8f9fa;
+        
+        .feature-list li::before {
+            content: "•";
+            color: hsl(var(--primary));
+            font-weight: bold;
+            margin-top: 0.125rem;
+        }
+        
+        .purpose-text {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .purpose-text strong {
+            color: hsl(var(--foreground));
             font-weight: 600;
-            color: #2c3e50;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-        tr:nth-child(even) {
-            background-color: #fafbfc;
+        
+        .toggle-dark {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 50;
         }
-        tr:hover {
-            background-color: #f1f3f4;
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
-        .page-section {
-            background-color: #e8f4fd;
-            font-weight: 600;
-            color: #1a365d;
+        
+        .stat-card {
+            background-color: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: calc(var(--radius) - 2px);
+            padding: 1.5rem;
+            text-align: center;
         }
-        .sub-section {
-            background-color: #f0e6ff;
-            font-weight: 600;
-            color: #553c9a;
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: hsl(var(--primary));
+            margin-bottom: 0.5rem;
         }
-        .sub-sub-section {
-            background-color: #fef5e7;
-            font-weight: 600;
-            color: #c05621;
-        }
-        .section-name {
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 4px;
-        }
-        .purpose-design {
-            color: #4a5568;
-            font-size: 13px;
-        }
-        .content-list {
-            color: #2d3748;
-        }
-        .content-list ul {
-            margin: 0;
-            padding-left: 16px;
-        }
-        .content-list li {
-            margin-bottom: 4px;
+        
+        .stat-label {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.875rem;
+            font-weight: 500;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Music Besties: App Specification - Table Format</h1>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Section</th>
-                    <th>Purpose & Design</th>
-                    <th>Content/Functionality</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="page-section">
-                    <td><div class="section-name">1. Homepage</div></td>
-                    <td class="purpose-design">
-                        <strong>Purpose:</strong> To serve as a simple, single-page entry point to the app<br>
-                        <strong>Design:</strong> A clean, non-scrolling, single-page layout
-                    </td>
-                    <td class="content-list">
-                        <ul>
-                            <li>App Name: "Music Besties"</li>
-                            <li>Description: "The app for superfans to create, curate, and connect"</li>
-                            <li>Artist Section: "Current Artist" with "Taylor Swift" and proceed button</li>
-                            <li>"Add Your Own Artist" Button</li>
-                            <li>Floating Action Button (FAB): help button and menu</li>
-                        </ul>
-                    </td>
-                </tr>
+<body class="min-h-screen bg-background">
+    <button class="toggle-dark btn btn-secondary" onclick="toggleDark()">🌙</button>
+    
+    <div class="container mx-auto p-8 max-w-7xl">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-foreground mb-4">Music Besties</h1>
+            <p class="text-xl text-muted-foreground mb-2">App Specification - Table Format</p>
+            <p class="text-sm text-muted-foreground">Comprehensive workflow documentation with design system integration</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Main Sections</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Navigation Tabs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Album Grid</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Research Categories</div>
+            </div>
+        </div>
+
+        <div class="card p-6">
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Section</th>
+                            <th>Purpose & Design</th>
+                            <th>Content/Functionality</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">📱 Page</span>
+                                    <span class="font-semibold text-foreground">1. Homepage</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> To serve as a simple, single-page entry point to the app<br>
+                                <strong>Design:</strong> A clean, non-scrolling, single-page layout
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>App Name: "Music Besties"</li>
+                                    <li>Description: "The app for superfans to create, curate, and connect"</li>
+                                    <li>Artist Section: "Current Artist" with "Taylor Swift" and proceed button</li>
+                                    <li>"Add Your Own Artist" Button</li>
+                                    <li>Floating Action Button (FAB): help button and menu</li>
+                                </ul>
+                            </td>
+                        </tr>
                 
-                <tr class="page-section">
-                    <td><div class="section-name">2. Add Your Own Artist Page</div></td>
-                    <td class="purpose-design">
-                        <strong>Purpose:</strong> To collect user requests for new artists to be added to the platform<br>
-                        <strong>Design:</strong> Form-based page with explanation
-                    </td>
-                    <td class="content-list">
-                        <ul>
-                            <li>Brief explanation of the feature</li>
-                            <li>Form with artist name and optional comment fields</li>
-                            <li>Submit button</li>
-                        </ul>
-                    </td>
-                </tr>
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">📝 Form</span>
+                                    <span class="font-semibold text-foreground">2. Add Your Own Artist Page</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> To collect user requests for new artists to be added to the platform<br>
+                                <strong>Design:</strong> Form-based page with explanation
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>Brief explanation of the feature</li>
+                                    <li>Form with artist name and optional comment fields</li>
+                                    <li>Submit button</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">🎤 Artist</span>
+                                    <span class="font-semibold text-foreground">3. Taylor Swift Artist Page</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> To serve as a dedicated landing page for Taylor Swift<br>
+                                <strong>Design:</strong> Single-page layout with no scrolling. Back arrow in top-left
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>"Welcome!" greeting</li>
+                                    <li>Featured album section for "Life of a Showgirl" with countdown timer (counting down to October 3, 2025, 12:01 a.m. Eastern Time)</li>
+                                    <li>Direct shortcut to Showgirl Countdown prediction activity</li>
+                                    <li>Clear path to main discography view</li>
+                                </ul>
+                            </td>
+                        </tr>
                 
-                <tr class="page-section">
-                    <td><div class="section-name">3. Taylor Swift Artist Page</div></td>
-                    <td class="purpose-design">
-                        <strong>Purpose:</strong> To serve as a dedicated landing page for Taylor Swift<br>
-                        <strong>Design:</strong> Single-page layout with no scrolling. Back arrow in top-left
-                    </td>
-                    <td class="content-list">
-                        <ul>
-                            <li>"Welcome!" greeting</li>
-                            <li>Featured album section for "Life of a Showgirl" with countdown timer (counting down to October 3, 2025, 12:01 a.m. Eastern Time)</li>
-                            <li>Direct shortcut to Showgirl Countdown prediction activity</li>
-                            <li>Clear path to main discography view</li>
-                        </ul>
-                    </td>
-                </tr>
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">🎵 Core</span>
+                                    <span class="font-semibold text-foreground">4. Discography Page (Core Experience)</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> To provide comprehensive and interactive view of artist's discography as a research tool<br>
+                                <strong>Design:</strong> Persistent 12-Grid View with bottom navigation
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>Persistent 12-Grid View: Static grid of 12 albums, always visible</li>
+                                    <li>Album tiles: color, name, year, song count (no album art)</li>
+                                    <li>Bottom Navigation Bar: "Explore," "Rank," "Connect" tabs</li>
+                                    <li>12-album grid representing Taylor Swift's complete discography</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-sub">🔍 Tab</span>
+                                    <span class="font-semibold text-foreground">4.1 Explore Tab</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> To provide access to research and discovery features<br>
+                                <strong>Design:</strong> Sub-navigation bar with three research categories
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>Sub-navigation: "Co-writers," "Lyrics," "Audio"</li>
+                                </ul>
+                            </td>
+                        </tr>
                 
-                <tr class="page-section">
-                    <td><div class="section-name">4. Discography Page (Core Experience)</div></td>
-                    <td class="purpose-design">
-                        <strong>Purpose:</strong> To provide comprehensive and interactive view of artist's discography as a research tool<br>
-                        <strong>Design:</strong> Persistent 12-Grid View with bottom navigation
-                    </td>
-                    <td class="content-list">
-                        <ul>
-                            <li>Persistent 12-Grid View: Static grid of 12 albums, always visible</li>
-                            <li>Album tiles: color, name, year, song count (no album art)</li>
-                            <li>Bottom Navigation Bar: "Explore," "Rank," "Connect" tabs</li>
-                            <li>12-album grid representing Taylor Swift's complete discography</li>
-                        </ul>
-                    </td>
-                </tr>
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-sub-sub">✍️ Feature</span>
+                                    <span class="font-semibold text-foreground">4.1.1 Co-writers Sub-Tab</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> To filter albums based on individual songwriter contributions<br>
+                                <strong>Design:</strong> Sub-navigation with songwriter names and counts
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>Songwriter names ordered by total contributions (highest to lowest)</li>
+                                    <li>Display format: "Jack Antonoff (45)", "Aaron Dessner (32)", etc.</li>
+                                    <li>Grid shows songs per album for selected songwriter</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-sub-sub">📝 Feature</span>
+                                    <span class="font-semibold text-foreground">4.1.2 Lyrics Sub-Tab</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> To filter albums based on lyrical characteristics<br>
+                                <strong>Design:</strong> Sub-navigation with lyrical characteristics
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>Lyrical characteristics (word count, complexity, etc.)</li>
+                                    <li>Grid shows numerical values for selected characteristic</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-sub-sub">🎧 Feature</span>
+                                    <span class="font-semibold text-foreground">4.1.3 Audio Sub-Tab</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> To filter albums based on audio features<br>
+                                <strong>Design:</strong> Sub-navigation with audio features
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>Audio features (danceability, energy, acousticness)</li>
+                                    <li>Grid shows numerical values for selected feature</li>
+                                </ul>
+                            </td>
+                        </tr>
                 
-                <tr class="sub-section">
-                    <td><div class="section-name">4.1 Explore Tab</div></td>
-                    <td class="purpose-design">
-                        <strong>Purpose:</strong> To provide access to research and discovery features<br>
-                        <strong>Design:</strong> Sub-navigation bar with three research categories
-                    </td>
-                    <td class="content-list">
-                        <ul>
-                            <li>Sub-navigation: "Co-writers," "Lyrics," "Audio"</li>
-                        </ul>
-                    </td>
-                </tr>
-                
-                <tr class="sub-sub-section">
-                    <td><div class="section-name">4.1.1 Co-writers Sub-Tab</div></td>
-                    <td class="purpose-design">
-                        <strong>Purpose:</strong> To filter albums based on individual songwriter contributions<br>
-                        <strong>Design:</strong> Sub-navigation with songwriter names and counts
-                    </td>
-                    <td class="content-list">
-                        <ul>
-                            <li>Songwriter names ordered by total contributions (highest to lowest)</li>
-                            <li>Display format: "Jack Antonoff (45)", "Aaron Dessner (32)", etc.</li>
-                            <li>Grid shows songs per album for selected songwriter</li>
-                        </ul>
-                    </td>
-                </tr>
-                
-                <tr class="sub-sub-section">
-                    <td><div class="section-name">4.1.2 Lyrics Sub-Tab</div></td>
-                    <td class="purpose-design">
-                        <strong>Purpose:</strong> To filter albums based on lyrical characteristics<br>
-                        <strong>Design:</strong> Sub-navigation with lyrical characteristics
-                    </td>
-                    <td class="content-list">
-                        <ul>
-                            <li>Lyrical characteristics (word count, complexity, etc.)</li>
-                            <li>Grid shows numerical values for selected characteristic</li>
-                        </ul>
-                    </td>
-                </tr>
-                
-                <tr class="sub-sub-section">
-                    <td><div class="section-name">4.1.3 Audio Sub-Tab</div></td>
-                    <td class="purpose-design">
-                        <strong>Purpose:</strong> To filter albums based on audio features<br>
-                        <strong>Design:</strong> Sub-navigation with audio features
-                    </td>
-                    <td class="content-list">
-                        <ul>
-                            <li>Audio features (danceability, energy, acousticness)</li>
-                            <li>Grid shows numerical values for selected feature</li>
-                        </ul>
-                    </td>
-                </tr>
-                
-                <tr class="sub-section">
-                    <td><div class="section-name">4.2 Rank Tab</div></td>
-                    <td class="purpose-design">
-                        <strong>Purpose:</strong> To provide access to personal ranking and prediction features<br>
-                        <strong>Design:</strong> Sub-navigation with ranking activities
-                    </td>
-                    <td class="content-list">
-                        <ul>
-                            <li>Ranking-related activities (to be defined in future iterations)</li>
-                        </ul>
-                    </td>
-                </tr>
-                
-                <tr class="sub-section">
-                    <td><div class="section-name">4.3 Connect Tab</div></td>
-                    <td class="purpose-design">
-                        <strong>Purpose:</strong> To provide access to all fan engagement activities and community features<br>
-                        <strong>Design:</strong> Sub-navigation with community activity categories
-                    </td>
-                    <td class="content-list">
-                        <ul>
-                            <li>"Showgirl Countdown" (including prediction activity from artist page)</li>
-                            <li>"Eras Tour Reunion"</li>
-                            <li>"The Travis Era"</li>
-                            <li>"Arcade"</li>
-                            <li>"Mix and Mingle"</li>
-                        </ul>
-                    </td>
-                </tr>
-                
-                <tr class="page-section">
-                    <td><div class="section-name">5. Implementation Principles</div></td>
-                    <td class="purpose-design">
-                        <strong>Purpose:</strong> To ensure clean, maintainable, and scalable codebase<br>
-                        <strong>Design:</strong> DRY and KISS principles applied throughout
-                    </td>
-                    <td class="content-list">
-                        <ul>
-                            <li>Hierarchy of Tabs: Main Tabs → List of Characteristics → 12-Album Grid → Song List</li>
-                            <li>Reusability: Common components for 12-grid, list items, navigation</li>
-                            <li>Simplicity: Core design simple, additional info revealed on request</li>
-                            <li>Persistence: Bottom navigation bar and FAB persistent across all screens</li>
-                        </ul>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-sub">📊 Tab</span>
+                                    <span class="font-semibold text-foreground">4.2 Rank Tab</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> To provide access to personal ranking and prediction features<br>
+                                <strong>Design:</strong> Sub-navigation with ranking activities
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>Ranking-related activities (to be defined in future iterations)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-sub">🤝 Tab</span>
+                                    <span class="font-semibold text-foreground">4.3 Connect Tab</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> To provide access to all fan engagement activities and community features<br>
+                                <strong>Design:</strong> Sub-navigation with community activity categories
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>"Showgirl Countdown" (including prediction activity from artist page)</li>
+                                    <li>"Eras Tour Reunion"</li>
+                                    <li>"The Travis Era"</li>
+                                    <li>"Arcade"</li>
+                                    <li>"Mix and Mingle"</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="section-badge section-badge-page">⚙️ System</span>
+                                    <span class="font-semibold text-foreground">5. Implementation Principles</span>
+                                </div>
+                            </td>
+                            <td class="purpose-text">
+                                <strong>Purpose:</strong> To ensure clean, maintainable, and scalable codebase<br>
+                                <strong>Design:</strong> DRY and KISS principles applied throughout
+                            </td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>Hierarchy of Tabs: Main Tabs → List of Characteristics → 12-Album Grid → Song List</li>
+                                    <li>Reusability: Common components for 12-grid, list items, navigation</li>
+                                    <li>Simplicity: Core design simple, additional info revealed on request</li>
+                                    <li>Persistence: Bottom navigation bar and FAB persistent across all screens</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-sm text-muted-foreground">
+            <p>Built with shadcn/ui design system • Music Besties App Specification</p>
+        </div>
     </div>
+
+    <script>
+        function toggleDark() {
+            document.documentElement.classList.toggle('dark');
+            const btn = document.querySelector('.toggle-dark');
+            btn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+        }
+    </script>
 </body>
 </html>
