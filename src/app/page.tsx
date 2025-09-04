@@ -1,5 +1,23 @@
 import { supabase } from '@/lib/supabase'
 
+interface Song {
+  id: string | number;
+  title?: string;
+  name?: string;
+  song_title?: string;
+  track_number?: number;
+  trackNumber?: number;
+  album_id?: string | number;
+  duration?: number;
+  length?: number;
+  genre?: string;
+  year?: number;
+  artist?: string;
+  lyrics?: string | boolean;
+  explicit?: boolean;
+  [key: string]: unknown;
+}
+
 export default async function HomePage() {
   // Fetch all albums
   const { data: albums, error: albumsError } = await supabase
@@ -246,7 +264,7 @@ export default async function HomePage() {
                   <div className="p-6">
                     <h3 className="text-lg font-semibold text-gray-800 mb-4">Track Listing</h3>
                                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                       {albumSongs.map((song) => (
+                       {albumSongs.map((song: Song) => (
                          <div key={song.id} className="bg-gray-50 rounded-lg p-3 border-l-4 border-gray-200">
                            <div className="flex items-start gap-3">
                              <span className="text-sm font-mono text-gray-500 w-8 text-center mt-1">
