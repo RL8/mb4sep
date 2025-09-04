@@ -1,0 +1,41 @@
+# MB Live Development Plan
+
+## Overview
+Plan for 4 September - Make MB live
+
+## Development Approach
+
+### Phase 1: Frontend Definition
+- Define each page from user's viewpoint
+- Create HTML mockup/prototype
+- Outline complete user journey
+- Fill in step-by-step
+
+### Phase 2: Backend Setup
+- App setup (GitHub, Vercel, database)
+- Verify database connectivity
+- Add payment gateway with tests
+- Plan future functionality
+
+## Paper Trail Strategy
+
+Two evolving documents will track development:
+- **Frontend paper trail** - User journey and interface evolution
+- **Backend paper trail** - Service connections and functionality
+
+## Next Steps
+
+### Frontend
+- Complete user journey outline
+- Define remaining app routes
+- Step-by-step implementation
+
+### Backend
+- Independent service testing
+- Payment gateway integration
+- Future functionality planning
+- Complete backend user journey
+
+## Tools
+Using Gemini for text dictation and canvas visualization of evolving paper trails.
+

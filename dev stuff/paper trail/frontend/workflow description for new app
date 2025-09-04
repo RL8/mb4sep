@@ -34,7 +34,7 @@ This document outlines the user flow and functional requirements for the "Music 
 
 **Content:**
 - A simple "Welcome!" greeting.
-- A featured, clickable section for a new album release with a countdown timer and a call to action to engage in album-related activities.
+- A featured, clickable section for the new album "Life of a Showgirl" with a countdown timer counting down to October 3, 2025, 12:01 a.m. Eastern Time (USA). This section serves as a direct shortcut to the Showgirl Countdown activities, specifically the prediction activity where users can predict where "Life of a Showgirl" will rank in their personal album rankings.
 - A clear path to the main discography view.
 
 ## 4. Discography Page (The Core Experience)
@@ -45,38 +45,71 @@ This document outlines the user flow and functional requirements for the "Music 
 - **Persistent 12-Grid View:** The main view of this page is a static grid of 12 albums, representing Taylor Swift's complete discography. This grid remains visible at all times.
 - Each album tile displays its respective color, album name, year of release, and number of songs. No album art is used.
 - **Bottom Navigation Bar:** A sticky bottom navigation bar provides a mechanism for filtering the data displayed on the album grids. It contains three main tabs:
+  - "Explore"
+  - "Rank"
+  - "Connect"
+
+### 4.1 The "Explore" Tab
+
+**Functionality:** This tab provides access to the research and discovery features of the discography.
+
+**User Flow:**
+- **Layer 1:** User taps the "Explore" tab.
+- **Layer 2:** A sub-navigation bar appears with three research categories:
   - "Co-writers"
-  - "Lyrics"
+  - "Lyrics" 
   - "Audio"
 
-### 4.1 The "Co-writers" Tab
+#### 4.1.1 The "Co-writers" Sub-Tab
 
-**Functionality:** When this tab is active, the 12-grid view provides a summary of co-writer information for each album.
-
-**User Flow:**
-- **Layer 1:** User taps the "Co-writers" tab.
-- **Layer 2:** The 12 album grids remain visible, and the number of co-writers is displayed for each album.
-- **Drill-Down:** Tapping on an album from this view transitions to a song list. This list displays each song's title with the names of its co-writers.
-
-### 4.2 The "Lyrics" Tab
-
-**Functionality:** This tab acts as a filter to view albums based on lyrical characteristics.
+**Functionality:** This sub-tab acts as a filter to view albums based on individual songwriter contributions.
 
 **User Flow:**
-- **Layer 1:** User taps the "Lyrics" tab.
+- **Layer 1:** User taps the "Co-writers" sub-tab.
+- **Layer 2:** A sub-navigation bar appears with a list of songwriter names, ordered by total song contributions (highest to lowest), displaying both name and total count (e.g., "Jack Antonoff (45)", "Aaron Dessner (32)", "Max Martin (18)").
+- **Drill-Down:** Tapping on a songwriter name displays the number of songs that songwriter worked on for each of the 12 album grids.
+- **Further Drill-Down:** Tapping on an album displays a song list showing which specific songs that songwriter worked on.
+
+#### 4.1.2 The "Lyrics" Sub-Tab
+
+**Functionality:** This sub-tab acts as a filter to view albums based on lyrical characteristics.
+
+**User Flow:**
+- **Layer 1:** User taps the "Lyrics" sub-tab.
 - **Layer 2:** An additional sub-navigation bar appears, listing lyrical characteristics (e.g., word count, lyrical complexity, etc.).
 - **Drill-Down:** Tapping a specific lyrical characteristic reveals a numerical value for that characteristic on each of the 12 album grids.
 - **Further Drill-Down:** Tapping on an album displays a song list where each song shows the corresponding numerical value for that lyrical characteristic.
 
-### 4.3 The "Audio" Tab
+#### 4.1.3 The "Audio" Sub-Tab
 
-**Functionality:** This tab acts as a filter to view albums based on their audio features.
+**Functionality:** This sub-tab acts as a filter to view albums based on their audio features.
 
 **User Flow:**
-- **Layer 1:** User taps the "Audio" tab.
+- **Layer 1:** User taps the "Audio" sub-tab.
 - **Layer 2:** A sub-navigation bar appears with a list of audio features (e.g., danceability, energy, acousticness).
 - **Drill-Down:** Tapping on an audio feature displays the numerical value for that feature on each of the 12 album grids.
 - **Further Drill-Down:** Tapping on an album displays a song list where each song shows the corresponding numerical value for that audio feature.
+
+### 4.2 The "Rank" Tab
+
+**Functionality:** This tab provides access to personal ranking and prediction features.
+
+**User Flow:**
+- **Layer 1:** User taps the "Rank" tab.
+- **Layer 2:** A sub-navigation bar appears with ranking-related activities (to be defined in future iterations).
+
+### 4.3 The "Connect" Tab
+
+**Functionality:** This tab provides access to all fan engagement activities and community features.
+
+**User Flow:**
+- **Layer 1:** User taps the "Connect" tab.
+- **Layer 2:** A sub-navigation bar appears with community activity categories:
+  - "Showgirl Countdown" (including the prediction activity accessible from the Taylor Swift artist page)
+  - "Eras Tour Reunion"
+  - "The Travis Era"
+  - "Arcade"
+  - "Mix and Mingle"
 
 ## 5. Implementation Principles
 

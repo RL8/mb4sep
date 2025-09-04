@@ -1,0 +1,49 @@
+### Backend Setup overview
+- ✅ App setup (GitHub, Vercel, database, Square)
+- ✅ Verify database connectivity
+- ⏳ Add payment gateway with tests
+- ✅ Plan future functionality
+
+### Frontend Planning - COMPLETED ✅
+- ✅ Complete app workflow specification
+- ✅ Create comprehensive user flow documentation
+- ✅ Design three-tier navigation structure (Explore/Rank/Connect)
+- ✅ Integrate monetization and activities strategy
+- ✅ Create professional HTML table format for specifications
+- ✅ Build interactive flowchart diagram
+- ✅ Define countdown timer integration with Showgirl Countdown activities
+
+### Next Steps - Frontend Development
+- [ ] Set up Next.js project structure
+- [ ] Implement shadcn/ui components
+- [ ] Create responsive 12-album grid component
+- [ ] Build three-tier navigation system
+- [ ] Implement countdown timer component
+- [ ] Create songwriter data visualization components
+
+### Backend Infrastructure
+
+#### GitHub
+- [ ] Check that the remote repo is set up and working
+- [ ] Check the relevant scripts related to it are also working
+- [ ] Make sure we have access to both github cli and api within this app
+
+#### Vercel
+- [ ] Vercel CLI connection should be working and accessible
+- [ ] Make sure the auto deploy is set up and connected properly
+- [ ] Credentials - make sure this one has all the credentials it needs
+
+#### Supabase
+- [ ] The retrieval of information from the database seems to be working but make sure you're accessing all the tables by being able to display them on the supabase test page
+- [ ] Confirm the correct album colours are recorded in this database
+- [ ] Make sure the current app can actually make posts into the database
+- [ ] We also need to think about the setup with user authentication
+- [ ] **NEW**: Set up database schema for songwriter data (co-writers, lyrics, audio features)
+- [ ] **NEW**: Create tables for community activities (Showgirl Countdown, Eras Tour, etc.)
+
+#### Square Payments
+- [ ] Connect to private square MCP server and test that the basic functionality works as expected
+- [ ] **NEW**: Implement freemium model payment flows
+- [ ] **NEW**: Set up special offers (Showgirl Special, Engagement Special)
+
+

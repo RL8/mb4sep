@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Besties - App Flow</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .mermaid {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Music Besties - App User Flow</h1>
+        <div class="mermaid">
+            flowchart TD
+                A[Homepage] --> B[Add Your Own Artist]
+                A --> C[Taylor Swift Artist Page]
+                B --> D[Artist Request Form]
+                D --> E[Submit & Confirmation]
+                E --> A
+                C --> F[Discography Page]
+                F --> G[Explore Tab]
+                F --> H[Rank Tab]
+                F --> I[Connect Tab]
+                
+                G --> J[Sub-navigation:<br/>Co-writers | Lyrics | Audio]
+                J --> K[Co-writers Sub-Tab]
+                J --> L[Lyrics Sub-Tab]
+                J --> M[Audio Sub-Tab]
+                
+                K --> N[Songwriter Names<br/>with Total Counts]
+                N --> O[Select Songwriter<br/>e.g. Jack Antonoff 45]
+                O --> P[12-Album Grid<br/>Shows Songs per Album]
+                P --> Q[Tap Album → Song List<br/>with Specific Songs]
+                
+                L --> R[Lyrical Characteristics]
+                R --> S[Select Characteristic<br/>e.g. Word Count]
+                S --> T[12-Album Grid<br/>Shows Values per Album]
+                T --> U[Tap Album → Song List<br/>with Individual Values]
+                
+                M --> V[Audio Features]
+                V --> W[Select Feature<br/>e.g. Danceability]
+                W --> X[12-Album Grid<br/>Shows Values per Album]
+                X --> Y[Tap Album → Song List<br/>with Individual Values]
+                
+                I --> Z[Community Activities:<br/>Showgirl Countdown |<br/>Eras Tour Reunion |<br/>The Travis Era |<br/>Arcade | Mix & Mingle]
+                Z --> AA[Showgirl Countdown<br/>Prediction Activity]
+                AA --> BB[Predict LOAS Ranking<br/>Mark as Accurate/Inaccurate]
+                
+                Q --> F
+                U --> F
+                Y --> F
+                BB --> F
+                
+                style A fill:#e1f5fe
+                style F fill:#f3e5f5
+                style G fill:#fff3e0
+                style H fill:#e8f5e8
+                style I fill:#fce4ec
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true
+            }
+        });
+    </script>
+</body>
+</html>
