@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Besties - App Prototype</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Homepage -->
+    <div id="homepage" class="page active">
+        <div class="container">
+            <h1 class="app-title">Music Besties</h1>
+            <p class="tagline">The app for superfans to create, curate, and connect.</p>
+            
+            <div class="artist-section">
+                <h2>Current Artist</h2>
+                <div class="artist-card">
+                    <div class="artist-avatar">TS</div>
+                    <h3>Taylor Swift</h3>
+                    <button class="btn primary" onclick="showPage('artist-page')">View Artist</button>
+                </div>
+            </div>
+            
+            <button class="btn secondary" onclick="showPage('add-artist-page')">Add Your Own Artist</button>
+        </div>
+        
+        <!-- Floating Action Button -->
+        <div class="fab" onclick="toggleMenu()">
+            <span>?</span>
+            <div class="fab-menu" id="fab-menu">
+                <div class="menu-item">Help</div>
+                <div class="menu-item">About</div>
+                <div class="menu-item">Settings</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Your Own Artist Page -->
+    <div id="add-artist-page" class="page">
+        <div class="container">
+            <button class="back-btn" onclick="showPage('homepage')">← Back</button>
+            <h2>Add Your Own Artist</h2>
+            <p class="explanation">Request a new artist to be added to our platform. We'll review your suggestion and add them if they meet our criteria.</p>
+            
+            <form class="artist-form" onsubmit="submitArtist(event)">
+                <div class="form-group">
+                    <label for="artist-name">Artist Name</label>
+                    <input type="text" id="artist-name" required placeholder="Enter artist name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="artist-comment">Comment (Optional)</label>
+                    <textarea id="artist-comment" placeholder="Why should we add this artist?"></textarea>
+                </div>
+                
+                <button type="submit" class="btn primary">Submit Request</button>
+            </form>
+        </div>
+        
+        <div class="fab" onclick="toggleMenu()">
+            <span>?</span>
+            <div class="fab-menu" id="fab-menu-2">
+                <div class="menu-item">Help</div>
+                <div class="menu-item">About</div>
+                <div class="menu-item">Settings</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Taylor Swift Artist Page -->
+    <div id="artist-page" class="page">
+        <div class="container">
+            <button class="back-btn" onclick="showPage('homepage')">← Back</button>
+            <h2>Welcome!</h2>
+            
+            <div class="featured-release">
+                <h3>New Release Coming Soon!</h3>
+                <div class="countdown">
+                    <div class="countdown-item">
+                        <span class="number">14</span>
+                        <span class="label">Days</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="number">08</span>
+                        <span class="label">Hours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="number">32</span>
+                        <span class="label">Minutes</span>
+                    </div>
+                </div>
+                <button class="btn primary" onclick="showPage('discography-page')">Explore Discography</button>
+            </div>
+        </div>
+        
+        <div class="fab" onclick="toggleMenu()">
+            <span>?</span>
+            <div class="fab-menu" id="fab-menu-3">
+                <div class="menu-item">Help</div>
+                <div class="menu-item">About</div>
+                <div class="menu-item">Settings</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Discography Page -->
+    <div id="discography-page" class="page">
+        <div class="container">
+            <button class="back-btn" onclick="showPage('artist-page')">← Back</button>
+            <h2>Discography</h2>
+            
+            <!-- 12-Album Grid -->
+            <div class="album-grid">
+                <div class="album-tile" data-album="debut">
+                    <div class="album-color" style="background: #FF6B6B;"></div>
+                    <h4>Taylor Swift</h4>
+                    <p class="year">2006</p>
+                    <p class="songs">11 songs</p>
+                </div>
+                <div class="album-tile" data-album="fearless">
+                    <div class="album-color" style="background: #FFD93D;"></div>
+                    <h4>Fearless</h4>
+                    <p class="year">2008</p>
+                    <p class="songs">13 songs</p>
+                </div>
+                <div class="album-tile" data-album="speak-now">
+                    <div class="album-color" style="background: #6BCF7F;"></div>
+                    <h4>Speak Now</h4>
+                    <p class="year">2010</p>
+                    <p class="songs">14 songs</p>
+                </div>
+                <div class="album-tile" data-album="red">
+                    <div class="album-color" style="background: #FF8E8E;"></div>
+                    <h4>Red</h4>
+                    <p class="year">2012</p>
+                    <p class="songs">16 songs</p>
+                </div>
+                <div class="album-tile" data-album="1989">
+                    <div class="album-color" style="background: #74C0FC;"></div>
+                    <h4>1989</h4>
+                    <p class="year">2014</p>
+                    <p class="songs">13 songs</p>
+                </div>
+                <div class="album-tile" data-album="reputation">
+                    <div class="album-color" style="background: #333333;"></div>
+                    <h4>Reputation</h4>
+                    <p class="year">2017</p>
+                    <p class="songs">15 songs</p>
+                </div>
+                <div class="album-tile" data-album="lover">
+                    <div class="album-color" style="background: #FFB3D9;"></div>
+                    <h4>Lover</h4>
+                    <p class="year">2019</p>
+                    <p class="songs">18 songs</p>
+                </div>
+                <div class="album-tile" data-album="folklore">
+                    <div class="album-color" style="background: #8B7355;"></div>
+                    <h4>Folklore</h4>
+                    <p class="year">2020</p>
+                    <p class="songs">16 songs</p>
+                </div>
+                <div class="album-tile" data-album="evermore">
+                    <div class="album-color" style="background: #A0522D;"></div>
+                    <h4>Evermore</h4>
+                    <p class="year">2020</p>
+                    <p class="songs">15 songs</p>
+                </div>
+                <div class="album-tile" data-album="midnights">
+                    <div class="album-color" style="background: #4A4A4A;"></div>
+                    <h4>Midnights</h4>
+                    <p class="year">2022</p>
+                    <p class="songs">13 songs</p>
+                </div>
+                <div class="album-tile" data-album="tortured-poets">
+                    <div class="album-color" style="background: #9370DB;"></div>
+                    <h4>The Tortured Poets Department</h4>
+                    <p class="year">2024</p>
+                    <p class="songs">16 songs</p>
+                </div>
+                <div class="album-tile" data-album="taylor-version">
+                    <div class="album-color" style="background: #FF69B4;"></div>
+                    <h4>Taylor's Version</h4>
+                    <p class="year">2021-2024</p>
+                    <p class="songs">Varies</p>
+                </div>
+            </div>
+            
+            <!-- Bottom Navigation Tabs -->
+            <div class="bottom-nav">
+                <div class="tab active" data-tab="co-writers" onclick="switchTab('co-writers')">
+                    Co-writers
+                </div>
+                <div class="tab" data-tab="lyrics" onclick="switchTab('lyrics')">
+                    Lyrics
+                </div>
+                <div class="tab" data-tab="audio" onclick="switchTab('audio')">
+                    Audio
+                </div>
+            </div>
+            
+            <!-- Sub-navigation for Lyrics and Audio tabs -->
+            <div class="sub-nav" id="sub-nav" style="display: none;">
+                <div class="sub-tab active" data-sub="word-count">Word Count</div>
+                <div class="sub-tab" data-sub="complexity">Complexity</div>
+                <div class="sub-tab" data-sub="themes">Themes</div>
+            </div>
+        </div>
+        
+        <div class="fab" onclick="toggleMenu()">
+            <span>?</span>
+            <div class="fab-menu" id="fab-menu-4">
+                <div class="menu-item">Help</div>
+                <div class="menu-item">About</div>
+                <div class="menu-item">Settings</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Song List Modal -->
+    <div id="song-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Album Songs</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Song list will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="success-message" class="success-message">
+        Artist request submitted successfully!
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

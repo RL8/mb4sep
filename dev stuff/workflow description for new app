@@ -1,0 +1,86 @@
+# Music Besties: App Specification
+
+This document outlines the user flow and functional requirements for the "Music Besties" mobile web application. The core focus of this app is to serve as a high-brow research tool for music superfans, providing a deep dive into an artist's discography and related musical data. The design principles of **DRY** (Don't Repeat Yourself) and **KISS** (Keep It Simple, Stupid) will be applied throughout the development to ensure a clean, maintainable, and scalable codebase.
+
+## 1. Homepage
+
+**Purpose:** To serve as a simple, single-page entry point to the app.
+
+**Design:** A clean, non-scrolling, single-page layout.
+
+**Content:**
+- **App Name:** "Music Besties"
+- **Description:** A concise tagline, such as "The app for superfans to create, curate, and connect."
+- **Artist Section:** A dedicated section titled "Current Artist" with the name "Taylor Swift" and a button to proceed to her page.
+- **"Add Your Own Artist" Button:** A prominent button allowing users to request a new artist.
+- **Floating Action Button (FAB):** A floating button that appears on all pages, serving as a help button and a menu.
+
+## 2. "Add Your Own Artist" Page
+
+**Purpose:** To collect user requests for new artists to be added to the platform.
+
+**User Flow:**
+1. User clicks "Add Your Own Artist" from the Homepage.
+2. The page displays a brief explanation of the feature.
+3. A simple form is presented with fields for the artist's name and an optional comment.
+4. Clicking the "Submit" button triggers a floating message confirming the submission.
+5. The user is then automatically redirected back to the Homepage.
+
+## 3. Taylor Swift Artist Page
+
+**Purpose:** To serve as a dedicated landing page for a specific artist, in this case, Taylor Swift.
+
+**Design:** A single-page layout with no scrolling. A back arrow in the top-left corner allows navigation back to the Homepage.
+
+**Content:**
+- A simple "Welcome!" greeting.
+- A featured, clickable section for a new album release with a countdown timer and a call to action to engage in album-related activities.
+- A clear path to the main discography view.
+
+## 4. Discography Page (The Core Experience)
+
+**Purpose:** To provide a comprehensive and interactive view of the artist's discography as a research tool.
+
+**Design:**
+- **Persistent 12-Grid View:** The main view of this page is a static grid of 12 albums, representing Taylor Swift's complete discography. This grid remains visible at all times.
+- Each album tile displays its respective color, album name, year of release, and number of songs. No album art is used.
+- **Bottom Navigation Bar:** A sticky bottom navigation bar provides a mechanism for filtering the data displayed on the album grids. It contains three main tabs:
+  - "Co-writers"
+  - "Lyrics"
+  - "Audio"
+
+### 4.1 The "Co-writers" Tab
+
+**Functionality:** When this tab is active, the 12-grid view provides a summary of co-writer information for each album.
+
+**User Flow:**
+- **Layer 1:** User taps the "Co-writers" tab.
+- **Layer 2:** The 12 album grids remain visible, and the number of co-writers is displayed for each album.
+- **Drill-Down:** Tapping on an album from this view transitions to a song list. This list displays each song's title with the names of its co-writers.
+
+### 4.2 The "Lyrics" Tab
+
+**Functionality:** This tab acts as a filter to view albums based on lyrical characteristics.
+
+**User Flow:**
+- **Layer 1:** User taps the "Lyrics" tab.
+- **Layer 2:** An additional sub-navigation bar appears, listing lyrical characteristics (e.g., word count, lyrical complexity, etc.).
+- **Drill-Down:** Tapping a specific lyrical characteristic reveals a numerical value for that characteristic on each of the 12 album grids.
+- **Further Drill-Down:** Tapping on an album displays a song list where each song shows the corresponding numerical value for that lyrical characteristic.
+
+### 4.3 The "Audio" Tab
+
+**Functionality:** This tab acts as a filter to view albums based on their audio features.
+
+**User Flow:**
+- **Layer 1:** User taps the "Audio" tab.
+- **Layer 2:** A sub-navigation bar appears with a list of audio features (e.g., danceability, energy, acousticness).
+- **Drill-Down:** Tapping on an audio feature displays the numerical value for that feature on each of the 12 album grids.
+- **Further Drill-Down:** Tapping on an album displays a song list where each song shows the corresponding numerical value for that audio feature.
+
+## 5. Implementation Principles
+
+- **Hierarchy of Tabs:** The app will use a clear hierarchy of tabs and views: Main Tabs → List of Characteristics → 12-Album Grid → Song List.
+- **Reusability:** Common components for the 12-grid, list items, and navigation will be created to follow the DRY principle.
+- **Simplicity:** The core design remains simple (KISS principle), with additional information revealed only when actively requested by the user.
+- **Persistence:** The bottom navigation bar and floating action button will be persistent across all screens to maintain a consistent user experience.
