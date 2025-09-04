@@ -103,53 +103,124 @@
             <p class="text-sm text-muted-foreground">Interactive flowchart showing the complete user journey</p>
         </div>
 
-        <div class="card p-6">
-            <div class="mermaid">
-            flowchart TD
-                A[Homepage] --> B[Add Your Own Artist]
-                A --> C[Taylor Swift Artist Page]
-                B --> D[Artist Request Form]
-                D --> E[Submit & Confirmation]
-                E --> A
-                C --> F[Discography Page]
-                F --> G[Explore Tab]
-                F --> H[Rank Tab]
-                F --> I[Connect Tab]
-                
-                G --> J["Sub-navigation: Co-writers | Lyrics | Audio"]
-                J --> K[Co-writers Sub-Tab]
-                J --> L[Lyrics Sub-Tab]
-                J --> M[Audio Sub-Tab]
-                
-                K --> N["Songwriter Names with Total Counts"]
-                N --> O["Select Songwriter (e.g. Jack Antonoff 45)"]
-                O --> P["12-Album Grid Shows Songs per Album"]
-                P --> Q["Tap Album → Song List with Specific Songs"]
-                
-                L --> R[Lyrical Characteristics]
-                R --> S["Select Characteristic (e.g. Word Count)"]
-                S --> T["12-Album Grid Shows Values per Album"]
-                T --> U["Tap Album → Song List with Individual Values"]
-                
-                M --> V[Audio Features]
-                V --> W["Select Feature (e.g. Danceability)"]
-                W --> X["12-Album Grid Shows Values per Album"]
-                X --> Y["Tap Album → Song List with Individual Values"]
-                
-                I --> Z["Community Activities: Showgirl Countdown | Eras Tour Reunion | The Travis Era | Arcade | Mix & Mingle"]
-                Z --> AA["Showgirl Countdown Prediction Activity"]
-                AA --> BB["Predict Life of a Showgirl Ranking - Mark as Accurate/Inaccurate"]
-                
-                Q --> F
-                U --> F
-                Y --> F
-                BB --> F
-                
-                style A fill:#e1f5fe
-                style F fill:#f3e5f5
-                style G fill:#fff3e0
-                style H fill:#e8f5e8
-                style I fill:#fce4ec
+        <!-- Navigation Tabs -->
+        <div class="flex justify-center mb-6">
+            <div class="bg-muted rounded-lg p-1 flex gap-1">
+                <button class="btn btn-primary px-4 py-2" onclick="showDiagram('main')">Main Flow</button>
+                <button class="btn btn-secondary px-4 py-2" onclick="showDiagram('explore')">Explore Tab</button>
+                <button class="btn btn-secondary px-4 py-2" onclick="showDiagram('rank')">Rank Tab</button>
+                <button class="btn btn-secondary px-4 py-2" onclick="showDiagram('connect')">Connect Tab</button>
+            </div>
+        </div>
+
+        <!-- Diagram 1: Main App Flow -->
+        <div id="diagram-main" class="diagram-container">
+            <div class="card p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Main App Flow</h2>
+                <div class="mermaid">
+                flowchart TD
+                    A[Homepage] --> B[Add Your Own Artist]
+                    A --> C[Taylor Swift Artist Page]
+                    B --> D[Artist Request Form]
+                    D --> E[Submit & Confirmation]
+                    E --> A
+                    C --> F[Discography Page]
+                    F --> G[Explore Tab]
+                    F --> H[Rank Tab]
+                    F --> I[Connect Tab]
+                    
+                    style A fill:#e1f5fe
+                    style F fill:#f3e5f5
+                    style G fill:#fff3e0
+                    style H fill:#e8f5e8
+                    style I fill:#fce4ec
+                </div>
+            </div>
+        </div>
+
+        <!-- Diagram 2: Explore Tab Flow -->
+        <div id="diagram-explore" class="diagram-container hidden">
+            <div class="card p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Explore Tab - Research Features</h2>
+                <div class="mermaid">
+                flowchart TD
+                    A[Explore Tab] --> B[Co-writers Sub-Tab]
+                    A --> C[Lyrics Sub-Tab]
+                    A --> D[Audio Sub-Tab]
+                    
+                    B --> E["Songwriter Names with Total Counts"]
+                    E --> F["Select Songwriter (e.g. Jack Antonoff 45)"]
+                    F --> G["12-Album Grid Shows Songs per Album"]
+                    G --> H["Tap Album → Song List with Specific Songs"]
+                    
+                    C --> I[Lyrical Characteristics]
+                    I --> J["Select Characteristic (e.g. Word Count)"]
+                    J --> K["12-Album Grid Shows Values per Album"]
+                    K --> L["Tap Album → Song List with Individual Values"]
+                    
+                    D --> M[Audio Features]
+                    M --> N["Select Feature (e.g. Danceability)"]
+                    N --> O["12-Album Grid Shows Values per Album"]
+                    O --> P["Tap Album → Song List with Individual Values"]
+                    
+                    H --> Q[Back to Discography]
+                    L --> Q
+                    P --> Q
+                    
+                    style A fill:#fff3e0
+                    style B fill:#e3f2fd
+                    style C fill:#f3e5f5
+                    style D fill:#e8f5e8
+                </div>
+            </div>
+        </div>
+
+        <!-- Diagram 3: Rank Tab Flow -->
+        <div id="diagram-rank" class="diagram-container hidden">
+            <div class="card p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Rank Tab - Personal Rankings</h2>
+                <div class="mermaid">
+                flowchart TD
+                    A[Rank Tab] --> B[Future Ranking Features]
+                    B --> C["To be defined in future iterations"]
+                    C --> D[Back to Discography]
+                    
+                    style A fill:#e8f5e8
+                    style B fill:#f0f0f0
+                    style C fill:#f0f0f0
+                </div>
+            </div>
+        </div>
+
+        <!-- Diagram 4: Connect Tab Flow -->
+        <div id="diagram-connect" class="diagram-container hidden">
+            <div class="card p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Connect Tab - Community Activities</h2>
+                <div class="mermaid">
+                flowchart TD
+                    A[Connect Tab] --> B[Showgirl Countdown]
+                    A --> C[Eras Tour Reunion]
+                    A --> D[The Travis Era]
+                    A --> E[Arcade]
+                    A --> F[Mix and Mingle]
+                    
+                    B --> G[Prediction Activity]
+                    G --> H["Predict Life of a Showgirl Ranking"]
+                    H --> I["Mark as Accurate/Inaccurate"]
+                    I --> J[Back to Discography]
+                    
+                    C --> J
+                    D --> J
+                    E --> J
+                    F --> J
+                    
+                    style A fill:#fce4ec
+                    style B fill:#e1f5fe
+                    style C fill:#f3e5f5
+                    style D fill:#fff3e0
+                    style E fill:#e8f5e8
+                    style F fill:#f0f4c3
+                </div>
             </div>
         </div>
 
@@ -164,6 +235,29 @@
             document.documentElement.classList.toggle('dark');
             const btn = document.querySelector('.toggle-dark');
             btn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+        }
+
+        function showDiagram(diagramType) {
+            // Hide all diagrams
+            const diagrams = document.querySelectorAll('.diagram-container');
+            diagrams.forEach(diagram => diagram.classList.add('hidden'));
+            
+            // Show selected diagram
+            document.getElementById(`diagram-${diagramType}`).classList.remove('hidden');
+            
+            // Update button states
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-secondary');
+            });
+            
+            // Highlight active button
+            event.target.classList.remove('btn-secondary');
+            event.target.classList.add('btn-primary');
+            
+            // Re-render Mermaid diagrams
+            mermaid.init();
         }
 
         mermaid.initialize({
