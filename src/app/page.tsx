@@ -246,7 +246,7 @@ export default async function HomePage() {
                   <div className="p-6">
                     <h3 className="text-lg font-semibold text-gray-800 mb-4">Track Listing</h3>
                                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                       {albumSongs.map((song: Record<string, unknown>) => (
+                       {albumSongs.map((song) => (
                          <div key={song.id} className="bg-gray-50 rounded-lg p-3 border-l-4 border-gray-200">
                            <div className="flex items-start gap-3">
                              <span className="text-sm font-mono text-gray-500 w-8 text-center mt-1">
