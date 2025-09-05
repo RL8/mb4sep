@@ -1,0 +1,313 @@
+# Prediction Game Implementation Plan
+
+## Overview
+This document outlines the implementation of a prediction game system that analyzes user preferences to predict rankings for new content. The system uses Edge Functions for fast calculations and Vercel Functions for LLM narrative generation.
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                NEW APP (Next.js)                           │
+├─────────────────────────────────────────────────────────────┤
+│  - UI/UX (VIEW 1-6)                                       │
+│  - /api/predict (Edge Function)                           │
+│  - /api/narrative (Vercel Function)                       │
+│  - Algorithm plugins                                       │
+│  - Database integration                                    │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## File Structure
+
+```
+your-new-app/
+├── app/
+│   ├── prediction-game/
+│   │   ├── page.tsx                    # VIEW 1: Welcome
+│   │   ├── saved-rankings/page.tsx     # VIEW 2: Saved rankings
+│   │   ├── ranking/page.tsx            # VIEW 3: Embedded ranking
+│   │   ├── processing/page.tsx         # VIEW 4: Processing animation
+│   │   ├── results/page.tsx            # VIEW 5: Album results
+│   │   └── enhanced-results/page.tsx   # VIEW 6: Song-enhanced results
+│   └── api/
+│       ├── predict/route.ts            # Edge Function
+│       └── narrative/route.ts          # Vercel Function
+├── lib/
+│   ├── algorithms/
+│   │   ├── basic.ts                    # Basic algorithm
+│   │   ├── enhanced.ts                 # Enhanced algorithm
+│   │   └── hybrid.ts                   # Hybrid algorithm
+│   ├── prediction-types.ts             # Type definitions
+│   └── database.ts                     # Database utilities
+├── components/
+│   ├── prediction/
+│   │   ├── WelcomeScreen.tsx           # VIEW 1 component
+│   │   ├── SavedRankings.tsx           # VIEW 2 component
+│   │   ├── RankingProcess.tsx          # VIEW 3 component
+│   │   ├── ProcessingAnimation.tsx     # VIEW 4 component
+│   │   ├── ResultsDisplay.tsx          # VIEW 5 component
+│   │   └── EnhancedResults.tsx         # VIEW 6 component
+│   └── ranking/                        # Existing ranking components
+└── types/
+    └── prediction.ts                   # Type definitions
+```
+
+## Implementation Steps
+
+### Phase 1: Core Infrastructure
+
+#### 1.1 Set up Edge Function
+**File:** `app/api/predict/route.ts`
+```typescript
+export const runtime = 'edge';
+
+export async function POST(request: Request) {
+  // 1. Validate input (userId, algorithm)
+  // 2. Check database for saved rankings
+  // 3. If no saved rankings, return error with redirect
+  // 4. Load selected algorithm plugin
+  // 5. Run calculations
+  // 6. Return results + queue LLM job
+  // 7. Return response with predictionId
+}
+```
+
+#### 1.2 Create Algorithm Plugins
+**File:** `lib/algorithms/basic.ts`
+```typescript
+export interface AlgorithmInput {
+  itemRankings: string[];
+  subItemRankings?: string[];
+  items: YourItem[];
+}
+
+export interface AlgorithmOutput {
+  predictedRank: number;
+  confidence: number;
+  analysis: {
+    category: CategoryAnalysis;
+    style: StyleAnalysis;
+    summary: PredictionSummary;
+  };
+}
+
+export function basicAlgorithm(input: AlgorithmInput): AlgorithmOutput {
+  // Implementation of basic prediction logic
+}
+```
+
+#### 1.3 Set up Database Schema
+**File:** `lib/database.ts`
+```typescript
+// User rankings table
+interface UserRankings {
+  id: string;
+  userId: string;
+  itemRankings: string[];
+  subItemRankings: string[];
+  lastUpdated: Date;
+  version: string;
+}
+
+// Prediction history table
+interface PredictionHistory {
+  id: string;
+  userId: string;
+  predictionId: string;
+  algorithm: string;
+  results: any;
+  createdAt: Date;
+}
+```
+
+### Phase 2: User Experience
+
+#### 2.1 Create View Components
+**VIEW 1: Welcome Screen**
+
+```typescript
+// components/prediction/WelcomeScreen.tsx
+export function WelcomeScreen() {
+  return (
+    <div>
+      <h1>Welcome to the Prediction Game!</h1>
+      <p>We'll use your preferences to predict Showgirl's ranking</p>
+      <button onClick={() => router.push('/prediction-game/saved-rankings')}>
+        Get Started
+      </button>
+    </div>
+  );
+}
+```
+
+**VIEW 2: Saved Rankings Check**
+
+```typescript
+// components/prediction/SavedRankings.tsx
+export function SavedRankings() {
+  const { data: savedRankings } = useQuery(['user-rankings'], 
+    () => checkSavedRankings(userId)
+  );
+  
+  if (savedRankings) {
+    return <ShowSavedRankings rankings={savedRankings} />;
+  } else {
+    return <RedirectToRanking />;
+  }
+}
+```
+
+**VIEW 3: Embedded Ranking Process**
+
+```typescript
+// components/prediction/RankingProcess.tsx
+export function RankingProcess() {
+  // Use existing ranking components
+  // Add save functionality
+  // Redirect to processing after completion
+}
+```
+
+**VIEW 4: Processing Animation**
+
+```typescript
+// components/prediction/ProcessingAnimation.tsx
+export function ProcessingAnimation() {
+  // Show progress indicators
+  // Connect to WebSocket for real-time updates
+  // Display engaging copy during processing
+}
+```
+
+**VIEW 5: Results Display**
+
+```typescript
+// components/prediction/ResultsDisplay.tsx
+export function ResultsDisplay() {
+  // Show album-based prediction
+  // Offer to add songs for better accuracy
+  // Display share/save options
+}
+```
+
+**VIEW 6: Enhanced Results**
+
+```typescript
+// components/prediction/EnhancedResults.tsx
+export function EnhancedResults() {
+  // Show updated prediction with songs
+  // Display improved confidence
+  // Show comparison with previous prediction
+}
+```
+
+### Phase 3: Backend Services
+
+#### 3.1 LLM Narrative Service
+
+**File:** `app/api/narrative/route.ts`
+
+```typescript
+export async function POST(request: Request) {
+  // 1. Receive prediction data
+  // 2. Generate personalized narrative using LLM
+  // 3. Send updates via WebSocket
+  // 4. Return final narrative
+}
+```
+
+#### 3.2 WebSocket Integration
+
+```typescript
+// Real-time updates for narrative generation
+// Progress indicators
+// Final story delivery
+```
+
+### Phase 4: Integration
+
+#### 4.1 Connect to Existing Ranking System
+- Import existing ranking components
+- Add save/load functionality
+- Integrate with database
+
+#### 4.2 API Integration
+
+```typescript
+// API calls to prediction service
+const response = await fetch('/api/predict', {
+  method: 'POST',
+  body: JSON.stringify({
+    userId,
+    algorithm: 'basic',
+    sessionId
+  })
+});
+```
+
+## Dependencies
+
+```json
+{
+  "dependencies": {
+    "zustand": "^5.0.8",
+    "framer-motion": "^12.23.12",
+    "lucide-react": "^0.471.1",
+    "@radix-ui/react-*": "latest",
+    "react-query": "^3.39.3",
+    "socket.io-client": "^4.7.2"
+  }
+}
+```
+
+## Environment Variables
+
+```env
+# Database
+DATABASE_URL=your_database_url
+
+# LLM Service
+OPENAI_API_KEY=your_openai_key
+ANTHROPIC_API_KEY=your_anthropic_key
+
+# WebSocket
+WEBSOCKET_URL=your_websocket_url
+```
+
+## Testing Strategy
+
+1. **Unit Tests**: Algorithm plugins
+2. **Integration Tests**: API endpoints
+3. **E2E Tests**: Complete user flow
+4. **Performance Tests**: Edge Function response times
+5. **A/B Tests**: Algorithm comparison
+
+## Deployment
+
+1. **Vercel Deployment**: Automatic with git push
+2. **Edge Functions**: Deploy to global edge locations
+3. **Database**: Set up production database
+4. **Monitoring**: Add error tracking and analytics
+
+## Success Metrics
+
+- **User Engagement**: Completion rate of prediction flow
+- **Prediction Accuracy**: User satisfaction with results
+- **Performance**: Edge Function response times < 100ms
+- **Narrative Quality**: User feedback on generated stories
+
+## Timeline
+
+- **Week 1**: Core infrastructure (Edge Functions, algorithms)
+- **Week 2**: User experience (VIEW 1-6)
+- **Week 3**: Backend services (LLM, WebSocket)
+- **Week 4**: Integration and testing
+- **Week 5**: Deployment and optimization
+
+## Notes
+
+- Keep algorithms lightweight for Edge Function compatibility
+- Use caching for frequently accessed data
+- Implement proper error handling and fallbacks
+- Consider rate limiting for LLM API calls
+- Monitor costs for LLM usage

@@ -217,20 +217,22 @@ export const appSpecification: AppSection[] = [
             status: 'active'
           },
           {
-            id: 'ranking-musings',
-            title: '4.2.5 Ranking Musings',
-            purpose: 'Allow users to add personal thoughts and musings about albums and songs',
-            design: 'Text input system for personal reflections on music',
+            id: 'reviews-notes-system',
+            title: '4.2.5 Reviews & Notes System',
+            purpose: 'Two content systems: Reviews (rate + opinions) and Notes (titled personal thoughts)',
+            design: 'Separate forms for reviews (1-5 stars + text) and notes (title + content)',
             features: [
-              'Add musings to individual albums',
-              'Add musings to individual songs',
-              'Personal reflection text areas',
-              'Save musings with rankings',
-              'View musings alongside rankings',
-              'Edit and update musings over time'
+              'Reviews: Rate albums/songs 1-5 stars with optional text (1000 chars)',
+              'Notes: Create titled entries with personal thoughts (title 100 chars, content 2000 chars)',
+              'Privacy controls: Notes can be public or private',
+              'Search functionality: Filter notes by title/content',
+              'Real-time updates and auto-save',
+              'Edit capabilities with timestamp and edit history',
+              'Visual feedback with character counters',
+              'Separate database tables for reviews and notes'
             ],
             type: 'feature',
-            icon: '💭',
+            icon: '💬',
             color: '#f3e5f5',
             status: 'active'
           }

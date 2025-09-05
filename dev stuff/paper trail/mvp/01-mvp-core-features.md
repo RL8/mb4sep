@@ -40,18 +40,23 @@ This document defines the **minimum viable product (MVP)** features for the Tayl
 - Search functionality (premium only)
 - Basic filtering by album/era
 
-### 3. User Notes & Comments
-**Purpose**: Personalization and community engagement
+### 3. Reviews & Notes System
+**Purpose**: Two content systems for personalization and community engagement
 
 **MVP Implementation**:
-- **Free Users**: Notes only on ranked items
-- **Premium Users**: Notes on any song/album
-- **Features**: Simple text input, character limits, basic formatting
+- **Reviews**: Rate albums/songs 1-5 stars with optional text (1000 chars)
+- **Notes**: Create titled entries with personal thoughts (title 100 chars, content 2000 chars)
+- **Free Users**: Reviews & Notes only on ranked items
+- **Premium Users**: Reviews & Notes on any song/album
+- **Privacy**: Notes can be public or private
 
 **Technical Requirements**:
-- Text input fields
-- Character count validation
+- Separate forms for reviews and notes
+- Star rating system for reviews
+- Character count validation with visual feedback
 - Auto-save functionality
+- Search functionality for notes
+- Real-time updates
 
 ### 4. Shareable Links
 **Purpose**: Viral growth and social proof

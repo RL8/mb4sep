@@ -82,23 +82,30 @@ flowchart TD
 flowchart TD
     A[Rank Tab] --> B[Album Ranking]
     A --> C[Song Ranking]
-    A --> D[Add Musings]
+    A --> D[Reviews & Notes]
     
     B --> E[Drag & Drop Reorder]
     C --> F[Tap Songs to Rank]
-    D --> G[Add Personal Thoughts]
+    D --> G[Write Reviews]
+    D --> H[Create Notes]
     
-    E --> H[Save Rankings]
-    F --> H
-    G --> H
+    G --> I[Rate 1-5 Stars + Text]
+    H --> J[Title + Content + Privacy]
     
-    H --> I[Share Rankings]
-    I --> J[Back to Discography]
+    E --> K[Save Rankings]
+    F --> K
+    I --> K
+    J --> K
+    
+    K --> L[Share Rankings]
+    L --> M[Back to Discography]
     
     style A fill:#e8f5e8
     style B fill:#e1f5fe
     style C fill:#fff3e0
     style D fill:#f3e5f5
+    style G fill:#fff9c4
+    style H fill:#f3e5f5
     `;
   };
 
