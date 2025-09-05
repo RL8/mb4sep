@@ -31,6 +31,12 @@ const navigationItems = [
     icon: '🔍'
   },
   {
+    id: 'database',
+    label: 'Database Admin',
+    href: '/admin/database',
+    icon: '🗄️'
+  },
+  {
     id: 'gallery',
     label: 'Gallery',
     href: '/admin/gallery',
@@ -103,12 +109,12 @@ export default function AdminLayout({
           <div className="p-4 border-t border-border">
             <div className="text-xs text-muted-foreground text-center">
               <p>Development Environment</p>
-              <p className="mt-1">
+              <div className="mt-1">
                 <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-800 rounded-full">
-                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
                   Active
                 </span>
-              </p>
+              </div>
             </div>
           </div>
         </div>
