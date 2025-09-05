@@ -17,6 +17,13 @@ export interface AppSection {
     sharedComponents: string[];
     userJourney: string[];
   };
+  databaseIntegration?: {
+    dataSources: string[];
+    queryPatterns: string[];
+    securityLevel: 'public' | 'authenticated' | 'premium-only' | 'admin-only';
+    performance: string[];
+    caching: string[];
+  };
 }
 
 export const appSpecification: AppSection[] = [
@@ -42,6 +49,13 @@ export const appSpecification: AppSection[] = [
       testing: ['Component tests with @testing-library/react', 'E2E tests with Playwright', 'Accessibility tests with @axe-core/react'],
       sharedComponents: ['Button', 'Card', 'Navigation', 'LoadingSpinner'],
       userJourney: ['Entry point for all user flows', 'Artist selection and navigation hub']
+    },
+    databaseIntegration: {
+      dataSources: ['artists', 'user_preferences'],
+      queryPatterns: ['static_data', 'user_session'],
+      securityLevel: 'public',
+      performance: ['preloaded', 'cached'],
+      caching: ['static_generation', 'session_storage']
     }
   },
   {
@@ -66,6 +80,13 @@ export const appSpecification: AppSection[] = [
       testing: ['Form validation tests', 'Upvote interaction tests', 'Duplicate prevention tests'],
       sharedComponents: ['FormInput', 'VoteButton', 'RequestCard', 'LoadingSpinner'],
       userJourney: ['Community contribution entry point', 'Artist request and voting flow']
+    },
+    databaseIntegration: {
+      dataSources: ['artist_requests', 'user_votes', 'users'],
+      queryPatterns: ['real_time_updates', 'aggregated_votes', 'user_submissions'],
+      securityLevel: 'authenticated',
+      performance: ['optimistic_updates', 'debounced_queries'],
+      caching: ['react_query', 'local_storage']
     }
   },
   {
@@ -92,6 +113,13 @@ export const appSpecification: AppSection[] = [
       testing: ['Countdown accuracy tests', 'Navigation flow tests', 'Timer accessibility tests'],
       sharedComponents: ['CountdownTimer', 'CTAButton', 'NavigationArrow', 'WelcomeMessage'],
       userJourney: ['Primary prediction game entry point', 'Artist-specific landing and navigation hub']
+    },
+    databaseIntegration: {
+      dataSources: ['albums', 'user_predictions', 'analytics_events'],
+      queryPatterns: ['static_album_data', 'user_prediction_status', 'analytics_tracking'],
+      securityLevel: 'public',
+      performance: ['preloaded_album_data', 'lazy_loaded_predictions'],
+      caching: ['static_generation', 'session_storage']
     }
   },
   {
@@ -117,6 +145,13 @@ export const appSpecification: AppSection[] = [
       testing: ['Grid interaction tests', 'Drag-and-drop tests', 'Keyboard navigation tests', 'Mobile touch tests'],
       sharedComponents: ['GridLayout', 'DraggableItem', 'DropZone', 'RankingCard', 'TabNavigation'],
       userJourney: ['Core research and ranking experience', 'Hub for all discography interactions']
+    },
+    databaseIntegration: {
+      dataSources: ['albums', 'songs', 'user_rankings', 'user_predictions'],
+      queryPatterns: ['grid_data_loading', 'real_time_rankings', 'prediction_integration'],
+      securityLevel: 'authenticated',
+      performance: ['preloaded_grid', 'optimistic_updates', 'lazy_loaded_details'],
+      caching: ['react_query', 'indexed_db', 'local_storage']
     },
     children: [
       {
@@ -151,6 +186,13 @@ export const appSpecification: AppSection[] = [
               testing: ['Data aggregation tests', 'Filter interaction tests', 'Performance tests for large datasets'],
               sharedComponents: ['SongwriterCard', 'FilterButton', 'CountBadge', 'GridLayout'],
               userJourney: ['Research songwriter contributions', 'Filter albums by collaboration patterns']
+            },
+            databaseIntegration: {
+              dataSources: ['songs', 'songwriters', 'albums'],
+              queryPatterns: ['aggregated_counts', 'filtered_queries', 'join_operations'],
+              securityLevel: 'public',
+              performance: ['memoized_calculations', 'virtual_scrolling'],
+              caching: ['react_query', 'computed_cache']
             }
           },
           {
@@ -234,6 +276,13 @@ export const appSpecification: AppSection[] = [
               testing: ['Drag and drop interaction tests', 'State persistence tests', 'Mobile touch tests', 'Keyboard navigation tests'],
               sharedComponents: ['DraggableAlbum', 'DropZone', 'RankingBadge', 'SaveIndicator'],
               userJourney: ['Core album ranking experience', 'Personal preference expression']
+            },
+            databaseIntegration: {
+              dataSources: ['user_rankings', 'albums', 'ranking_history'],
+              queryPatterns: ['real_time_save', 'ranking_retrieval', 'history_tracking'],
+              securityLevel: 'authenticated',
+              performance: ['optimistic_updates', 'debounced_saves', 'local_state'],
+              caching: ['react_query', 'local_storage', 'indexed_db']
             }
           },
           {
@@ -457,6 +506,13 @@ export const appSpecification: AppSection[] = [
       testing: ['Navigation tests', 'Activity tracking tests'],
       sharedComponents: ['ActivityCard', 'StatusIndicator', 'NavigationMenu', 'CategoryGrid'],
       userJourney: ['Community engagement hub', 'Connects to all social features']
+    },
+    databaseIntegration: {
+      dataSources: ['community_activities', 'user_engagement', 'activity_status'],
+      queryPatterns: ['activity_aggregation', 'user_participation', 'status_tracking'],
+      securityLevel: 'authenticated',
+      performance: ['lazy_loaded_activities', 'cached_status'],
+      caching: ['react_query', 'local_storage']
     },
     children: [
       {

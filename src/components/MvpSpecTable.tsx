@@ -26,6 +26,13 @@ export default function MvpSpecTable() {
         testing: ['Component tests with @testing-library/react', 'E2E tests with Playwright', 'Accessibility tests with @axe-core/react'],
         sharedComponents: ['Button', 'Card', 'LoadingSpinner'],
         userJourney: ['Entry point for all user flows', 'Connects to ranking and prediction features']
+      },
+      databaseIntegration: {
+        dataSources: ['albums', 'user_preferences'],
+        queryPatterns: ['static_data', 'user_session'],
+        securityLevel: 'public',
+        performance: ['preloaded', 'cached'],
+        caching: ['static_generation', 'session_storage']
       }
     },
     {
@@ -50,6 +57,13 @@ export default function MvpSpecTable() {
         testing: ['Drag-and-drop interaction tests', 'State management tests', 'Keyboard navigation tests', 'Touch interaction tests'],
         sharedComponents: ['DraggableItem', 'DropZone', 'ProgressBar', 'RankingCard'],
         userJourney: ['Core ranking experience', 'Connects to knowledge base and sharing']
+      },
+      databaseIntegration: {
+        dataSources: ['albums', 'songs', 'user_rankings'],
+        queryPatterns: ['real_time_save', 'ranking_retrieval', 'progress_tracking'],
+        securityLevel: 'authenticated',
+        performance: ['optimistic_updates', 'local_state', 'debounced_saves'],
+        caching: ['react_query', 'local_storage', 'indexed_db']
       }
     },
     {
@@ -306,6 +320,7 @@ export default function MvpSpecTable() {
                 <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Content/Functionality</th>
                 <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Technical Implementation</th>
                 <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Pattern Analysis</th>
+                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Database Integration</th>
               </tr>
             </thead>
             <tbody>
@@ -425,6 +440,76 @@ export default function MvpSpecTable() {
                         </ul>
                       </div>
                     </div>
+                  </td>
+                  <td className="p-4">
+                    {section.databaseIntegration ? (
+                      <div className="space-y-3">
+                        {/* Data Sources */}
+                        <div>
+                          <h4 className="text-sm font-semibold text-blue-700 mb-2">🗄️ Data Sources</h4>
+                          <div className="flex flex-wrap gap-1">
+                            {section.databaseIntegration.dataSources.map((source, index) => (
+                              <span key={index} className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                {source}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        {/* Query Patterns */}
+                        <div>
+                          <h4 className="text-sm font-semibold text-green-700 mb-2">🔍 Query Patterns</h4>
+                          <div className="flex flex-wrap gap-1">
+                            {section.databaseIntegration.queryPatterns.map((pattern, index) => (
+                              <span key={index} className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+                                {pattern}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        {/* Security Level */}
+                        <div>
+                          <h4 className="text-sm font-semibold text-orange-700 mb-2">🔒 Security Level</h4>
+                          <span className={`text-xs px-2 py-1 rounded ${
+                            section.databaseIntegration.securityLevel === 'public' ? 'bg-green-100 text-green-800' :
+                            section.databaseIntegration.securityLevel === 'authenticated' ? 'bg-blue-100 text-blue-800' :
+                            section.databaseIntegration.securityLevel === 'premium-only' ? 'bg-purple-100 text-purple-800' :
+                            'bg-red-100 text-red-800'
+                          }`}>
+                            {section.databaseIntegration.securityLevel}
+                          </span>
+                        </div>
+                        
+                        {/* Performance */}
+                        <div>
+                          <h4 className="text-sm font-semibold text-purple-700 mb-2">⚡ Performance</h4>
+                          <div className="flex flex-wrap gap-1">
+                            {section.databaseIntegration.performance.map((perf, index) => (
+                              <span key={index} className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
+                                {perf}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        {/* Caching */}
+                        <div>
+                          <h4 className="text-sm font-semibold text-cyan-700 mb-2">💾 Caching</h4>
+                          <div className="flex flex-wrap gap-1">
+                            {section.databaseIntegration.caching.map((cache, index) => (
+                              <span key={index} className="text-xs bg-cyan-100 text-cyan-800 px-2 py-1 rounded">
+                                {cache}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-xs text-muted-foreground italic">
+                        Database integration not yet defined
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}
