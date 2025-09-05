@@ -1,36 +1,38 @@
-# MB4SEP - Supabase Database Explorer
+# MB4SEP - Taylor Swift Fan App
 
-A Next.js application that connects to Supabase and displays Taylor Swift's complete discography with comprehensive database exploration capabilities.
+A Next.js application that provides an engaging fan experience with AI-powered predictions and comprehensive ranking capabilities for Taylor Swift's discography.
 
 ## 🎯 Overview
 
-This application provides a comprehensive view of your Supabase database, featuring:
+This application provides a unique fan experience featuring:
 
-- **Complete Discography Display** - All albums and songs from your Supabase database
-- **Database Schema Explorer** - Automatic discovery of all available tables
-- **Real-time Data** - Live connection to your Supabase instance
-- **Responsive Design** - Works on desktop, tablet, and mobile
-- **Comprehensive Field Display** - Shows all available data fields
+- **AI-Powered Prediction Game** - Predict where "Life of a Showgirl" will rank in your personal top 10
+- **Complete Discography Ranking** - Rank albums and songs with intuitive interface
+- **Personalized Narratives** - AI-generated explanations for your predictions
+- **Community Features** - Share rankings and compare with other fans
+- **Mobile-First Design** - Optimized for mobile fan engagement
 
 ## 🚀 Features
 
-### 1. Database Overview
-- **Summary Statistics** - Total albums, songs, and additional tables
-- **Table Discovery** - Automatically finds all available tables in your database
-- **Schema Information** - Shows column names and data types
-- **Sample Data** - Displays actual records from each table
+### 1. Prediction Game (Primary Feature)
+- **AI-Powered Analysis** - Analyzes your taste to predict Life of a Showgirl ranking
+- **Confidence Scoring** - Shows prediction accuracy and reasoning
+- **Personalized Narratives** - AI-generated explanations for predictions
+- **Quick Taste Profile** - Build taste profile with 3-album ranking for new users
+- **Prediction Storage** - Save predictions for verification when album releases
 
-### 2. Album Display
-- **Complete Album List** - All albums with metadata
-- **Theme Colors** - Visual color coding for each album
-- **Song Counts** - Number of songs per album
-- **Flexible Field Display** - Shows all available album fields
+### 2. Ranking System
+- **Album Ranking** - Rank Taylor Swift's complete discography
+- **Song Ranking** - Cross-album song selection and ranking
+- **Visual Feedback** - Numbered badges and smooth animations
+- **Prediction Integration** - Rankings improve prediction accuracy
+- **Shareable Results** - Generate and share your rankings
 
-### 3. Song Display
-- **Track Listings** - Complete song lists with track numbers
-- **Duration Information** - Song lengths and timing
-- **Additional Metadata** - Genre, year, artist, explicit content indicators
-- **Organized Layout** - Clean, responsive grid display
+### 3. Community Features
+- **Shareable Links** - Unique permanent links for your rankings
+- **Prediction Sharing** - Share your Life of a Showgirl predictions
+- **Community Comparison** - Compare rankings with other fans
+- **Social Proof** - See how your predictions compare to others
 
 ## 🛠️ Technical Implementation
 

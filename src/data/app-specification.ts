@@ -47,15 +47,16 @@ export const appSpecification: AppSection[] = [
   {
     id: 'artist-page',
     title: '3. Taylor Swift Artist Page',
-    purpose: 'To serve as a dedicated landing page for Taylor Swift',
+    purpose: 'To serve as a dedicated landing page for Taylor Swift with prediction game as primary feature',
     design: 'Single-page layout with no scrolling. Back arrow in top-left',
     features: [
       '"Welcome!" greeting',
+      'Primary CTA: "Make Your Life of a Showgirl Prediction"',
       'Featured album countdown preview box for "Life of a Showgirl"',
       'Countdown timer (counting down to October 3, 2025, 12:01 a.m. Eastern Time)',
-      'Direct shortcut to Showgirl Countdown prediction activity',
-      'Clear path to main discography view',
-      'Clear path to Connect page'
+      'Direct shortcut to prediction game (primary action)',
+      'Clear path to main discography view (secondary)',
+      'Clear path to Connect page (tertiary)'
     ],
     type: 'page',
     icon: '🎤',
@@ -64,13 +65,15 @@ export const appSpecification: AppSection[] = [
   {
     id: 'discography',
     title: '4. Discography Page (Core Experience)',
-    purpose: 'To provide comprehensive and interactive view of artist\'s discography as a research tool',
-    design: 'Persistent 12-Grid View with bottom navigation',
+    purpose: 'To provide comprehensive and interactive view of artist\'s discography as a research tool with prediction integration',
+    design: 'Persistent 12-Grid View with bottom navigation and prediction integration',
     features: [
       'Persistent 12-Grid View: Static grid of 12 albums, always visible',
       'Album tiles: color, name, year, song count (no album art)',
       'Bottom Navigation Bar: "Explore," "Rank," and "Match" tabs',
-      '12-album grid representing Taylor Swift\'s complete discography'
+      '12-album grid representing Taylor Swift\'s complete discography',
+      'Prediction integration: Show current prediction alongside rankings',
+      'Prediction refinement prompts: "Add more rankings to improve accuracy"'
     ],
     type: 'page',
     icon: '🎵',
@@ -323,10 +326,10 @@ export const appSpecification: AppSection[] = [
       {
         id: 'showgirl-countdown',
         title: '5.1 Showgirl Countdown',
-        purpose: 'Activities focused on the upcoming album Life of a Showgirl',
+        purpose: 'Activities focused on the upcoming album Life of a Showgirl - now accessible early in user journey',
         design: 'Sub-navigation with prediction, guessing, and community activities',
         features: [
-          'Prediction Activity (Active)',
+          'Prediction Activity (Active) - Now accessible from artist page',
           'The Guessing Game (Coming Soon)',
           'World\'s Biggest Listen Party (Brainstorming)'
         ],
@@ -337,10 +340,14 @@ export const appSpecification: AppSection[] = [
           {
             id: 'prediction-activity',
             title: '5.1.1 Prediction Activity',
-            purpose: 'Use current music rankings to predict where LOAS will feature on your rankings',
-            design: 'Interactive prediction system with accuracy tracking',
+            purpose: 'AI-powered prediction system that analyzes user taste to predict where LOAS will rank - now first experience',
+            design: 'Interactive prediction system with AI analysis, confidence scoring, and accuracy tracking',
             features: [
-              'Use current music rankings to predict LOAS placement',
+              'AI-powered taste analysis from existing rankings',
+              'Prediction interface (1-10 ranking position)',
+              'Confidence scoring and explanation',
+              'Personalized narrative generation',
+              'Quick taste profile for new users (3 albums)',
               'Mark predictions as "sounds about right" or "totally way off"',
               'Declare accuracy once album is released',
               'Game state ready for actual results when album releases'
@@ -641,8 +648,8 @@ export const getMainFlow = () => {
   return [
     { id: 'homepage', title: 'Homepage', type: 'page' },
     { id: 'add-artist', title: 'Add Your Own Artist', type: 'page' },
-    { id: 'artist-page', title: 'Taylor Swift Artist Page', type: 'page' },
-    { id: 'discography', title: 'Discography Page', type: 'page' }
+    { id: 'artist-page', title: 'Taylor Swift Artist Page (Prediction First)', type: 'page' },
+    { id: 'discography', title: 'Discography Page (With Prediction Integration)', type: 'page' }
   ];
 };
 

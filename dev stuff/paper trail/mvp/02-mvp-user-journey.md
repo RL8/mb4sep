@@ -12,37 +12,41 @@ This document outlines the simplified user journey for the MVP version of the Ta
 
 **User Experience**:
 - **Landing Page**: Clean, single-page design
-- **Value Proposition**: "Rank Taylor Swift's entire discography"
-- **Call-to-Action**: "Start Ranking" button
-- **Social Proof**: "Join 1,000+ Swifties ranking their favorites"
+- **Value Proposition**: "Predict where Life of a Showgirl will rank in your personal top 10"
+- **Call-to-Action**: "Make Your Prediction" button
+- **Social Proof**: "Join 1,000+ Swifties making predictions"
 
 **MVP Features**:
 - Simple homepage with Taylor Swift focus
-- Clear app description
-- Single "Get Started" button
+- Clear prediction game description
+- Single "Make Your Prediction" button
+- Countdown timer to album release (October 3, 2025)
 - Basic app preview/screenshots
 
-### 2. Onboarding & First Ranking
-**Goal**: Get user to complete their first ranking
+### 2. Prediction Game Experience
+**Goal**: Get user to make their Life of a Showgirl prediction
 
 **User Experience**:
-- **Quick Setup**: No account required initially
-- **Tutorial**: Simple 3-step guide to ranking
-- **First Ranking**: Start with 3 albums
-- **Immediate Value**: See results instantly
+- **Welcome Screen**: "We'll analyze your taste to predict where Showgirl will rank"
+- **Check Rankings**: If user has saved rankings, proceed to prediction
+- **Quick Taste Profile**: If no rankings, quick 3-album ranking to build taste profile
+- **AI Processing**: Show engaging animation while AI analyzes preferences
+- **Prediction Results**: Display prediction with confidence level and narrative
 
 **MVP Features**:
-- Skip-able tutorial
-- Start with album ranking (easier)
-- Visual feedback on each selection
-- Progress indicator
+- Prediction game interface (1-10 ranking position)
+- AI-powered taste analysis
+- Confidence scoring and explanation
+- Personalized narrative generation
+- Save prediction for later verification
 
 ### 3. Core Ranking Experience
-**Goal**: Engage user with the main value proposition
+**Goal**: Engage user with ranking after seeing their prediction
 
 **User Experience**:
-- **Album Ranking**: Tap to rank 3 albums
-- **Song Ranking**: Select 13 songs across albums
+- **Natural Progression**: "Want to refine your prediction? Add more rankings!"
+- **Album Ranking**: Tap to rank 3 albums (free) or entire discography (premium)
+- **Song Ranking**: Select 13 songs across albums (free) or unlimited (premium)
 - **Visual Feedback**: Numbered badges, smooth animations
 - **Personal Notes**: Add thoughts to ranked items
 
@@ -51,6 +55,7 @@ This document outlines the simplified user journey for the MVP version of the Ta
 - Cross-album song selection
 - Character-limited notes
 - Auto-save functionality
+- Prediction refinement prompts
 
 ### 4. Knowledge Base Discovery
 **Goal**: Provide context and encourage exploration
@@ -103,22 +108,23 @@ This document outlines the simplified user journey for the MVP version of the Ta
 
 ### Flow 1: New User - Free Experience
 ```
-Landing Page → Tutorial → Album Ranking → Song Ranking → 
+Landing Page → Prediction Game → Quick Taste Profile (if needed) → 
+Prediction Results → Album Ranking → Song Ranking → 
 Knowledge Base → Add Notes → Generate Link → Share → 
 Hit Limits → Upgrade Prompt → Premium Conversion
 ```
 
 ### Flow 2: Returning User - Free Experience
 ```
-Return to App → View Rankings → Edit Rankings → 
-Add More Notes → Share Updates → Hit Limits → 
-Upgrade Prompt → Premium Conversion
+Return to App → View Prediction → Refine Prediction (if desired) → 
+View Rankings → Edit Rankings → Add More Notes → Share Updates → 
+Hit Limits → Upgrade Prompt → Premium Conversion
 ```
 
 ### Flow 3: Premium User - Full Experience
 ```
-Login → View All Rankings → Full Knowledge Base → 
-Rank Entire Discography → Advanced Notes → 
+Login → View Prediction → Refine Prediction → View All Rankings → 
+Full Knowledge Base → Rank Entire Discography → Advanced Notes → 
 Community Features → Share Everything
 ```
 
@@ -127,11 +133,12 @@ Community Features → Share Everything
 ## 🎯 MVP Conversion Points
 
 ### Primary Conversion Triggers
-1. **Ranking Limits**: Hit 3 album/13 song limit
-2. **Knowledge Base**: Want to see full discography
-3. **Community**: Want to see other users' rankings
-4. **Notes**: Want to add notes to more items
-5. **History**: Want unlimited ranking history
+1. **Prediction Accuracy**: Want to improve prediction accuracy with more rankings
+2. **Ranking Limits**: Hit 3 album/13 song limit
+3. **Knowledge Base**: Want to see full discography
+4. **Community**: Want to see other users' rankings and predictions
+5. **Notes**: Want to add notes to more items
+6. **History**: Want unlimited ranking history
 
 ### Secondary Conversion Triggers
 1. **Sharing**: Want to share more detailed rankings
@@ -144,10 +151,11 @@ Community Features → Share Everything
 ## 📊 MVP User Experience Metrics
 
 ### Engagement Metrics
-- **Time to First Ranking**: < 2 minutes
-- **Completion Rate**: 70%+ complete initial ranking
-- **Return Rate**: 40%+ return within 7 days
-- **Sharing Rate**: 20%+ generate shareable link
+- **Time to First Prediction**: < 2 minutes
+- **Prediction Completion Rate**: 80%+ complete prediction game
+- **Ranking Completion Rate**: 70%+ complete initial ranking after prediction
+- **Return Rate**: 50%+ return within 7 days (increased due to prediction engagement)
+- **Sharing Rate**: 25%+ generate shareable link (increased due to prediction sharing)
 
 ### Conversion Metrics
 - **Upgrade Prompt Views**: Track all upgrade prompts
