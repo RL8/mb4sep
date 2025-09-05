@@ -11,6 +11,13 @@ interface TableSchema {
   column_default: string | null
 }
 
+interface SchemaColumn {
+  column_name: string
+  data_type: string
+  is_nullable: string
+  column_default: string | null
+}
+
 interface QueryResult {
   columns: string[]
   rows: Record<string, unknown>[]
@@ -49,7 +56,7 @@ ORDER BY a.year;`
 
 export default function DatabaseAdminPage() {
   const [connectionStatus, setConnectionStatus] = useState<'checking' | 'connected' | 'error'>('checking')
-  const [schema, setSchema] = useState<TableSchema[]>([])
+  const [schema, setSchema] = useState<Record<string, SchemaColumn[]>>({})
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<QueryResult | null>(null)
   const [isExecuting, setIsExecuting] = useState(false)
@@ -62,9 +69,36 @@ export default function DatabaseAdminPage() {
 
   const checkConnection = async () => {
     try {
-      const { error } = await supabase.from('albums').select('count').limit(1)
-      if (error) throw error
-      setConnectionStatus('connected')
+      // Test actual database connection and get real schema
+      const { data: tables, error: tablesError } = await supabase
+        .from('information_schema.tables')
+        .select('table_name')
+        .eq('table_schema', 'public')
+        .eq('table_type', 'BASE TABLE')
+
+      if (tablesError) {
+        // Fallback: try to query known tables directly
+        const knownTables = ['albums', 'songs']
+        let connectedTables = 0
+        
+        for (const table of knownTables) {
+          try {
+            const { error } = await supabase.from(table).select('*').limit(1)
+            if (!error) connectedTables++
+          } catch (e) {
+            console.warn(`Table ${table} not accessible:`, e)
+          }
+        }
+        
+        if (connectedTables > 0) {
+          setConnectionStatus('connected')
+        } else {
+          setConnectionStatus('error')
+        }
+      } else {
+        // Successfully got schema information
+        setConnectionStatus('connected')
+      }
     } catch (error) {
       console.error('Database connection error:', error)
       setConnectionStatus('error')
@@ -73,17 +107,69 @@ export default function DatabaseAdminPage() {
 
   const loadSchema = async () => {
     try {
-      // Get table schema information
-      const { data, error } = await supabase
+      // First try to get real schema from information_schema
+      const { data: columns, error: columnsError } = await supabase
         .from('information_schema.columns')
         .select('table_name, column_name, data_type, is_nullable, column_default')
-        .in('table_schema', ['public'])
+        .eq('table_schema', 'public')
         .order('table_name, ordinal_position')
 
-      if (error) throw error
-      setSchema(data || [])
+      if (!columnsError && columns) {
+        // Group columns by table name
+        const schemaData: Record<string, SchemaColumn[]> = {}
+        columns.forEach(col => {
+          if (!schemaData[col.table_name]) {
+            schemaData[col.table_name] = []
+          }
+          schemaData[col.table_name].push({
+            column_name: col.column_name,
+            data_type: col.data_type,
+            is_nullable: col.is_nullable,
+            column_default: col.column_default
+          })
+        })
+        setSchema(schemaData)
+        return
+      }
+
+      // Fallback: Try to get schema by querying actual tables
+      console.warn('Could not access information_schema, trying direct table queries')
+      const knownTables = ['albums', 'songs']
+      const schemaData: Record<string, SchemaColumn[]> = {}
+
+      for (const tableName of knownTables) {
+        try {
+          // Try to get a sample row to understand the structure
+          const { data, error } = await supabase
+            .from(tableName)
+            .select('*')
+            .limit(1)
+
+          if (!error && data && data.length > 0) {
+            // Extract column information from the sample data
+            const columns: SchemaColumn[] = Object.keys(data[0]).map(key => ({
+              column_name: key,
+              data_type: typeof data[0][key] === 'number' ? 'integer' : 
+                        typeof data[0][key] === 'boolean' ? 'boolean' : 'text',
+              is_nullable: 'YES',
+              column_default: null
+            }))
+            schemaData[tableName] = columns
+          }
+        } catch (tableError) {
+          console.warn(`Could not load schema for table ${tableName}:`, tableError)
+        }
+      }
+
+      if (Object.keys(schemaData).length > 0) {
+        setSchema(schemaData)
+      } else {
+        // No tables accessible - show error state
+        setSchema({})
+      }
     } catch (error) {
       console.error('Schema loading error:', error)
+      setSchema({})
     }
   }
 
@@ -181,11 +267,11 @@ export default function DatabaseAdminPage() {
   }
 
   const getTableColumns = (tableName: string) => {
-    return schema.filter(col => col.table_name === tableName)
+    return schema[tableName] || []
   }
 
   const getTableNames = () => {
-    return [...new Set(schema.map(col => col.table_name))]
+    return Object.keys(schema)
   }
 
   return (
@@ -198,33 +284,52 @@ export default function DatabaseAdminPage() {
             connectionStatus === 'error' ? 'bg-red-500' : 'bg-yellow-500'
           }`}></div>
           <span className="text-sm font-medium">
-            {connectionStatus === 'connected' ? 'Connected' : 
-             connectionStatus === 'error' ? 'Connection Error' : 'Checking...'}
+            {connectionStatus === 'connected' ? 'Database Connected' : 
+             connectionStatus === 'error' ? 'Connection Failed' : 'Testing Connection...'}
           </span>
+          {connectionStatus === 'connected' && (
+            <span className="text-xs text-gray-500">
+              ({Object.keys(schema).length} tables detected)
+            </span>
+          )}
         </div>
       </div>
 
       {/* Schema Viewer */}
       <div className="bg-white rounded-lg border p-6">
         <h2 className="text-xl font-semibold mb-4">Database Schema</h2>
-        <div className="space-y-4">
-          {getTableNames().map(tableName => (
-            <div key={tableName} className="border rounded-lg p-4">
-              <h3 className="font-medium text-lg mb-2">{tableName}</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                {getTableColumns(tableName).map((column, index) => (
-                  <div key={index} className="text-sm bg-gray-50 p-2 rounded">
-                    <span className="font-medium">{column.column_name}</span>
-                    <span className="text-gray-600 ml-2">({column.data_type})</span>
-                    {column.is_nullable === 'NO' && (
-                      <span className="text-red-600 ml-1">*</span>
-                    )}
-                  </div>
-                ))}
-              </div>
+        {Object.keys(schema).length === 0 ? (
+          <div className="text-center py-8">
+            <div className="text-gray-500 mb-2">No schema information available</div>
+            <div className="text-sm text-gray-400">
+              {connectionStatus === 'error' ? 'Database connection failed' : 'Loading schema...'}
             </div>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {getTableNames().map(tableName => (
+              <div key={tableName} className="border rounded-lg p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <h3 className="font-medium text-lg">{tableName}</h3>
+                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                    {getTableColumns(tableName).length} columns
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                  {getTableColumns(tableName).map((column, index) => (
+                    <div key={index} className="text-sm bg-gray-50 p-2 rounded">
+                      <span className="font-medium">{column.column_name}</span>
+                      <span className="text-gray-600 ml-2">({column.data_type})</span>
+                      {column.is_nullable === 'NO' && (
+                        <span className="text-red-600 ml-1">*</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Query Interface */}
