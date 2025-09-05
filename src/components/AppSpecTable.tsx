@@ -210,21 +210,21 @@ export default function AppSpecTable({ className }: AppSpecTableProps) {
         {/* Table */}
         <div className="overflow-x-auto border rounded-lg">
           <table className="w-full">
-            <thead className="bg-muted">
+            <thead className="bg-muted sticky top-0 z-10">
               <tr>
-                <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider bg-muted">
                   Section
                 </th>
-                <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider bg-muted">
                   Purpose & Design
                 </th>
-                <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider bg-muted">
                   Content/Functionality
                 </th>
-                <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider bg-muted">
                   Technical Best Practices
                 </th>
-                <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider bg-muted">
                   Pattern Analysis
                 </th>
               </tr>

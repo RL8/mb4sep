@@ -299,13 +299,13 @@ export default function MvpSpecTable() {
       <Card className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-muted">
+            <thead className="bg-muted sticky top-0 z-10">
               <tr>
-                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Section</th>
-                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Purpose & Design</th>
-                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Content/Functionality</th>
-                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Technical Implementation</th>
-                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Pattern Analysis</th>
+                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Section</th>
+                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Purpose & Design</th>
+                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Content/Functionality</th>
+                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Technical Implementation</th>
+                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Pattern Analysis</th>
               </tr>
             </thead>
             <tbody>

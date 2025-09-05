@@ -147,12 +147,12 @@ export default function PatternAnalysisTable() {
 
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-muted">
+            <thead className="bg-muted sticky top-0 z-10">
               <tr>
-                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Pattern</th>
-                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Usage Across Features</th>
-                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Shared Components</th>
-                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Consistency</th>
+                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Pattern</th>
+                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Usage Across Features</th>
+                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Shared Components</th>
+                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Consistency</th>
               </tr>
             </thead>
             <tbody>
