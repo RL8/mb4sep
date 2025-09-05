@@ -82,6 +82,66 @@ export default function AppSpecTable({ className }: AppSpecTableProps) {
           ))}
         </ul>
       </td>
+      <td className="p-4">
+        {section.technicalPractices ? (
+          <div className="space-y-3">
+            {/* Current Practices */}
+            <div>
+              <h4 className="text-sm font-semibold text-green-700 mb-2">✅ Current Practices</h4>
+              <ul className="space-y-1">
+                {section.technicalPractices.current.map((practice, index) => (
+                  <li key={index} className="flex items-start gap-2 text-xs">
+                    <span className="text-green-500 font-bold mt-0.5">•</span>
+                    <span className="text-muted-foreground">{practice}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {/* Improvements */}
+            <div>
+              <h4 className="text-sm font-semibold text-orange-700 mb-2">🚀 Technical Improvements</h4>
+              <ul className="space-y-1">
+                {section.technicalPractices.improvements.map((improvement, index) => (
+                  <li key={index} className="flex items-start gap-2 text-xs">
+                    <span className="text-orange-500 font-bold mt-0.5">•</span>
+                    <span className="text-muted-foreground">{improvement}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {/* Dependencies */}
+            <div>
+              <h4 className="text-sm font-semibold text-purple-700 mb-2">📦 Dependencies</h4>
+              <div className="flex flex-wrap gap-1">
+                {section.technicalPractices.dependencies.map((dep, index) => (
+                  <span key={index} className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
+                    {dep}
+                  </span>
+                ))}
+              </div>
+            </div>
+            
+            {/* Testing */}
+            <div>
+              <h4 className="text-sm font-semibold text-red-700 mb-2">🧪 Testing Requirements</h4>
+              <ul className="space-y-1">
+                {section.technicalPractices.testing.map((test, index) => (
+                  <li key={index} className="flex items-start gap-2 text-xs">
+                    <span className="text-red-500 font-bold mt-0.5">•</span>
+                    <span className="text-muted-foreground">{test}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : (
+          <div className="text-xs text-muted-foreground italic">
+            Technical practices not yet defined
+          </div>
+        )}
+      </td>
     </tr>
   );
 
@@ -126,6 +186,9 @@ export default function AppSpecTable({ className }: AppSpecTableProps) {
                 </th>
                 <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Content/Functionality
+                </th>
+                <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  Technical Best Practices
                 </th>
               </tr>
             </thead>

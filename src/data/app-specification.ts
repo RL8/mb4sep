@@ -9,6 +9,12 @@ export interface AppSection {
   children?: AppSection[];
   color?: string;
   status?: 'active' | 'coming-soon' | 'brainstorming';
+  technicalPractices?: {
+    current: string[];
+    improvements: string[];
+    dependencies: string[];
+    testing: string[];
+  };
 }
 
 export const appSpecification: AppSection[] = [
@@ -26,7 +32,13 @@ export const appSpecification: AppSection[] = [
     ],
     type: 'page',
     icon: '📱',
-    color: '#e1f5fe'
+    color: '#e1f5fe',
+    technicalPractices: {
+      current: ['Next.js 15 App Router', 'TypeScript', 'shadcn/ui components', 'Responsive design'],
+      improvements: ['Error boundaries with react-error-boundary', 'Lazy loading with dynamic imports', 'SEO optimization with Next.js metadata', 'Performance monitoring with web-vitals'],
+      dependencies: ['react-error-boundary', 'web-vitals', 'next/dynamic', 'next-seo'],
+      testing: ['Component tests with @testing-library/react', 'E2E tests with Playwright', 'Accessibility tests with @axe-core/react']
+    }
   },
   {
     id: 'add-artist',
@@ -78,6 +90,12 @@ export const appSpecification: AppSection[] = [
     type: 'page',
     icon: '🎵',
     color: '#f3e5f5',
+    technicalPractices: {
+      current: ['React state management', 'Component composition', 'Grid layout system'],
+      improvements: ['Drag-and-drop with @dnd-kit/core', 'Keyboard navigation with focus-trap-react', 'Mobile optimization with touch events', 'Data caching with @tanstack/react-query'],
+      dependencies: ['@dnd-kit/core', 'focus-trap-react', '@tanstack/react-query'],
+      testing: ['Grid interaction tests', 'Drag-and-drop tests', 'Keyboard navigation tests', 'Mobile touch tests']
+    },
     children: [
       {
         id: 'explore-tab',
@@ -322,6 +340,12 @@ export const appSpecification: AppSection[] = [
     type: 'page',
     icon: '🤝',
     color: '#fce4ec',
+    technicalPractices: {
+      current: ['Status tracking system', 'Navigation structure'],
+      improvements: ['Activity tracking with basic metrics', 'Navigation state management'],
+      dependencies: ['@tanstack/react-query'],
+      testing: ['Navigation tests', 'Activity tracking tests']
+    },
     children: [
       {
         id: 'showgirl-countdown',

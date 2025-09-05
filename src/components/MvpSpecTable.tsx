@@ -18,7 +18,13 @@ export default function MvpSpecTable() {
         'Single "Start Ranking" button',
         'Preview of ranking interface',
         'Social proof: "Join 1,000+ Swifties"'
-      ]
+      ],
+      technicalPractices: {
+        current: ['Next.js 15 App Router', 'TypeScript', 'shadcn/ui components', 'Responsive design'],
+        improvements: ['Error boundaries with react-error-boundary', 'Lazy loading with dynamic imports', 'SEO optimization with Next.js metadata', 'Performance monitoring with web-vitals'],
+        dependencies: ['react-error-boundary', 'web-vitals', 'next/dynamic'],
+        testing: ['Component tests with @testing-library/react', 'E2E tests with Playwright', 'Accessibility tests with @axe-core/react']
+      }
     },
     {
       id: 2,
@@ -34,7 +40,13 @@ export default function MvpSpecTable() {
         'Cross-album song selection',
         'Drag-and-drop reordering',
         'Progress indicators and visual feedback'
-      ]
+      ],
+      technicalPractices: {
+        current: ['React state management', 'Touch-optimized interactions', 'Visual feedback animations'],
+        improvements: ['Drag-and-drop with @dnd-kit/core', 'Optimistic updates with @tanstack/react-query', 'Keyboard navigation with focus-trap-react'],
+        dependencies: ['@dnd-kit/core', '@tanstack/react-query', 'focus-trap-react'],
+        testing: ['Drag-and-drop interaction tests', 'State management tests', 'Keyboard navigation tests', 'Touch interaction tests']
+      }
     },
     {
       id: 3,
@@ -50,7 +62,13 @@ export default function MvpSpecTable() {
         'Song details, duration, track numbers',
         'Basic search and filtering',
         'Upgrade prompts for full access'
-      ]
+      ],
+      technicalPractices: {
+        current: ['Static data management', 'Basic search functionality'],
+        improvements: ['Image optimization with Next.js Image', 'Caching with @tanstack/react-query', 'Data validation with zod', 'API layer with Next.js API routes'],
+        dependencies: ['next/image', '@tanstack/react-query', 'zod'],
+        testing: ['Image loading tests', 'Cache invalidation tests', 'API endpoint tests', 'Data validation tests']
+      }
     },
     {
       id: 4,
@@ -68,7 +86,13 @@ export default function MvpSpecTable() {
         'Real-time updates and auto-save',
         'Visual feedback with character counters',
         'Edit capabilities with timestamp and edit history'
-      ]
+      ],
+      technicalPractices: {
+        current: ['Form validation', 'Character counting', 'Basic CRUD operations'],
+        improvements: ['Auto-save with react-hook-form + debouncing', 'Form validation with zod', 'Character counting with visual feedback'],
+        dependencies: ['react-hook-form', 'zod', '@hookform/resolvers'],
+        testing: ['Form validation tests', 'Auto-save functionality tests', 'Character counting tests']
+      }
     },
     {
       id: 5,
@@ -84,7 +108,13 @@ export default function MvpSpecTable() {
         'Mobile-optimized ranking display',
         'User notes and comments visible',
         'Basic analytics on link views'
-      ]
+      ],
+      technicalPractices: {
+        current: ['URL generation', 'Social media meta tags'],
+        improvements: ['Open Graph with next-seo', 'Link expiration with database timestamps'],
+        dependencies: ['next-seo'],
+        testing: ['URL generation tests', 'Meta tag validation tests', 'Link expiration tests']
+      }
     },
     {
       id: 6,
@@ -100,7 +130,13 @@ export default function MvpSpecTable() {
         'One-click payment integration',
         'Immediate feature unlock',
         '30-day money-back guarantee'
-      ]
+      ],
+      technicalPractices: {
+        current: ['Basic payment integration'],
+        improvements: ['Stripe integration with @stripe/stripe-js', 'Feature gating with middleware'],
+        dependencies: ['@stripe/stripe-js'],
+        testing: ['Payment flow tests', 'Feature gating tests']
+      }
     },
     {
       id: 7,
@@ -116,7 +152,13 @@ export default function MvpSpecTable() {
         'Available to all users (free and premium)',
         'Simple form-based interface',
         'Results comparison with other users'
-      ]
+      ],
+      technicalPractices: {
+        current: ['Form handling', 'Data persistence'],
+        improvements: ['Simple prediction logic with heuristics', 'Basic gamification elements', 'Data persistence with @tanstack/react-query'],
+        dependencies: ['@tanstack/react-query'],
+        testing: ['Prediction logic tests', 'Gamification tests', 'Data persistence tests']
+      }
     },
     {
       id: 8,
@@ -132,7 +174,13 @@ export default function MvpSpecTable() {
         'Basic user profiles',
         'Simple search by username',
         'Upgrade prompts for full access'
-      ]
+      ],
+      technicalPractices: {
+        current: ['Basic user profiles', 'Public/private content'],
+        improvements: ['Authentication with NextAuth.js', 'Profile management with React state', 'Privacy controls with basic permissions'],
+        dependencies: ['next-auth'],
+        testing: ['Authentication flow tests', 'Profile management tests', 'Privacy control tests']
+      }
     },
     {
       id: 9,
@@ -148,7 +196,13 @@ export default function MvpSpecTable() {
         'Note creation and edits',
         'Share link generation',
         'Export ranking data (premium)'
-      ]
+      ],
+      technicalPractices: {
+        current: ['Basic data storage'],
+        improvements: ['Data export with simple CSV format', 'Activity tracking with basic metrics'],
+        dependencies: ['csv-writer'],
+        testing: ['Export functionality tests', 'Activity tracking tests']
+      }
     },
     {
       id: 10,
@@ -164,7 +218,13 @@ export default function MvpSpecTable() {
         'Account settings and preferences',
         'Data export and deletion',
         'Customer support contact'
-      ]
+      ],
+      technicalPractices: {
+        current: ['Basic authentication'],
+        improvements: ['OAuth with NextAuth.js providers', 'Session management with JWT', 'Password reset with secure tokens'],
+        dependencies: ['next-auth', 'jsonwebtoken', 'nodemailer'],
+        testing: ['OAuth flow tests', 'Session management tests', 'Password reset tests']
+      }
     }
   ];
 
@@ -224,6 +284,7 @@ export default function MvpSpecTable() {
                 <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Section</th>
                 <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Purpose & Design</th>
                 <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Content/Functionality</th>
+                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Technical Implementation</th>
               </tr>
             </thead>
             <tbody>
@@ -261,6 +322,60 @@ export default function MvpSpecTable() {
                         </li>
                       ))}
                     </ul>
+                  </td>
+                  <td className="p-4">
+                    <div className="space-y-3">
+                      {/* Current Practices */}
+                      <div>
+                        <h4 className="text-sm font-semibold text-green-700 mb-2">✅ Current Practices</h4>
+                        <ul className="space-y-1">
+                          {section.technicalPractices.current.map((practice, index) => (
+                            <li key={index} className="flex items-start gap-2 text-xs">
+                              <span className="text-green-500 font-bold mt-0.5">•</span>
+                              <span className="text-muted-foreground">{practice}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      {/* Improvements */}
+                      <div>
+                        <h4 className="text-sm font-semibold text-orange-700 mb-2">🚀 Technical Improvements</h4>
+                        <ul className="space-y-1">
+                          {section.technicalPractices.improvements.map((improvement, index) => (
+                            <li key={index} className="flex items-start gap-2 text-xs">
+                              <span className="text-orange-500 font-bold mt-0.5">•</span>
+                              <span className="text-muted-foreground">{improvement}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      {/* Dependencies */}
+                      <div>
+                        <h4 className="text-sm font-semibold text-purple-700 mb-2">📦 Dependencies</h4>
+                        <div className="flex flex-wrap gap-1">
+                          {section.technicalPractices.dependencies.map((dep, index) => (
+                            <span key={index} className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
+                              {dep}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* Testing */}
+                      <div>
+                        <h4 className="text-sm font-semibold text-red-700 mb-2">🧪 Testing Requirements</h4>
+                        <ul className="space-y-1">
+                          {section.technicalPractices.testing.map((test, index) => (
+                            <li key={index} className="flex items-start gap-2 text-xs">
+                              <span className="text-red-500 font-bold mt-0.5">•</span>
+                              <span className="text-muted-foreground">{test}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               ))}
