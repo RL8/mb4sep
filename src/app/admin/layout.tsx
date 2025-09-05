@@ -25,6 +25,12 @@ const navigationItems = [
     icon: '🚀'
   },
   {
+    id: 'pattern-analysis',
+    label: 'Pattern Analysis',
+    href: '/admin/pattern-analysis',
+    icon: '🔍'
+  },
+  {
     id: 'gallery',
     label: 'Gallery',
     href: '/admin/gallery',

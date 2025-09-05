@@ -14,6 +14,8 @@ export interface AppSection {
     improvements: string[];
     dependencies: string[];
     testing: string[];
+    sharedComponents: string[];
+    userJourney: string[];
   };
 }
 
@@ -37,7 +39,9 @@ export const appSpecification: AppSection[] = [
       current: ['Next.js 15 App Router', 'TypeScript', 'shadcn/ui components', 'Responsive design'],
       improvements: ['Error boundaries with react-error-boundary', 'Lazy loading with dynamic imports', 'SEO optimization with Next.js metadata', 'Performance monitoring with web-vitals'],
       dependencies: ['react-error-boundary', 'web-vitals', 'next/dynamic', 'next-seo'],
-      testing: ['Component tests with @testing-library/react', 'E2E tests with Playwright', 'Accessibility tests with @axe-core/react']
+      testing: ['Component tests with @testing-library/react', 'E2E tests with Playwright', 'Accessibility tests with @axe-core/react'],
+      sharedComponents: ['Button', 'Card', 'Navigation', 'LoadingSpinner'],
+      userJourney: ['Entry point for all user flows', 'Artist selection and navigation hub']
     }
   },
   {
@@ -94,7 +98,9 @@ export const appSpecification: AppSection[] = [
       current: ['React state management', 'Component composition', 'Grid layout system'],
       improvements: ['Drag-and-drop with @dnd-kit/core', 'Keyboard navigation with focus-trap-react', 'Mobile optimization with touch events', 'Data caching with @tanstack/react-query'],
       dependencies: ['@dnd-kit/core', 'focus-trap-react', '@tanstack/react-query'],
-      testing: ['Grid interaction tests', 'Drag-and-drop tests', 'Keyboard navigation tests', 'Mobile touch tests']
+      testing: ['Grid interaction tests', 'Drag-and-drop tests', 'Keyboard navigation tests', 'Mobile touch tests'],
+      sharedComponents: ['GridLayout', 'DraggableItem', 'DropZone', 'RankingCard', 'TabNavigation'],
+      userJourney: ['Core research and ranking experience', 'Hub for all discography interactions']
     },
     children: [
       {
@@ -344,7 +350,9 @@ export const appSpecification: AppSection[] = [
       current: ['Status tracking system', 'Navigation structure'],
       improvements: ['Activity tracking with basic metrics', 'Navigation state management'],
       dependencies: ['@tanstack/react-query'],
-      testing: ['Navigation tests', 'Activity tracking tests']
+      testing: ['Navigation tests', 'Activity tracking tests'],
+      sharedComponents: ['ActivityCard', 'StatusIndicator', 'NavigationMenu', 'CategoryGrid'],
+      userJourney: ['Community engagement hub', 'Connects to all social features']
     },
     children: [
       {

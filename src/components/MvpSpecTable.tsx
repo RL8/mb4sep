@@ -23,7 +23,9 @@ export default function MvpSpecTable() {
         current: ['Next.js 15 App Router', 'TypeScript', 'shadcn/ui components', 'Responsive design'],
         improvements: ['Error boundaries with react-error-boundary', 'Lazy loading with dynamic imports', 'SEO optimization with Next.js metadata', 'Performance monitoring with web-vitals'],
         dependencies: ['react-error-boundary', 'web-vitals', 'next/dynamic'],
-        testing: ['Component tests with @testing-library/react', 'E2E tests with Playwright', 'Accessibility tests with @axe-core/react']
+        testing: ['Component tests with @testing-library/react', 'E2E tests with Playwright', 'Accessibility tests with @axe-core/react'],
+        sharedComponents: ['Button', 'Card', 'LoadingSpinner'],
+        userJourney: ['Entry point for all user flows', 'Connects to ranking and prediction features']
       }
     },
     {
@@ -45,7 +47,9 @@ export default function MvpSpecTable() {
         current: ['React state management', 'Touch-optimized interactions', 'Visual feedback animations'],
         improvements: ['Drag-and-drop with @dnd-kit/core', 'Optimistic updates with @tanstack/react-query', 'Keyboard navigation with focus-trap-react'],
         dependencies: ['@dnd-kit/core', '@tanstack/react-query', 'focus-trap-react'],
-        testing: ['Drag-and-drop interaction tests', 'State management tests', 'Keyboard navigation tests', 'Touch interaction tests']
+        testing: ['Drag-and-drop interaction tests', 'State management tests', 'Keyboard navigation tests', 'Touch interaction tests'],
+        sharedComponents: ['DraggableItem', 'DropZone', 'ProgressBar', 'RankingCard'],
+        userJourney: ['Core ranking experience', 'Connects to knowledge base and sharing']
       }
     },
     {
@@ -67,7 +71,9 @@ export default function MvpSpecTable() {
         current: ['Static data management', 'Basic search functionality'],
         improvements: ['Image optimization with Next.js Image', 'Caching with @tanstack/react-query', 'Data validation with zod', 'API layer with Next.js API routes'],
         dependencies: ['next/image', '@tanstack/react-query', 'zod'],
-        testing: ['Image loading tests', 'Cache invalidation tests', 'API endpoint tests', 'Data validation tests']
+        testing: ['Image loading tests', 'Cache invalidation tests', 'API endpoint tests', 'Data validation tests'],
+        sharedComponents: ['SearchInput', 'DataCard', 'ImageOptimized', 'LoadingState'],
+        userJourney: ['Research tool for ranking decisions', 'Connects to ranking interface']
       }
     },
     {
@@ -91,7 +97,9 @@ export default function MvpSpecTable() {
         current: ['Form validation', 'Character counting', 'Basic CRUD operations'],
         improvements: ['Auto-save with react-hook-form + debouncing', 'Form validation with zod', 'Character counting with visual feedback'],
         dependencies: ['react-hook-form', 'zod', '@hookform/resolvers'],
-        testing: ['Form validation tests', 'Auto-save functionality tests', 'Character counting tests']
+        testing: ['Form validation tests', 'Auto-save functionality tests', 'Character counting tests'],
+        sharedComponents: ['FormField', 'TextArea', 'CharacterCounter', 'SaveButton'],
+        userJourney: ['Personal content creation', 'Connects to sharing and community features']
       }
     },
     {
@@ -113,7 +121,9 @@ export default function MvpSpecTable() {
         current: ['URL generation', 'Social media meta tags'],
         improvements: ['Open Graph with next-seo', 'Link expiration with database timestamps'],
         dependencies: ['next-seo'],
-        testing: ['URL generation tests', 'Meta tag validation tests', 'Link expiration tests']
+        testing: ['URL generation tests', 'Meta tag validation tests', 'Link expiration tests'],
+        sharedComponents: ['ShareButton', 'LinkPreview', 'SocialIcons'],
+        userJourney: ['Viral growth mechanism', 'Connects to all ranking and content features']
       }
     },
     {
@@ -135,7 +145,9 @@ export default function MvpSpecTable() {
         current: ['Basic payment integration'],
         improvements: ['Stripe integration with @stripe/stripe-js', 'Feature gating with middleware'],
         dependencies: ['@stripe/stripe-js'],
-        testing: ['Payment flow tests', 'Feature gating tests']
+        testing: ['Payment flow tests', 'Feature gating tests'],
+        sharedComponents: ['PaymentButton', 'FeatureGate', 'UpgradePrompt'],
+        userJourney: ['Conversion point from free to premium', 'Unlocks advanced features']
       }
     },
     {
@@ -157,7 +169,9 @@ export default function MvpSpecTable() {
         current: ['Form handling', 'Data persistence'],
         improvements: ['Simple prediction logic with heuristics', 'Basic gamification elements', 'Data persistence with @tanstack/react-query'],
         dependencies: ['@tanstack/react-query'],
-        testing: ['Prediction logic tests', 'Gamification tests', 'Data persistence tests']
+        testing: ['Prediction logic tests', 'Gamification tests', 'Data persistence tests'],
+        sharedComponents: ['PredictionForm', 'ConfidenceDisplay', 'GamificationBadge'],
+        userJourney: ['Engagement hook for new users', 'Connects to ranking and sharing']
       }
     },
     {
@@ -179,7 +193,9 @@ export default function MvpSpecTable() {
         current: ['Basic user profiles', 'Public/private content'],
         improvements: ['Authentication with NextAuth.js', 'Profile management with React state', 'Privacy controls with basic permissions'],
         dependencies: ['next-auth'],
-        testing: ['Authentication flow tests', 'Profile management tests', 'Privacy control tests']
+        testing: ['Authentication flow tests', 'Profile management tests', 'Privacy control tests'],
+        sharedComponents: ['UserProfile', 'PrivacyToggle', 'PublicBadge'],
+        userJourney: ['Social features foundation', 'Connects to sharing and community']
       }
     },
     {
@@ -201,7 +217,9 @@ export default function MvpSpecTable() {
         current: ['Basic data storage'],
         improvements: ['Data export with simple CSV format', 'Activity tracking with basic metrics'],
         dependencies: ['csv-writer'],
-        testing: ['Export functionality tests', 'Activity tracking tests']
+        testing: ['Export functionality tests', 'Activity tracking tests'],
+        sharedComponents: ['DataExport', 'ActivityTimeline', 'HistoryCard'],
+        userJourney: ['User retention and engagement', 'Connects to all user activities']
       }
     },
     {
@@ -223,7 +241,9 @@ export default function MvpSpecTable() {
         current: ['Basic authentication'],
         improvements: ['OAuth with NextAuth.js providers', 'Session management with JWT', 'Password reset with secure tokens'],
         dependencies: ['next-auth', 'jsonwebtoken', 'nodemailer'],
-        testing: ['OAuth flow tests', 'Session management tests', 'Password reset tests']
+        testing: ['OAuth flow tests', 'Session management tests', 'Password reset tests'],
+        sharedComponents: ['LoginForm', 'AuthProvider', 'SessionManager'],
+        userJourney: ['Foundation for all user features', 'Enables personalization and data persistence']
       }
     }
   ];
@@ -285,6 +305,7 @@ export default function MvpSpecTable() {
                 <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Purpose & Design</th>
                 <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Content/Functionality</th>
                 <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Technical Implementation</th>
+                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide">Pattern Analysis</th>
               </tr>
             </thead>
             <tbody>
@@ -371,6 +392,34 @@ export default function MvpSpecTable() {
                             <li key={index} className="flex items-start gap-2 text-xs">
                               <span className="text-red-500 font-bold mt-0.5">•</span>
                               <span className="text-muted-foreground">{test}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    <div className="space-y-3">
+                      {/* Shared Components */}
+                      <div>
+                        <h4 className="text-sm font-semibold text-blue-700 mb-2">🧩 Shared Components</h4>
+                        <div className="flex flex-wrap gap-1">
+                          {section.technicalPractices.sharedComponents.map((component, index) => (
+                            <span key={index} className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                              {component}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* User Journey */}
+                      <div>
+                        <h4 className="text-sm font-semibold text-green-700 mb-2">🛤️ User Journey</h4>
+                        <ul className="space-y-1">
+                          {section.technicalPractices.userJourney.map((journey, index) => (
+                            <li key={index} className="flex items-start gap-2 text-xs">
+                              <span className="text-green-500 font-bold mt-0.5">•</span>
+                              <span className="text-muted-foreground">{journey}</span>
                             </li>
                           ))}
                         </ul>

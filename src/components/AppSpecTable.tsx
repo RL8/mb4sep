@@ -142,6 +142,40 @@ export default function AppSpecTable({ className }: AppSpecTableProps) {
           </div>
         )}
       </td>
+      <td className="p-4">
+        {section.technicalPractices ? (
+          <div className="space-y-3">
+            {/* Shared Components */}
+            <div>
+              <h4 className="text-sm font-semibold text-blue-700 mb-2">🧩 Shared Components</h4>
+              <div className="flex flex-wrap gap-1">
+                {section.technicalPractices.sharedComponents.map((component, index) => (
+                  <span key={index} className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                    {component}
+                  </span>
+                ))}
+              </div>
+            </div>
+            
+            {/* User Journey */}
+            <div>
+              <h4 className="text-sm font-semibold text-green-700 mb-2">🛤️ User Journey</h4>
+              <ul className="space-y-1">
+                {section.technicalPractices.userJourney.map((journey, index) => (
+                  <li key={index} className="flex items-start gap-2 text-xs">
+                    <span className="text-green-500 font-bold mt-0.5">•</span>
+                    <span className="text-muted-foreground">{journey}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : (
+          <div className="text-xs text-muted-foreground italic">
+            Pattern analysis not yet defined
+          </div>
+        )}
+      </td>
     </tr>
   );
 
@@ -189,6 +223,9 @@ export default function AppSpecTable({ className }: AppSpecTableProps) {
                 </th>
                 <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Technical Best Practices
+                </th>
+                <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  Pattern Analysis
                 </th>
               </tr>
             </thead>
