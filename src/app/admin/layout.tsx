@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { AdminSecurity } from '@/components/AdminSecurity';
 
 const navigationItems = [
   {
@@ -36,6 +37,12 @@ const navigationItems = [
     label: 'Gallery',
     href: '/admin/gallery',
     icon: '🎨'
+  },
+  {
+    id: 'analytics',
+    label: 'Analytics',
+    href: '/admin/analytics',
+    icon: '📈'
   }
 ];
 
@@ -64,9 +71,10 @@ export default function AdminLayout({
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Top Navigation Bar - Always Visible */}
-      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm">
+    <AdminSecurity>
+      <div className="min-h-screen bg-background">
+        {/* Top Navigation Bar - Always Visible */}
+        <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm">
         <div className="flex items-center justify-between px-6 py-3">
           {/* Logo and Title */}
           <div className="flex items-center gap-3">
@@ -182,5 +190,6 @@ export default function AdminLayout({
         )}
       </main>
     </div>
+    </AdminSecurity>
   );
 }

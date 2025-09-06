@@ -350,6 +350,34 @@ export const appSpecification: AppSection[] = [
               testing: ['Audio feature calculation tests', 'Chart rendering tests', 'Audio playback tests'],
               sharedComponents: ['AudioChart', 'FeatureSelector', 'AudioPreview', 'PlaylistGenerator'],
               userJourney: ['Analyze musical characteristics', 'Discover songs by audio features']
+            },
+            databaseIntegration: {
+              dataSources: [
+                { name: 'songs', verified: true, type: 'table' },
+                { name: 'audio_features', verified: false, type: 'table' },
+                { name: 'spotify_api', verified: false, type: 'external' }
+              ],
+              queryPatterns: ['audio_feature_queries', 'correlation_analysis', 'playlist_generation'],
+              securityLevel: 'public',
+              performance: ['indexed_audio_queries', 'cached_feature_data'],
+              caching: ['audio_feature_cache', 'correlation_matrix']
+            },
+            testingRequirements: {
+              coreTests: [
+                'Audio feature calculations are accurate',
+                'Charts display audio data correctly',
+                'Audio preview functionality works'
+              ],
+              userFlowTests: [
+                'Users can filter by audio features',
+                'Feature comparison interface is intuitive',
+                'Playlist generation produces relevant results'
+              ],
+              mobileTests: [
+                'Audio features load quickly on mobile',
+                'Charts are touch-friendly',
+                'Audio previews work on mobile devices'
+              ]
             }
           }
         ]
@@ -644,17 +672,6 @@ export const appSpecification: AppSection[] = [
       testing: ['Navigation tests', 'Activity tracking tests'],
       sharedComponents: ['ActivityCard', 'StatusIndicator', 'NavigationMenu', 'CategoryGrid'],
       userJourney: ['Community engagement hub', 'Connects to all social features']
-    },
-    databaseIntegration: {
-      dataSources: [
-        { name: 'community_activities', verified: false, type: 'table' },
-        { name: 'user_engagement', verified: false, type: 'table' },
-        { name: 'activity_status', verified: false, type: 'table' }
-      ],
-      queryPatterns: ['activity_aggregation', 'user_participation', 'status_tracking'],
-      securityLevel: 'authenticated',
-      performance: ['lazy_loaded_activities', 'cached_status'],
-      caching: ['react_query', 'local_storage']
     },
     testingRequirements: {
       coreTests: [

@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { SecurityStatus } from '@/components/AdminSecurity';
 import Link from 'next/link';
 
 // Mock data for section summaries - in a real app, this would come from a database or API
@@ -64,6 +65,21 @@ const sectionSummaries = [
       lastUpdate: 'Auto'
     },
     recentActivity: 'Gallery auto-updates when components/ui directory changes'
+  },
+  {
+    id: 'analytics',
+    title: 'User Analytics',
+    description: 'Monitor user engagement and leaderboards',
+    icon: '📈',
+    href: '/admin/analytics',
+    lastEdited: '2024-12-19T11:15:00Z',
+    status: 'active',
+    stats: {
+      totalUsers: 1247,
+      activeUsers: 89,
+      totalActivities: 342
+    },
+    recentActivity: 'Implemented user activity tracking and leaderboard system'
   }
 ];
 
@@ -102,6 +118,9 @@ export default function AdminDashboard() {
           Development tools and project overview for Music Besties
         </p>
       </div>
+
+      {/* Security Status */}
+      <SecurityStatus />
 
       {/* Section Summaries */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
