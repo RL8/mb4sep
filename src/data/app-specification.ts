@@ -27,7 +27,7 @@ export interface AppSection {
     dataSources: Array<{
       name: string;
       verified: boolean;
-      type?: 'table' | 'view' | 'function';
+      type?: 'table' | 'view' | 'function' | 'external';
     }>;
     queryPatterns: string[];
     securityLevel: 'public' | 'authenticated' | 'premium-only' | 'admin-only';

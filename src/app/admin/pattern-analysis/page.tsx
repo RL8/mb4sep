@@ -6,7 +6,7 @@ export default function PatternAnalysisPage() {
       <div>
         <h1 className="text-3xl font-bold">Pattern Analysis</h1>
         <p className="text-muted-foreground mt-2">
-          Cross-feature analysis of component reuse, interaction patterns, and consistency across MVP and App Specification
+          Cross-feature analysis of component reuse, interaction patterns, and consistency across the application specification
         </p>
       </div>
       
