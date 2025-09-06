@@ -20,13 +20,13 @@ export function AdminSecurity({ children }: AdminSecurityProps) {
     const checkAuth = () => {
       const isProduction = process.env.NODE_ENV === 'production';
       
-      if (!isProduction) {
-        // In development, allow access
-        setIsAuthenticated(true);
-        setIsLoading(false);
-        return;
-      }
+      // TEMPORARILY DISABLED: Allow access in both development and production
+      // TODO: Re-enable authentication when ready
+      setIsAuthenticated(true);
+      setIsLoading(false);
+      return;
 
+      /* DISABLED AUTHENTICATION CODE - Re-enable when needed
       // In production, check for valid admin session
       const adminToken = document.cookie
         .split('; ')
@@ -55,6 +55,7 @@ export function AdminSecurity({ children }: AdminSecurityProps) {
       } else {
         setIsAuthenticated(false);
       }
+      */
       
       setIsLoading(false);
     };

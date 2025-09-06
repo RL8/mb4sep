@@ -4,9 +4,14 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   // Check if the request is for admin routes (but exclude login page)
   if (request.nextUrl.pathname.startsWith('/admin') && request.nextUrl.pathname !== '/admin/login') {
+    // TEMPORARILY DISABLED: Skip authentication in both development and production
+    // TODO: Re-enable authentication when ready
+    // Just add security headers and continue
+    
     // In production, implement proper authentication
     const isProduction = process.env.NODE_ENV === 'production'
     
+    /* DISABLED AUTHENTICATION CODE - Re-enable when needed
     if (isProduction) {
       // Check for admin authentication
       const adminToken = request.cookies.get('admin-token')
@@ -23,6 +28,7 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/admin/login', request.url))
       }
     }
+    */
     
     // Add security headers for admin routes
     const response = NextResponse.next()
