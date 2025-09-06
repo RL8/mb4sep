@@ -301,6 +301,34 @@ export const appSpecification: AppSection[] = [
               testing: ['Text analysis accuracy tests', 'Data visualization tests', 'Performance tests for large text datasets'],
               sharedComponents: ['DataChart', 'CharacteristicSelector', 'NumericalDisplay', 'ExportButton'],
               userJourney: ['Analyze lyrical patterns across albums', 'Compare textual characteristics']
+            },
+            databaseIntegration: {
+              dataSources: [
+                { name: 'songs', verified: true, type: 'table' },
+                { name: 'lyrics_analysis', verified: false, type: 'table' },
+                { name: 'text_metrics', verified: false, type: 'view' }
+              ],
+              queryPatterns: ['text_analysis_queries', 'aggregated_metrics', 'pattern_matching'],
+              securityLevel: 'public',
+              performance: ['indexed_text_search', 'cached_analysis_results'],
+              caching: ['analysis_cache', 'computed_metrics']
+            },
+            testingRequirements: {
+              coreTests: [
+                'Text analysis algorithms produce accurate results',
+                'Lyrical characteristic calculations are consistent',
+                'Data visualization renders correctly'
+              ],
+              userFlowTests: [
+                'Users can filter albums by lyrical characteristics',
+                'Grid updates show correct numerical values',
+                'Export functionality works properly'
+              ],
+              mobileTests: [
+                'Text analysis performs well on mobile devices',
+                'Charts are readable on small screens',
+                'Touch interactions work smoothly'
+              ]
             }
           },
           {
@@ -616,6 +644,34 @@ export const appSpecification: AppSection[] = [
       testing: ['Navigation tests', 'Activity tracking tests'],
       sharedComponents: ['ActivityCard', 'StatusIndicator', 'NavigationMenu', 'CategoryGrid'],
       userJourney: ['Community engagement hub', 'Connects to all social features']
+    },
+    databaseIntegration: {
+      dataSources: [
+        { name: 'community_activities', verified: false, type: 'table' },
+        { name: 'user_engagement', verified: false, type: 'table' },
+        { name: 'activity_status', verified: false, type: 'table' }
+      ],
+      queryPatterns: ['activity_aggregation', 'user_participation', 'status_tracking'],
+      securityLevel: 'authenticated',
+      performance: ['lazy_loaded_activities', 'cached_status'],
+      caching: ['react_query', 'local_storage']
+    },
+    testingRequirements: {
+      coreTests: [
+        'Navigation between activity categories works',
+        'Status indicators display correctly',
+        'Activity cards render properly'
+      ],
+      userFlowTests: [
+        'Users can navigate between different activity types',
+        'Status updates are reflected in real-time',
+        'Community engagement tracking works'
+      ],
+      mobileTests: [
+        'Mobile navigation is smooth',
+        'Activity cards are touch-friendly',
+        'Status indicators are visible on small screens'
+      ]
     },
     databaseIntegration: {
       dataSources: [

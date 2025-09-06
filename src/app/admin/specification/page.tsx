@@ -5,11 +5,15 @@ import UnifiedSpecTable from '@/components/UnifiedSpecTable';
 import AppSpecFlowchart from '@/components/AppSpecFlowchart';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { MvpProvider, useMvp } from '@/contexts/MvpContext';
 
 type ViewType = 'table' | 'flowchart';
+type ViewMode = 'all' | 'mvp' | 'comparison';
 
-export default function DocumentationPage() {
+function SpecificationContent() {
   const [activeView, setActiveView] = useState<ViewType>('table');
+  const [viewMode, setViewMode] = useState<ViewMode>('all');
+  const { mvpCount, allSectionsCount } = useMvp();
 
   return (
     <div className="min-h-screen bg-background">
@@ -23,8 +27,29 @@ export default function DocumentationPage() {
           </p>
         </div>
 
-        {/* View Toggle */}
-        <div className="flex justify-center mb-8">
+        {/* MVP Stats Overview */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <Card className="p-4 text-center">
+            <div className="text-2xl font-bold text-primary mb-1">{allSectionsCount}</div>
+            <div className="text-sm text-muted-foreground">Total Features</div>
+          </Card>
+          <Card className="p-4 text-center">
+            <div className="text-2xl font-bold text-primary mb-1">{mvpCount}</div>
+            <div className="text-sm text-muted-foreground">MVP Features</div>
+          </Card>
+          <Card className="p-4 text-center">
+            <div className="text-2xl font-bold text-primary mb-1">{allSectionsCount - mvpCount}</div>
+            <div className="text-sm text-muted-foreground">Future Features</div>
+          </Card>
+          <Card className="p-4 text-center">
+            <div className="text-2xl font-bold text-primary mb-1">{Math.round((mvpCount / allSectionsCount) * 100)}%</div>
+            <div className="text-sm text-muted-foreground">MVP Coverage</div>
+          </Card>
+        </div>
+
+        {/* View and Mode Toggles */}
+        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+          {/* View Toggle */}
           <Card className="p-1">
             <div className="flex gap-1">
               <Button
@@ -43,13 +68,40 @@ export default function DocumentationPage() {
               </Button>
             </div>
           </Card>
+
+          {/* MVP Mode Toggle */}
+          <Card className="p-1">
+            <div className="flex gap-1">
+              <Button
+                variant={viewMode === 'all' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setViewMode('all')}
+              >
+                All Features
+              </Button>
+              <Button
+                variant={viewMode === 'mvp' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setViewMode('mvp')}
+              >
+                MVP Only
+              </Button>
+              <Button
+                variant={viewMode === 'comparison' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setViewMode('comparison')}
+              >
+                MVP Toggle
+              </Button>
+            </div>
+          </Card>
         </div>
 
         {/* Content */}
         {activeView === 'table' ? (
-          <UnifiedSpecTable />
+          <UnifiedSpecTable viewMode={viewMode} />
         ) : (
-          <AppSpecFlowchart />
+          <AppSpecFlowchart viewMode={viewMode} />
         )}
 
         {/* Footer */}
@@ -64,5 +116,13 @@ export default function DocumentationPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function DocumentationPage() {
+  return (
+    <MvpProvider>
+      <SpecificationContent />
+    </MvpProvider>
   );
 }

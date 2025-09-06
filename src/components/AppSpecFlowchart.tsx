@@ -4,6 +4,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useMvp } from '@/contexts/MvpContext';
 
 // Dynamically import MermaidDiagram with SSR disabled
 const MermaidDiagram = dynamic(() => import('@/components/MermaidDiagram'), {
@@ -20,12 +21,14 @@ const MermaidDiagram = dynamic(() => import('@/components/MermaidDiagram'), {
 
 interface AppSpecFlowchartProps {
   className?: string;
+  viewMode: 'all' | 'mvp' | 'comparison';
 }
 
 type DiagramType = 'main' | 'explore' | 'rank' | 'match' | 'connect';
 
-export default function AppSpecFlowchart({ className }: AppSpecFlowchartProps) {
+export default function AppSpecFlowchart({ className, viewMode }: AppSpecFlowchartProps) {
   const [activeDiagram, setActiveDiagram] = useState<DiagramType>('main');
+  // Removed unused mvpIncluded variable
 
   const generateMainFlowMermaid = () => {
     return `
@@ -249,6 +252,16 @@ flowchart TD
             </Button>
           </div>
         </div>
+
+        {/* View Mode Indicator */}
+        {viewMode === 'mvp' && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <h3 className="font-semibold text-green-900 mb-2">🎯 MVP Mode Active</h3>
+            <p className="text-sm text-green-800">
+              Showing only MVP features in the flowchart. Switch to &quot;All Features&quot; or &quot;MVP Toggle&quot; to see the complete specification.
+            </p>
+          </div>
+        )}
 
         {/* Diagram */}
         <div className="text-center">

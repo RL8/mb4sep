@@ -2,14 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
+import { Button } from '@/components/ui/button'
 
-interface TableSchema {
-  table_name: string
-  column_name: string
-  data_type: string
-  is_nullable: string
-  column_default: string | null
-}
+// Removed unused TableSchema interface
 
 interface SchemaColumn {
   column_name: string
@@ -27,14 +22,16 @@ interface QueryResult {
 const preBuiltQueries = [
   {
     name: 'All Albums',
-    query: 'SELECT * FROM albums ORDER BY year;'
+    query: 'SELECT * FROM albums ORDER BY year;',
+    description: 'Complete list of all Taylor Swift albums'
   },
   {
     name: 'Songs by Album',
     query: `SELECT s.*, a.name as album_name 
 FROM songs s 
 JOIN albums a ON s.album_id = a.id 
-ORDER BY a.name, s.track_number;`
+ORDER BY a.name, s.track_number;`,
+    description: 'All songs with their corresponding album names'
   },
   {
     name: 'Album with Song Counts',
@@ -42,15 +39,47 @@ ORDER BY a.name, s.track_number;`
 FROM albums a 
 LEFT JOIN songs s ON a.id = s.album_id 
 GROUP BY a.id, a.name, a.year, a.color, a.analytics, a.created_at, a.updated_at
-ORDER BY a.year;`
+ORDER BY a.year;`,
+    description: 'Albums with total song counts'
   },
   {
     name: 'Recent Albums (2015+)',
-    query: 'SELECT * FROM albums WHERE year >= 2015 ORDER BY year DESC;'
+    query: 'SELECT * FROM albums WHERE year >= 2015 ORDER BY year DESC;',
+    description: 'Albums released from 2015 onwards'
   },
   {
     name: 'Songs by Duration',
-    query: 'SELECT name, duration, album_id FROM songs ORDER BY duration DESC LIMIT 20;'
+    query: 'SELECT name, duration, album_id FROM songs ORDER BY duration DESC LIMIT 20;',
+    description: 'Longest songs across all albums'
+  },
+  {
+    name: 'User Rankings (Mock)',
+    query: `SELECT 
+  u.username,
+  r.album_id,
+  a.name as album_name,
+  r.rank_position,
+  r.created_at
+FROM user_rankings r
+JOIN users u ON r.user_id = u.id
+JOIN albums a ON r.album_id = a.id
+ORDER BY r.created_at DESC
+LIMIT 50;`,
+    description: 'Recent user album rankings (mock data)'
+  },
+  {
+    name: 'Prediction Activity (Mock)',
+    query: `SELECT 
+  u.username,
+  p.predicted_rank,
+  p.confidence_score,
+  p.created_at
+FROM user_predictions p
+JOIN users u ON p.user_id = u.id
+WHERE p.album_id = 'life-of-a-showgirl'
+ORDER BY p.created_at DESC
+LIMIT 20;`,
+    description: 'User predictions for Life of a Showgirl (mock data)'
   }
 ]
 
@@ -61,16 +90,18 @@ export default function DatabaseAdminPage() {
   const [results, setResults] = useState<QueryResult | null>(null)
   const [isExecuting, setIsExecuting] = useState(false)
   const [queryHistory, setQueryHistory] = useState<string[]>([])
+  const [lastSchemaUpdate, setLastSchemaUpdate] = useState<string>('')
 
   useEffect(() => {
     checkConnection()
     loadSchema()
+    setLastSchemaUpdate(new Date().toISOString())
   }, [])
 
   const checkConnection = async () => {
     try {
       // Test actual database connection and get real schema
-      const { data: tables, error: tablesError } = await supabase
+      const { error: tablesError } = await supabase
         .from('information_schema.tables')
         .select('table_name')
         .eq('table_schema', 'public')
@@ -297,7 +328,38 @@ export default function DatabaseAdminPage() {
 
       {/* Schema Viewer */}
       <div className="bg-white rounded-lg border p-6">
-        <h2 className="text-xl font-semibold mb-4">Database Schema</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold">Database Schema</h2>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={loadSchema}
+              disabled={connectionStatus === 'checking'}
+            >
+              Refresh Schema
+            </Button>
+            {lastSchemaUpdate && (
+              <span className="text-xs text-gray-500">
+                Last updated: {new Date(lastSchemaUpdate).toLocaleTimeString()}
+              </span>
+            )}
+          </div>
+        </div>
+        
+        {/* Schema Status */}
+        <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+            <span className="text-sm font-medium text-blue-900">Schema Status</span>
+          </div>
+          <div className="text-sm text-blue-800">
+            <p>• Core tables: albums, songs (verified)</p>
+            <p>• User tables: users, user_rankings, user_predictions (mock data)</p>
+            <p>• Community tables: reviews, notes, artist_requests (planned)</p>
+          </div>
+        </div>
+
         {Object.keys(schema).length === 0 ? (
           <div className="text-center py-8">
             <div className="text-gray-500 mb-2">No schema information available</div>
@@ -314,6 +376,13 @@ export default function DatabaseAdminPage() {
                   <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
                     {getTableColumns(tableName).length} columns
                   </span>
+                  <span className={`text-xs px-2 py-1 rounded ${
+                    tableName === 'albums' || tableName === 'songs' 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    {tableName === 'albums' || tableName === 'songs' ? 'Verified' : 'Mock Data'}
+                  </span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                   {getTableColumns(tableName).map((column, index) => (
@@ -328,6 +397,19 @@ export default function DatabaseAdminPage() {
                 </div>
               </div>
             ))}
+            
+            {/* Mock Tables Info */}
+            <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <h4 className="font-medium text-yellow-900 mb-2">Mock Tables (Not Yet Implemented)</h4>
+              <div className="text-sm text-yellow-800 space-y-1">
+                <p>• <strong>users:</strong> User accounts and profiles</p>
+                <p>• <strong>user_rankings:</strong> Album and song rankings by users</p>
+                <p>• <strong>user_predictions:</strong> Life of a Showgirl predictions</p>
+                <p>• <strong>reviews:</strong> User reviews and ratings</p>
+                <p>• <strong>notes:</strong> Personal notes and thoughts</p>
+                <p>• <strong>artist_requests:</strong> Community artist requests</p>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -339,14 +421,15 @@ export default function DatabaseAdminPage() {
         {/* Pre-built Queries */}
         <div className="mb-4">
           <h3 className="text-sm font-medium text-gray-700 mb-2">Pre-built Queries:</h3>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {preBuiltQueries.map((preQuery, index) => (
               <button
                 key={index}
                 onClick={() => setQuery(preQuery.query)}
-                className="px-3 py-1 bg-blue-100 text-blue-800 rounded text-sm hover:bg-blue-200"
+                className="p-3 bg-blue-50 border border-blue-200 rounded text-left hover:bg-blue-100 transition-colors"
               >
-                {preQuery.name}
+                <div className="font-medium text-blue-900 text-sm">{preQuery.name}</div>
+                <div className="text-xs text-blue-700 mt-1">{preQuery.description}</div>
               </button>
             ))}
           </div>

@@ -10,8 +10,7 @@ export default function PatternAnalysisTable() {
       category: 'Component Reuse',
       pattern: 'Form Components',
       description: 'Shared form elements across features',
-      mvpUsage: ['Reviews & Notes System', 'User Management', 'Prediction Game'],
-      appSpecUsage: ['Add Your Own Artist', 'Reviews & Notes System', 'User Management'],
+      appSpecUsage: ['Add Your Own Artist', 'Reviews & Notes System', 'User Management', 'Prediction Game'],
       sharedComponents: ['FormField', 'FormButton', 'FormValidation', 'CharacterCounter'],
       dependencies: ['react-hook-form', 'zod', '@hookform/resolvers'],
       consistency: 'High - All forms use same validation and styling patterns'
@@ -21,8 +20,7 @@ export default function PatternAnalysisTable() {
       category: 'Component Reuse',
       pattern: 'Button Components',
       description: 'Consistent button styling and behavior',
-      mvpUsage: ['Landing Page', 'Premium Upgrade', 'Prediction Game', 'Shareable Links'],
-      appSpecUsage: ['Homepage', 'Add Your Own Artist', 'Discography', 'Connect'],
+      appSpecUsage: ['Homepage', 'Add Your Own Artist', 'Discography', 'Connect', 'Premium Upgrade', 'Shareable Links'],
       sharedComponents: ['PrimaryButton', 'SecondaryButton', 'IconButton', 'LoadingButton'],
       dependencies: ['shadcn/ui button component'],
       consistency: 'High - All buttons use shadcn/ui design system'
@@ -32,8 +30,7 @@ export default function PatternAnalysisTable() {
       category: 'UX Patterns',
       pattern: 'Loading States',
       description: 'Consistent loading feedback across features',
-      mvpUsage: ['Prediction Game', 'Ranking Interface', 'Knowledge Base'],
-      appSpecUsage: ['Discography', 'Connect Page', 'Ranking Features'],
+      appSpecUsage: ['Discography', 'Connect Page', 'Ranking Features', 'Prediction Game', 'Knowledge Base'],
       sharedComponents: ['LoadingSpinner', 'ProgressBar', 'SkeletonLoader'],
       dependencies: ['lucide-react', 'framer-motion'],
       consistency: 'Medium - Need standardized loading patterns'
@@ -43,8 +40,7 @@ export default function PatternAnalysisTable() {
       category: 'Interaction Patterns',
       pattern: 'Drag and Drop',
       description: 'Consistent drag-and-drop behavior',
-      mvpUsage: ['Ranking Interface'],
-      appSpecUsage: ['Album Ranking Mode', 'Song Ranking Mode'],
+      appSpecUsage: ['Album Ranking Mode', 'Song Ranking Mode', 'Ranking Interface'],
       sharedComponents: ['DraggableItem', 'DropZone', 'DragHandle'],
       dependencies: ['@dnd-kit/core', '@dnd-kit/sortable'],
       consistency: 'High - Same drag-and-drop logic across ranking features'
@@ -54,7 +50,6 @@ export default function PatternAnalysisTable() {
       category: 'UX Patterns',
       pattern: 'Navigation Patterns',
       description: 'Consistent navigation between features',
-      mvpUsage: ['All MVP features'],
       appSpecUsage: ['Homepage', 'Discography', 'Connect', 'All sub-features'],
       sharedComponents: ['NavItem', 'Breadcrumb', 'BackButton', 'TabNavigation'],
       dependencies: ['next/navigation', 'shadcn/ui navigation components'],
@@ -65,7 +60,6 @@ export default function PatternAnalysisTable() {
       category: 'System Patterns',
       pattern: 'Error Handling',
       description: 'Consistent error display and recovery',
-      mvpUsage: ['All MVP features'],
       appSpecUsage: ['All App Spec features'],
       sharedComponents: ['ErrorBoundary', 'ErrorMessage', 'ErrorFallback', 'RetryButton'],
       dependencies: ['react-error-boundary', '@sentry/nextjs'],
@@ -76,8 +70,7 @@ export default function PatternAnalysisTable() {
       category: 'System Patterns',
       pattern: 'Input Validation',
       description: 'Consistent validation feedback',
-      mvpUsage: ['Reviews & Notes', 'User Management', 'Prediction Game'],
-      appSpecUsage: ['Add Your Own Artist', 'Reviews & Notes', 'User Management'],
+      appSpecUsage: ['Add Your Own Artist', 'Reviews & Notes', 'User Management', 'Prediction Game'],
       sharedComponents: ['ValidationMessage', 'FieldError', 'SuccessMessage'],
       dependencies: ['zod', 'react-hook-form'],
       consistency: 'High - All validation uses zod schemas'
@@ -87,8 +80,7 @@ export default function PatternAnalysisTable() {
       category: 'System Patterns',
       pattern: 'Data Persistence',
       description: 'Consistent data storage and retrieval',
-      mvpUsage: ['Ranking Interface', 'User History', 'Reviews & Notes'],
-      appSpecUsage: ['Ranking Features', 'User Management', 'Reviews & Notes'],
+      appSpecUsage: ['Ranking Features', 'User Management', 'Reviews & Notes', 'User History'],
       sharedComponents: ['useLocalStorage', 'useServerState', 'DataSync'],
       dependencies: ['@tanstack/react-query', 'localStorage'],
       consistency: 'Medium - Need standardized data persistence patterns'
@@ -142,7 +134,7 @@ export default function PatternAnalysisTable() {
       <Card className="overflow-hidden">
         <div className="p-6">
           <h2 className="text-2xl font-semibold mb-2">Cross-Feature Pattern Analysis</h2>
-          <p className="text-muted-foreground mb-6">Analysis of component reuse, interaction patterns, and consistency across MVP and App Specification features</p>
+          <p className="text-muted-foreground mb-6">Analysis of component reuse, interaction patterns, and consistency across App Specification features</p>
         </div>
 
         <div className="overflow-x-auto">
@@ -150,7 +142,7 @@ export default function PatternAnalysisTable() {
             <thead className="bg-muted sticky top-0 z-10">
               <tr>
                 <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Pattern</th>
-                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Usage Across Features</th>
+                <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">App Specification Usage</th>
                 <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Shared Components</th>
                 <th className="text-left p-4 font-semibold text-sm uppercase tracking-wide bg-muted">Consistency</th>
               </tr>
@@ -173,29 +165,16 @@ export default function PatternAnalysisTable() {
                     </div>
                   </td>
                   <td className="p-4">
-                    <div className="space-y-3">
-                      <div>
-                        <h4 className="text-sm font-semibold text-blue-700 mb-2">📱 MVP Usage</h4>
-                        <ul className="space-y-1">
-                          {pattern.mvpUsage.map((usage, index) => (
-                            <li key={index} className="flex items-start gap-2 text-xs">
-                              <span className="text-blue-500 font-bold mt-0.5">•</span>
-                              <span className="text-muted-foreground">{usage}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-semibold text-green-700 mb-2">📋 App Spec Usage</h4>
-                        <ul className="space-y-1">
-                          {pattern.appSpecUsage.map((usage, index) => (
-                            <li key={index} className="flex items-start gap-2 text-xs">
-                              <span className="text-green-500 font-bold mt-0.5">•</span>
-                              <span className="text-muted-foreground">{usage}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                    <div>
+                      <h4 className="text-sm font-semibold text-blue-700 mb-2">📋 App Specification Usage</h4>
+                      <ul className="space-y-1">
+                        {pattern.appSpecUsage.map((usage, index) => (
+                          <li key={index} className="flex items-start gap-2 text-xs">
+                            <span className="text-blue-500 font-bold mt-0.5">•</span>
+                            <span className="text-muted-foreground">{usage}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </td>
                   <td className="p-4">

@@ -1,8 +1,10 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const navigationItems = [
   {
@@ -16,12 +18,6 @@ const navigationItems = [
     label: 'Specification',
     href: '/admin/specification',
     icon: '📋'
-  },
-  {
-    id: 'mvp-docs',
-    label: 'MVP Docs',
-    href: '/admin/mvp-docs',
-    icon: '🚀'
   },
   {
     id: 'pattern-analysis',
@@ -49,6 +45,23 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingPath, setLoadingPath] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Reset loading state when pathname changes
+    setIsLoading(false);
+    setLoadingPath(null);
+  }, [pathname]);
+
+  const handleNavigation = (href: string) => {
+    if (href !== pathname) {
+      setIsLoading(true);
+      setLoadingPath(href);
+      router.push(href);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -71,10 +84,11 @@ export default function AdminLayout({
             {navigationItems.map((item) => {
               const isActive = pathname === item.href;
               return (
-                <Link
+                <button
                   key={item.id}
-                  href={item.href}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  onClick={() => handleNavigation(item.href)}
+                  disabled={isLoading}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${
                     isActive
                       ? 'bg-primary text-primary-foreground'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted'
@@ -82,7 +96,10 @@ export default function AdminLayout({
                 >
                   <span className="text-base">{item.icon}</span>
                   <span className="hidden lg:inline">{item.label}</span>
-                </Link>
+                  {isLoading && loadingPath === item.href && (
+                    <Skeleton className="h-4 w-4 rounded-full" />
+                  )}
+                </button>
               );
             })}
           </nav>
@@ -131,7 +148,38 @@ export default function AdminLayout({
 
       {/* Main content */}
       <main className="p-6">
-        {children}
+        {isLoading ? (
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-4 w-4 rounded-full" />
+              <span className="text-sm text-muted-foreground">Loading...</span>
+            </div>
+            <div className="space-y-4">
+              <Skeleton className="h-8 w-64" />
+              <Skeleton className="h-4 w-96" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="border rounded-lg p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Skeleton className="h-8 w-8 rounded" />
+                      <div>
+                        <Skeleton className="h-5 w-32 mb-1" />
+                        <Skeleton className="h-4 w-48" />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-3/4" />
+                      <Skeleton className="h-4 w-1/2" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          children
+        )}
       </main>
     </div>
   );

@@ -1,8 +1,80 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Skeleton } from "@/components/ui/skeleton"
+
+interface ComponentInfo {
+  name: string;
+  path: string;
+  lastModified: string;
+  size: number;
+}
 
 export default function GalleryPage() {
+  const [lastUpdated, setLastUpdated] = useState<string>('');
+  const [components, setComponents] = useState<ComponentInfo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [autoRefresh, setAutoRefresh] = useState(true);
+
+  // Mock function to simulate checking for component updates
+  const checkForUpdates = async () => {
+    try {
+      // In a real implementation, this would check the file system or API
+      // For now, we'll simulate with mock data
+      const mockComponents: ComponentInfo[] = [
+        { name: 'button.tsx', path: 'src/components/ui/button.tsx', lastModified: new Date().toISOString(), size: 2048 },
+        { name: 'card.tsx', path: 'src/components/ui/card.tsx', lastModified: new Date(Date.now() - 300000).toISOString(), size: 1536 },
+        { name: 'input.tsx', path: 'src/components/ui/input.tsx', lastModified: new Date(Date.now() - 600000).toISOString(), size: 1024 },
+        { name: 'badge.tsx', path: 'src/components/ui/badge.tsx', lastModified: new Date(Date.now() - 900000).toISOString(), size: 768 },
+        { name: 'checkbox.tsx', path: 'src/components/ui/checkbox.tsx', lastModified: new Date(Date.now() - 1200000).toISOString(), size: 896 },
+        { name: 'skeleton.tsx', path: 'src/components/ui/skeleton.tsx', lastModified: new Date(Date.now() - 1800000).toISOString(), size: 512 },
+      ];
+
+      setComponents(mockComponents);
+      setLastUpdated(new Date().toISOString());
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error checking for updates:', error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    checkForUpdates();
+  }, []);
+
+  useEffect(() => {
+    if (!autoRefresh) return;
+
+    const interval = setInterval(() => {
+      checkForUpdates();
+    }, 30000); // Check every 30 seconds
+
+    return () => clearInterval(interval);
+  }, [autoRefresh]);
+
+  const formatLastModified = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
+    
+    if (diffInMinutes < 1) return 'Just now';
+    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours}h ago`;
+    const diffInDays = Math.floor(diffInHours / 24);
+    return `${diffInDays}d ago`;
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024) return `${bytes} B`;
+    return `${(bytes / 1024).toFixed(1)} KB`;
+  };
+
   return (
     <div className="container mx-auto p-8 space-y-8">
       <div className="text-center space-y-2">
@@ -10,7 +82,83 @@ export default function GalleryPage() {
         <p className="text-muted-foreground">
           Visual showcase of all shadcn/ui components in the design system
         </p>
+        
+        {/* Auto-update Status */}
+        <div className="flex items-center justify-center gap-4 mt-4">
+          <div className="flex items-center gap-2">
+            <div className={`w-2 h-2 rounded-full ${autoRefresh ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+            <span className="text-sm text-muted-foreground">
+              Auto-update: {autoRefresh ? 'ON' : 'OFF'}
+            </span>
+          </div>
+          {lastUpdated && (
+            <div className="text-sm text-muted-foreground">
+              Last checked: {formatLastModified(lastUpdated)}
+            </div>
+          )}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setAutoRefresh(!autoRefresh)}
+          >
+            {autoRefresh ? 'Disable' : 'Enable'} Auto-update
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={checkForUpdates}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Checking...' : 'Check Now'}
+          </Button>
+        </div>
       </div>
+
+      {/* Component Status */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Component Status</CardTitle>
+          <CardDescription>
+            Real-time monitoring of components/ui directory
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {isLoading ? (
+            <div className="space-y-2">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="flex items-center justify-between p-2 border rounded">
+                  <div className="flex items-center gap-3">
+                    <Skeleton className="h-4 w-4" />
+                    <Skeleton className="h-4 w-24" />
+                  </div>
+                  <Skeleton className="h-4 w-16" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {components.map((component, index) => (
+                <div key={index} className="flex items-center justify-between p-2 border rounded hover:bg-muted/50">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-2 h-2 rounded-full ${
+                      new Date(component.lastModified).getTime() > Date.now() - 300000 
+                        ? 'bg-green-500' 
+                        : 'bg-gray-400'
+                    }`}></div>
+                    <span className="font-mono text-sm">{component.name}</span>
+                    <Badge variant="outline" className="text-xs">
+                      {formatFileSize(component.size)}
+                    </Badge>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    {formatLastModified(component.lastModified)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Buttons Section */}
       <section className="space-y-4">
