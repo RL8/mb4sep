@@ -1,0 +1,34 @@
+03:27 AM
+The contents of the current dashboard are not very useful. I think what might be more useful is just to pretty much have summaries of each of the items on the top navigation bar which would focus on whatever is essential to know concisely about that particular section. One piece of data that will be helpful is to know when that particular document or section was last edited.
+03:25 AM
+Here are some elements of the app we haven't discussed but are still required. First and foremost is the sharing functionality. Or one pillar of the sharing aspect is the ability to share your user profile so to speak with others. Therefore, we would need like a almost like a home page, like individual links so that people can show off their information to their friends and family.
+03:23 AM
+There are still some items, other specifications that don't show or rather that show that there is missing information, basically. Where things are not yet defined which are mainly affecting the database integration and testing requirements columns. Please provide a list although it does expand to other columns for specific items. So anyway please provide a plan for filling in all the missing cells.
+03:21 AM
+How to keep the admin panel safe when the website is deployed?
+03:21 AM
+Audio is silent.
+03:20 AM
+Do we have a plan for monitoring usage by the users as way of creating some sort of leaderboard or incentive?
+03:17 AM
+The gallery tab on the admin refers to the contents of components/ui I think. Therefore it is important that it is updated frequently as in when that page is updated. So perhaps the last updated This graphic might be helpful on that page but there's wider pictures on that. It would be worth considering how that is monitored and implemented to keep the gallery page relevant and updated almost real-time.
+03:16 AM
+The database admin view does not seem to have been updated with the latest schema and other features discussed recently.
+03:15 AM
+When toggling between the main navigation on the admin panel there is sometimes a slight delay in the page loading. Can we utilise shadow shadow UI or whatever it's called so that the user is aware that changes are taking place to the page whilst you wait?
+03:14 AM
+for web app improvement
+03:13 AM
+Review the following items and see how we can fit them into our specifications for the app before editing show me what your proposals are
+03:12 AM
+On the Pattern Analysis table, the MVP usage there is referring to the MVP docs, which we have said we are deleting. Therefore, we would need to update this source. And I don't think it's necessary. We actually don't need to mention the MVP on Pattern Analysis. It is just to be focused on this overall specification.
+03:10 AM
+One of the page navigations is to MVP Docs, that has now been superseded by the MVP Under Specification. Therefore, please can you remove MVP Docs as an option on the main menu. And of course, anywhere else it is appearing on the website. And of course, this table, and all the contents under that section.
+03:09 AM
+Regarding the All features MVP only and MVP Toggle, these should not only affect the table view but also the flowchart view. Therefore perhaps it's better to change the location of those buttons so that they serve both the table view and the flow chart view
+03:08 AM
+So on the table view if I toggle MVP the cards at the top which are like a summary are getting updated but the number of rows is not increasing to match what has been toggled even though the sort of summary cards are demonstrating that it is toggled
+03:07 AM
+For all specification tables, the column, not column but the row height is becoming a bit too much. I would suggest having a fixed width and then the ability to toggle it to open it fully.
+03:06 AM
+On the Admin panel, under Specification, Table View. You have some Toggle buttons there all features MVP Only and MVP Toggle. Now, my understanding is that when you are MVP Only, there is a summary card. But they are not changing dynamically with the ticking. In other words ticking things on the MVP toggle is not resulting in them being added to MVP Only which I thought was the idea.

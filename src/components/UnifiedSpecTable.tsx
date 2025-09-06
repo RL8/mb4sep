@@ -1,14 +1,54 @@
 'use client';
 
-import { appSpecification, getAllSections, AppSection } from '@/data/app-specification';
+import { useState } from 'react';
+import { appSpecification, getAllSections, getMvpSections, AppSection } from '@/data/app-specification';
 import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 
-interface AppSpecTableProps {
+interface UnifiedSpecTableProps {
   className?: string;
 }
 
-export default function AppSpecTable({ className }: AppSpecTableProps) {
-  const allSections = getAllSections();
+type ViewMode = 'all' | 'mvp' | 'comparison';
+
+export default function UnifiedSpecTable({ className }: UnifiedSpecTableProps) {
+  const [viewMode, setViewMode] = useState<ViewMode>('all');
+  const [mvpIncluded, setMvpIncluded] = useState<Record<string, boolean>>({});
+
+  // Initialize MVP state from data
+  const initializeMvpState = () => {
+    const allSections = getAllSections();
+    const state: Record<string, boolean> = {};
+    allSections.forEach(section => {
+      state[section.id] = section.mvpIncluded || false;
+    });
+    return state;
+  };
+
+  // Initialize state on first render
+  if (Object.keys(mvpIncluded).length === 0) {
+    setMvpIncluded(initializeMvpState());
+  }
+
+  const handleMvpToggle = (sectionId: string, checked: boolean) => {
+    setMvpIncluded(prev => ({
+      ...prev,
+      [sectionId]: checked
+    }));
+  };
+
+  const getSectionsToDisplay = () => {
+    switch (viewMode) {
+      case 'mvp':
+        return getMvpSections();
+      case 'comparison':
+        return getAllSections();
+      default:
+        return getAllSections();
+    }
+  };
 
   const getSectionBadgeClass = (type: AppSection['type']) => {
     switch (type) {
@@ -49,6 +89,25 @@ export default function AppSpecTable({ className }: AppSpecTableProps) {
     }
   };
 
+  const getMvpBadge = (section: AppSection) => {
+    const isIncluded = mvpIncluded[section.id] || section.mvpIncluded;
+    if (viewMode === 'comparison') {
+      return (
+        <div className="flex items-center gap-2">
+          <Checkbox
+            checked={isIncluded}
+            onCheckedChange={(checked) => handleMvpToggle(section.id, checked as boolean)}
+            className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+          />
+          <Badge variant={isIncluded ? "default" : "secondary"} className={isIncluded ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}>
+            {isIncluded ? '✅ MVP' : '⏳ Future'}
+          </Badge>
+        </div>
+      );
+    }
+    return null;
+  };
+
   const renderSection = (section: AppSection) => (
     <tr key={section.id} className="hover:bg-muted/50 transition-colors">
       <td className="p-4">
@@ -61,6 +120,7 @@ export default function AppSpecTable({ className }: AppSpecTableProps) {
               {getStatusIcon(section.status)} {section.status.replace('-', ' ').toUpperCase()}
             </span>
           )}
+          {getMvpBadge(section)}
           <span className="font-semibold text-foreground">{section.title}</span>
         </div>
       </td>
@@ -253,36 +313,131 @@ export default function AppSpecTable({ className }: AppSpecTableProps) {
           </div>
         )}
       </td>
+      <td className="p-4">
+        {section.testingRequirements ? (
+          <div className="space-y-3">
+            {/* Core Tests */}
+            <div>
+              <h4 className="text-sm font-semibold text-blue-700 mb-2">🧪 Core Functionality</h4>
+              <ul className="space-y-1">
+                {section.testingRequirements.coreTests.map((test, index) => (
+                  <li key={index} className="flex items-start gap-2 text-xs">
+                    <span className="text-blue-500 font-bold mt-0.5">•</span>
+                    <span className="text-muted-foreground">{test}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {/* User Flow Tests */}
+            <div>
+              <h4 className="text-sm font-semibold text-green-700 mb-2">🛤️ User Experience</h4>
+              <ul className="space-y-1">
+                {section.testingRequirements.userFlowTests.map((test, index) => (
+                  <li key={index} className="flex items-start gap-2 text-xs">
+                    <span className="text-green-500 font-bold mt-0.5">•</span>
+                    <span className="text-muted-foreground">{test}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {/* Mobile Tests */}
+            <div>
+              <h4 className="text-sm font-semibold text-purple-700 mb-2">📱 Mobile & PWA</h4>
+              <ul className="space-y-1">
+                {section.testingRequirements.mobileTests.map((test, index) => (
+                  <li key={index} className="flex items-start gap-2 text-xs">
+                    <span className="text-purple-500 font-bold mt-0.5">•</span>
+                    <span className="text-muted-foreground">{test}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : (
+          <div className="text-xs text-muted-foreground italic">
+            Testing requirements not yet defined
+          </div>
+        )}
+      </td>
     </tr>
   );
+
+  const sectionsToDisplay = getSectionsToDisplay();
+  const allSections = getAllSections();
+  const mvpSections = getMvpSections();
+  const mvpCount = allSections.filter(s => mvpIncluded[s.id] || s.mvpIncluded).length;
 
   return (
     <div className={className}>
       <Card className="p-6">
         <div className="mb-6">
-          <h2 className="text-2xl font-semibold mb-2">App Specification - Table Format</h2>
-          <p className="text-muted-foreground">Comprehensive workflow documentation with design system integration</p>
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-2xl font-semibold mb-2">Unified App Specification</h2>
+              <p className="text-muted-foreground">Complete workflow documentation with MVP scoping</p>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant={viewMode === 'all' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setViewMode('all')}
+              >
+                All Features
+              </Button>
+              <Button
+                variant={viewMode === 'mvp' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setViewMode('mvp')}
+              >
+                MVP Only
+              </Button>
+              <Button
+                variant={viewMode === 'comparison' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setViewMode('comparison')}
+              >
+                MVP Toggle
+              </Button>
+            </div>
+          </div>
         </div>
 
         {/* Stats Overview */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
           <div className="text-center p-4 bg-muted rounded-lg">
-            <div className="text-2xl font-bold text-primary mb-1">6</div>
-            <div className="text-sm text-muted-foreground">Main Sections</div>
+            <div className="text-2xl font-bold text-primary mb-1">{allSections.length}</div>
+            <div className="text-sm text-muted-foreground">Total Features</div>
           </div>
           <div className="text-center p-4 bg-muted rounded-lg">
-            <div className="text-2xl font-bold text-primary mb-1">3</div>
-            <div className="text-sm text-muted-foreground">Discography Tabs</div>
+            <div className="text-2xl font-bold text-primary mb-1">{mvpCount}</div>
+            <div className="text-sm text-muted-foreground">MVP Features</div>
           </div>
           <div className="text-center p-4 bg-muted rounded-lg">
-            <div className="text-2xl font-bold text-primary mb-1">12</div>
-            <div className="text-sm text-muted-foreground">Connect Activities</div>
+            <div className="text-2xl font-bold text-primary mb-1">{allSections.length - mvpCount}</div>
+            <div className="text-sm text-muted-foreground">Future Features</div>
           </div>
           <div className="text-center p-4 bg-muted rounded-lg">
-            <div className="text-2xl font-bold text-primary mb-1">5</div>
-            <div className="text-sm text-muted-foreground">Ranking Features</div>
+            <div className="text-2xl font-bold text-primary mb-1">{Math.round((mvpCount / allSections.length) * 100)}%</div>
+            <div className="text-sm text-muted-foreground">MVP Coverage</div>
+          </div>
+          <div className="text-center p-4 bg-muted rounded-lg">
+            <div className="text-2xl font-bold text-primary mb-1">{allSections.filter(s => s.testingRequirements).length}</div>
+            <div className="text-sm text-muted-foreground">Test Coverage</div>
           </div>
         </div>
+
+        {/* View Mode Description */}
+        {viewMode === 'comparison' && (
+          <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h3 className="font-semibold text-blue-900 mb-2">🎯 MVP Toggle Mode</h3>
+            <p className="text-sm text-blue-800">
+              Use the checkboxes to include/exclude features from your MVP. This allows you to dynamically scope your MVP 
+              and see the impact on your feature set. Changes are reflected in real-time in the stats above.
+            </p>
+          </div>
+        )}
 
         {/* Table */}
         <div className="overflow-x-auto border rounded-lg">
@@ -290,7 +445,7 @@ export default function AppSpecTable({ className }: AppSpecTableProps) {
             <thead className="bg-muted sticky top-0 z-10">
               <tr>
                 <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider bg-muted">
-                  Section
+                  Section {viewMode === 'comparison' && '(MVP Toggle)'}
                 </th>
                 <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider bg-muted">
                   Purpose & Design
@@ -307,13 +462,91 @@ export default function AppSpecTable({ className }: AppSpecTableProps) {
                 <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider bg-muted">
                   Database Integration
                 </th>
+                <th className="text-left p-3 text-xs font-medium text-muted-foreground uppercase tracking-wider bg-muted">
+                  Testing Requirements
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {allSections.map(renderSection)}
+              {sectionsToDisplay.map(renderSection)}
             </tbody>
           </table>
         </div>
+
+        {/* MVP Summary */}
+        {viewMode === 'comparison' && (
+          <div className="mt-6 space-y-4">
+            <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+              <h3 className="font-semibold text-green-900 mb-2">📋 Current MVP Scope</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <h4 className="font-medium text-green-800 mb-2">✅ Included in MVP ({mvpCount} features):</h4>
+                  <ul className="space-y-1 text-green-700">
+                    {allSections
+                      .filter(s => mvpIncluded[s.id] || s.mvpIncluded)
+                      .slice(0, 5)
+                      .map(section => (
+                        <li key={section.id}>• {section.title}</li>
+                      ))}
+                    {mvpCount > 5 && <li>• ... and {mvpCount - 5} more</li>}
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-medium text-green-800 mb-2">⏳ Future Features ({allSections.length - mvpCount} features):</h4>
+                  <ul className="space-y-1 text-green-700">
+                    {allSections
+                      .filter(s => !(mvpIncluded[s.id] || s.mvpIncluded))
+                      .slice(0, 5)
+                      .map(section => (
+                        <li key={section.id}>• {section.title}</li>
+                      ))}
+                    {(allSections.length - mvpCount) > 5 && <li>• ... and {(allSections.length - mvpCount) - 5} more</li>}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            {/* Testing Summary */}
+            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <h3 className="font-semibold text-blue-900 mb-2">🧪 MVP Testing Strategy</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div>
+                  <h4 className="font-medium text-blue-800 mb-2">🎯 Focus Areas:</h4>
+                  <ul className="space-y-1 text-blue-700">
+                    <li>• Core functionality works</li>
+                    <li>• User flows are intuitive</li>
+                    <li>• Mobile experience is smooth</li>
+                    <li>• PWA installation works</li>
+                    <li>• Payment flow is secure</li>
+                    <li>• Basic accessibility</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-medium text-blue-800 mb-2">⚡ Lean Approach:</h4>
+                  <ul className="space-y-1 text-blue-700">
+                    <li>• 3 test categories per feature</li>
+                    <li>• Focus on user value, not perfection</li>
+                    <li>• Manual testing for MVP launch</li>
+                    <li>• Automated tests for critical paths</li>
+                    <li>• Mobile-first testing priority</li>
+                    <li>• Iterate based on user feedback</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-medium text-blue-800 mb-2">📈 Success Metrics:</h4>
+                  <ul className="space-y-1 text-blue-700">
+                    <li>• {allSections.filter(s => s.testingRequirements).length} features with test plans</li>
+                    <li>• Core user journeys work end-to-end</li>
+                    <li>• Mobile app installs successfully</li>
+                    <li>• Payment flow completes without errors</li>
+                    <li>• Users can complete ranking tasks</li>
+                    <li>• Prediction game is engaging</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </Card>
     </div>
   );

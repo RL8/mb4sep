@@ -9,6 +9,12 @@ export interface AppSection {
   children?: AppSection[];
   color?: string;
   status?: 'active' | 'coming-soon' | 'brainstorming';
+  mvpIncluded?: boolean; // New field for MVP inclusion
+  testingRequirements?: {
+    coreTests: string[];
+    userFlowTests: string[];
+    mobileTests: string[];
+  };
   technicalPractices?: {
     current: string[];
     improvements: string[];
@@ -18,7 +24,11 @@ export interface AppSection {
     userJourney: string[];
   };
   databaseIntegration?: {
-    dataSources: string[];
+    dataSources: Array<{
+      name: string;
+      verified: boolean;
+      type?: 'table' | 'view' | 'function';
+    }>;
     queryPatterns: string[];
     securityLevel: 'public' | 'authenticated' | 'premium-only' | 'admin-only';
     performance: string[];
@@ -42,6 +52,24 @@ export const appSpecification: AppSection[] = [
     type: 'page',
     icon: '📱',
     color: '#e1f5fe',
+    mvpIncluded: true,
+    testingRequirements: {
+      coreTests: [
+        'Homepage renders and navigation works',
+        'Artist selection button leads to Taylor Swift page',
+        'FAB (help button) is functional'
+      ],
+      userFlowTests: [
+        'User can get from homepage to ranking interface',
+        'Clear path to prediction game',
+        'Mobile navigation works smoothly'
+      ],
+      mobileTests: [
+        'Touch targets are large enough (44px minimum)',
+        'Mobile-first responsive design works',
+        'PWA can be installed on mobile'
+      ]
+    },
     technicalPractices: {
       current: ['Next.js 15 App Router', 'TypeScript', 'shadcn/ui components', 'Responsive design'],
       improvements: ['Error boundaries with react-error-boundary', 'Lazy loading with dynamic imports', 'SEO optimization with Next.js metadata', 'Performance monitoring with web-vitals'],
@@ -51,7 +79,11 @@ export const appSpecification: AppSection[] = [
       userJourney: ['Entry point for all user flows', 'Artist selection and navigation hub']
     },
     databaseIntegration: {
-      dataSources: ['artists', 'user_preferences'],
+      dataSources: [
+        { name: 'albums', verified: true, type: 'table' },
+        { name: 'songs', verified: true, type: 'table' },
+        { name: 'user_preferences', verified: false, type: 'table' }
+      ],
       queryPatterns: ['static_data', 'user_session'],
       securityLevel: 'public',
       performance: ['preloaded', 'cached'],
@@ -73,6 +105,7 @@ export const appSpecification: AppSection[] = [
     type: 'page',
     icon: '📝',
     color: '#e1f5fe',
+    mvpIncluded: false,
     technicalPractices: {
       current: ['Form handling with react-hook-form', 'Input validation with zod', 'Real-time updates'],
       improvements: ['Optimistic updates for better UX', 'Debounced search for artist names', 'Rate limiting for submissions', 'Duplicate detection'],
@@ -82,7 +115,11 @@ export const appSpecification: AppSection[] = [
       userJourney: ['Community contribution entry point', 'Artist request and voting flow']
     },
     databaseIntegration: {
-      dataSources: ['artist_requests', 'user_votes', 'users'],
+      dataSources: [
+        { name: 'artist_requests', verified: false, type: 'table' },
+        { name: 'user_votes', verified: false, type: 'table' },
+        { name: 'users', verified: false, type: 'table' }
+      ],
       queryPatterns: ['real_time_updates', 'aggregated_votes', 'user_submissions'],
       securityLevel: 'authenticated',
       performance: ['optimistic_updates', 'debounced_queries'],
@@ -106,6 +143,24 @@ export const appSpecification: AppSection[] = [
     type: 'page',
     icon: '🎤',
     color: '#e1f5fe',
+    mvpIncluded: true,
+    testingRequirements: {
+      coreTests: [
+        'Countdown timer shows correct time to October 3, 2025',
+        'Primary CTA leads to prediction game',
+        'Navigation arrows work properly'
+      ],
+      userFlowTests: [
+        'User can easily start prediction game',
+        'Clear path to discography ranking',
+        'Countdown creates urgency for prediction'
+      ],
+      mobileTests: [
+        'Countdown timer displays well on mobile',
+        'CTA buttons are touch-friendly',
+        'Mobile navigation is intuitive'
+      ]
+    },
     technicalPractices: {
       current: ['Static layout with fixed positioning', 'Countdown timer implementation', 'Navigation routing'],
       improvements: ['Real-time countdown with timezone handling', 'CTA button analytics tracking', 'Progressive enhancement for countdown', 'Accessibility for timer display'],
@@ -115,7 +170,12 @@ export const appSpecification: AppSection[] = [
       userJourney: ['Primary prediction game entry point', 'Artist-specific landing and navigation hub']
     },
     databaseIntegration: {
-      dataSources: ['albums', 'user_predictions', 'analytics_events'],
+      dataSources: [
+        { name: 'albums', verified: true, type: 'table' },
+        { name: 'songs', verified: true, type: 'table' },
+        { name: 'user_predictions', verified: false, type: 'table' },
+        { name: 'analytics_events', verified: false, type: 'table' }
+      ],
       queryPatterns: ['static_album_data', 'user_prediction_status', 'analytics_tracking'],
       securityLevel: 'public',
       performance: ['preloaded_album_data', 'lazy_loaded_predictions'],
@@ -138,6 +198,24 @@ export const appSpecification: AppSection[] = [
     type: 'page',
     icon: '🎵',
     color: '#f3e5f5',
+    mvpIncluded: true,
+    testingRequirements: {
+      coreTests: [
+        '12-album grid displays correctly',
+        'Tab navigation works (Explore, Rank, Match)',
+        'Album tiles show color, name, year, song count'
+      ],
+      userFlowTests: [
+        'User can navigate between tabs smoothly',
+        'Ranking interface is accessible from grid',
+        'Prediction integration works with rankings'
+      ],
+      mobileTests: [
+        'Grid is touch-friendly on mobile',
+        'Tab navigation works on mobile',
+        'Mobile grid layout is responsive'
+      ]
+    },
     technicalPractices: {
       current: ['React state management', 'Component composition', 'Grid layout system'],
       improvements: ['Drag-and-drop with @dnd-kit/core', 'Keyboard navigation with focus-trap-react', 'Mobile optimization with touch events', 'Data caching with @tanstack/react-query'],
@@ -147,7 +225,12 @@ export const appSpecification: AppSection[] = [
       userJourney: ['Core research and ranking experience', 'Hub for all discography interactions']
     },
     databaseIntegration: {
-      dataSources: ['albums', 'songs', 'user_rankings', 'user_predictions'],
+      dataSources: [
+        { name: 'albums', verified: true, type: 'table' },
+        { name: 'songs', verified: true, type: 'table' },
+        { name: 'user_rankings', verified: false, type: 'table' },
+        { name: 'user_predictions', verified: false, type: 'table' }
+      ],
       queryPatterns: ['grid_data_loading', 'real_time_rankings', 'prediction_integration'],
       securityLevel: 'authenticated',
       performance: ['preloaded_grid', 'optimistic_updates', 'lazy_loaded_details'],
@@ -188,7 +271,11 @@ export const appSpecification: AppSection[] = [
               userJourney: ['Research songwriter contributions', 'Filter albums by collaboration patterns']
             },
             databaseIntegration: {
-              dataSources: ['songs', 'songwriters', 'albums'],
+              dataSources: [
+                { name: 'songs', verified: true, type: 'table' },
+                { name: 'albums', verified: true, type: 'table' },
+                { name: 'songwriters', verified: false, type: 'table' }
+              ],
               queryPatterns: ['aggregated_counts', 'filtered_queries', 'join_operations'],
               securityLevel: 'public',
               performance: ['memoized_calculations', 'virtual_scrolling'],
@@ -269,6 +356,24 @@ export const appSpecification: AppSection[] = [
             icon: '📀',
             color: '#e1f5fe',
             status: 'active',
+            mvpIncluded: true,
+            testingRequirements: {
+              coreTests: [
+                'Drag and drop album reordering works',
+                'Visual feedback shows numbered rankings',
+                'Rankings save automatically'
+              ],
+              userFlowTests: [
+                'User can rank albums intuitively',
+                'Rankings persist between sessions',
+                'Share functionality works'
+              ],
+              mobileTests: [
+                'Touch drag and drop works on mobile',
+                'Mobile ranking interface is usable',
+                'Mobile share functionality works'
+              ]
+            },
             technicalPractices: {
               current: ['Drag and drop with @dnd-kit/core', 'Local state management', 'Visual feedback system'],
               improvements: ['Auto-save with debouncing', 'Undo/redo functionality', 'Keyboard navigation support', 'Mobile touch optimization'],
@@ -278,7 +383,11 @@ export const appSpecification: AppSection[] = [
               userJourney: ['Core album ranking experience', 'Personal preference expression']
             },
             databaseIntegration: {
-              dataSources: ['user_rankings', 'albums', 'ranking_history'],
+              dataSources: [
+                { name: 'albums', verified: true, type: 'table' },
+                { name: 'user_rankings', verified: false, type: 'table' },
+                { name: 'ranking_history', verified: false, type: 'table' }
+              ],
               queryPatterns: ['real_time_save', 'ranking_retrieval', 'history_tracking'],
               securityLevel: 'authenticated',
               performance: ['optimistic_updates', 'debounced_saves', 'local_state'],
@@ -383,6 +492,7 @@ export const appSpecification: AppSection[] = [
             icon: '💬',
             color: '#f3e5f5',
             status: 'active',
+            mvpIncluded: true,
             technicalPractices: {
               current: ['Form validation with character limits', 'Auto-save functionality', 'Search and filtering'],
               improvements: ['Rich text editor with markdown support', 'Version history for edits', 'Advanced search with full-text indexing', 'Content moderation tools'],
@@ -508,7 +618,11 @@ export const appSpecification: AppSection[] = [
       userJourney: ['Community engagement hub', 'Connects to all social features']
     },
     databaseIntegration: {
-      dataSources: ['community_activities', 'user_engagement', 'activity_status'],
+      dataSources: [
+        { name: 'community_activities', verified: false, type: 'table' },
+        { name: 'user_engagement', verified: false, type: 'table' },
+        { name: 'activity_status', verified: false, type: 'table' }
+      ],
       queryPatterns: ['activity_aggregation', 'user_participation', 'status_tracking'],
       securityLevel: 'authenticated',
       performance: ['lazy_loaded_activities', 'cached_status'],
@@ -548,6 +662,24 @@ export const appSpecification: AppSection[] = [
             icon: '🎯',
             color: '#e8f5e8',
             status: 'active',
+            mvpIncluded: true,
+            testingRequirements: {
+              coreTests: [
+                'AI prediction algorithm works with user rankings',
+                'Confidence scoring displays correctly',
+                'User can mark prediction as accurate/inaccurate'
+              ],
+              userFlowTests: [
+                'User can make prediction based on their rankings',
+                'Prediction feels personalized and accurate',
+                'Feedback collection is simple and clear'
+              ],
+              mobileTests: [
+                'Prediction interface works well on mobile',
+                'Touch-friendly feedback buttons',
+                'Mobile prediction calculation is fast enough'
+              ]
+            },
             technicalPractices: {
               current: ['AI prediction algorithms', 'Confidence scoring system', 'User feedback collection'],
               improvements: ['Machine learning model training', 'Real-time prediction updates', 'A/B testing for prediction accuracy', 'Gamification elements'],
@@ -959,4 +1091,29 @@ export const getTabFlows = () => {
     rank: discography.children.find(child => child.id === 'rank-tab'),
     connect: discography.children.find(child => child.id === 'connect-tab')
   };
+};
+
+// Helper function to get MVP sections only
+export const getMvpSections = (sections: AppSection[] = appSpecification): AppSection[] => {
+  const result: AppSection[] = [];
+  
+  for (const section of sections) {
+    if (section.mvpIncluded) {
+      // Include the section and recursively check children
+      const mvpSection = { ...section };
+      if (section.children) {
+        mvpSection.children = getMvpSections(section.children);
+      }
+      result.push(mvpSection);
+    } else if (section.children) {
+      // Even if parent isn't in MVP, check children
+      const mvpChildren = getMvpSections(section.children);
+      if (mvpChildren.length > 0) {
+        const sectionWithMvpChildren = { ...section, children: mvpChildren };
+        result.push(sectionWithMvpChildren);
+      }
+    }
+  }
+  
+  return result;
 };

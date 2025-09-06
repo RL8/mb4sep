@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import AppSpecTable from '@/components/AppSpecTable';
+import UnifiedSpecTable from '@/components/UnifiedSpecTable';
 import AppSpecFlowchart from '@/components/AppSpecFlowchart';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -47,7 +47,7 @@ export default function DocumentationPage() {
 
         {/* Content */}
         {activeView === 'table' ? (
-          <AppSpecTable />
+          <UnifiedSpecTable />
         ) : (
           <AppSpecFlowchart />
         )}
@@ -56,10 +56,10 @@ export default function DocumentationPage() {
         <div className="mt-8 text-center text-sm text-muted-foreground">
           <p>Built with Next.js and shadcn/ui • Music Besties Admin Panel</p>
           <p className="mt-2">
-            <strong>Single Source of Truth:</strong> Changes to the data automatically sync between both views
+            <strong>Unified Specification:</strong> Single table with MVP toggle functionality for dynamic scoping
           </p>
           <p className="mt-1">
-            <strong>Foundation:</strong> This admin panel can be extended with additional development tools and features
+            <strong>MVP Management:</strong> Use checkboxes to include/exclude features and see real-time impact on your MVP scope
           </p>
         </div>
       </div>

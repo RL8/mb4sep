@@ -28,7 +28,11 @@ export default function MvpSpecTable() {
         userJourney: ['Entry point for all user flows', 'Connects to ranking and prediction features']
       },
       databaseIntegration: {
-        dataSources: ['albums', 'user_preferences'],
+        dataSources: [
+          { name: 'albums', verified: true, type: 'table' },
+          { name: 'songs', verified: true, type: 'table' },
+          { name: 'user_preferences', verified: false, type: 'table' }
+        ],
         queryPatterns: ['static_data', 'user_session'],
         securityLevel: 'public',
         performance: ['preloaded', 'cached'],
@@ -59,7 +63,11 @@ export default function MvpSpecTable() {
         userJourney: ['Core ranking experience', 'Connects to knowledge base and sharing']
       },
       databaseIntegration: {
-        dataSources: ['albums', 'songs', 'user_rankings'],
+        dataSources: [
+          { name: 'albums', verified: true, type: 'table' },
+          { name: 'songs', verified: true, type: 'table' },
+          { name: 'user_rankings', verified: false, type: 'table' }
+        ],
         queryPatterns: ['real_time_save', 'ranking_retrieval', 'progress_tracking'],
         securityLevel: 'authenticated',
         performance: ['optimistic_updates', 'local_state', 'debounced_saves'],
@@ -449,8 +457,15 @@ export default function MvpSpecTable() {
                           <h4 className="text-sm font-semibold text-blue-700 mb-2">🗄️ Data Sources</h4>
                           <div className="flex flex-wrap gap-1">
                             {section.databaseIntegration.dataSources.map((source, index) => (
-                              <span key={index} className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                                {source}
+                              <span key={index} className={`text-xs px-2 py-1 rounded flex items-center gap-1 ${
+                                source.verified 
+                                  ? 'bg-green-100 text-green-800' 
+                                  : 'bg-yellow-100 text-yellow-800'
+                              }`}>
+                                {source.verified ? '✅' : '❓'} {source.name}
+                                {source.type && (
+                                  <span className="text-xs opacity-75">({source.type})</span>
+                                )}
                               </span>
                             ))}
                           </div>
